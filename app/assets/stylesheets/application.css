@@ -15,7 +15,7 @@
  *= require reset
  *= require MarkerCluster
  *= require MarkerCluster.Default
- *= require lightbox
+ *= require magnific-popup
  *= require Leaflet.Coordinates-0.1.3
  *= require bjqs
  *= require token-input

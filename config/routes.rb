@@ -1,5 +1,7 @@
 Biomodis::Application.routes.draw do
-  devise_for :users
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
+  devise_for :users, controllers: { registrations: "devise2/registrations" }
   #devise_for :users
   get "models/visor"
   get "models/download_model"
@@ -13,6 +15,8 @@ Biomodis::Application.routes.draw do
   post "ratings/rate_model"
   post "species/comment_point"
   post "species/create_comment_point"
+  post "groups/bulk_email"
+  post "groups/email_invitation"
   post "species/species_by_class"
   post "species/add_ecological_variable"
   post "species/add_altitude_range"
@@ -27,6 +31,7 @@ Biomodis::Application.routes.draw do
   resources :home, :only => [:show]
   resources :reviews, :only => [:show, :create, :destroy]
   resources :users, :only => [:show, :edit, :update]
+  resources :user_relationships, :only => [:create]
   resources :models, :only => [:index, :new, :create]
   resources :species, :only => [:new, :create, :edit] do
     get :autocomplete, :on => :collection
@@ -34,6 +39,11 @@ Biomodis::Application.routes.draw do
     get :eco_variables_search, :on => :collection
   end 
   resources :faq, :only => [:index]
+  resources :groups do
+  end
+  resources :species_groups, :only => [:index, :create, :update]
+  resources :group_users do
+  end
 
   # connect '/models/search', :controller => 'models', :action => 'search'
   #get "models/index"

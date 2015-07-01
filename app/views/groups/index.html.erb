@@ -1,0 +1,24 @@
+<h1>Indice de Grupos</h1>
+
+<table>
+  <tr><td>
+    <%= form_tag({controller: "groups", action: "index"}, method: "get", class: "nifty_form") do  %>
+        <%= label_tag(:q, "Buscar Grupo:") %>
+        <%= text_field_tag(:q) %>
+        <%= submit_tag("Search") %>
+    <% end %>
+  </td></tr>
+</table>
+
+<table>
+
+  <% @groups.each do |group| %>
+      <tr>
+        <td><%= link_to image_tag(group.logo.url(:thumb250).to_s), group %></td>
+        <td><%= link_to group.name, group %></td>
+        <td><%= group.description %></td>
+      </tr>
+  <% end %>
+</table>
+
+<br>

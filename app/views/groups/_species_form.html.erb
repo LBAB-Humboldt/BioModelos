@@ -1,0 +1,10 @@
+<div id="group_form" ng-show="sugest_species">
+  <%= simple_form_for @species_group do |f| %>
+      <table>
+        <tr><td rowspan="8"><h3>Sugerir Adición de especie en el Grupo </h3></td></tr>
+        <tr><td><%= f.hidden_field :group_id, :value =>  @group.id %><%= f.hidden_field :species_group_state_id, :value => 2 %>
+          <%= f.select :species_id, options_from_collection_for_select(@species, 'id', 'sci_name'), :input_html => { :class => "inputforma inp2" }, include_blank: '- Selecciona una Especie* '  %></td></tr>
+        <tr><td><%= f.submit "Enviar" %></td></tr>
+      </table>
+  <% end %>
+</div>

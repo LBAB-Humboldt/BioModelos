@@ -12,14 +12,38 @@
         <div class="familia"><%= @species.family %></div>
         <a href="http://www.biodiversidad.co/" class="linksib" target="_blank">www.biodiversidad.co</a></div>
 
+        <% @level1 = 1 %>
+        <% @level2 = 2 %>
+        <% @levelc = 0 %>
+        <% @level3 = 99 %>
+        <% @nivel2 = 2 %>
+
+        <% @newtabs_sp = [5090, 5091, 141, 378, 931, 932, 933, 2483, 6569, 4238, 4239] %>
+        <% @validacion_sp = [5090, 5091, 141, 378, 931, 932, 933, 2483, 6569, 4238, 4239, 5331, 5208, 5302, 5328, 5329] %>
+        <% @isInSpeciesList = @newtabs_sp.include? @species.id %>
+        <% @isInValList = @validacion_sp.include? @species.id %>
+
         <div class="hs clearfix" id="tabs">
                 <ul class="tabsnav clearfix">
-                    <li><a href="#tabs-1" class='tabtn'>Nivel 1</a></li>
-                    <li><a href="#tabs-2" class='tabtn'>Nivel 2</a></li>
+                    <% if @isInSpeciesList %>
+                        <li><a href="#tabs-1" class='tabtn'>Bioclim</a></li>     
+                        <li><a href="#tabs-2" class='tabtn'>BRT</a></li>
+                        <li><a href="#tabs-4" class='tabtn'>Maxent</a></li>
+                        <% @level1 = 97 %>
+                        <% @level2 = 98 %>
+                        <% @nivel2 = 1 %>
+                    <% else %>
+                        <li><a href="#tabs-1" class='tabtn'>Nivel 1</a></li>     
+                        <li><a href="#tabs-2" class='tabtn'>Nivel 2</a></li>
+                    <% end %>
                     <li><a href="#tabs-3" class='tabtn'>Consenso</a></li>
+                    <% if @isInValList %>
+                        <li><a href="#tabs-5" class='tabtn'>Validación</a></li>
+                    <% end %>
+
                     <div class="urls" title="Enlace directo">URL:<input id="idUrl" type="text" value="biomodelos.humboldt.org.co/models/visor?species_id=<%= @species.id %>" /></div>
                 </ul>
-                
+
         <div id="tabs-1">
             <div class="left-arrow">
                 <a href="#prev">
@@ -27,7 +51,7 @@
             </div>
             <div class="showcase">
                 <ul class="modelost">
-                    <% @models.where(:level => 1).order(:img_url).each_with_index do |model, i| %>
+                    <% @models.where(:level => @level1).order(:img_url).each_with_index do |model, i| %>
                         <li class="modelothumb">
                             <div class="cajadatosm">
                             <%= link_to "#", :class => 'model_link' do%>
@@ -73,14 +97,14 @@
             </div>
             <div class="showcase2">
                 <ul class="modelost">
-                    <% @models.where(:level => 2).each_with_index do |model, i| %>
+                    <% @models.where(:level => @level2).each_with_index do |model, i| %>
                         <li class="modelothumb">
                             <div class="cajadatosm">
                             <%= link_to "#", :class => 'model_link' do%>
                                 <%= hidden_field_tag('imgsrc', model.img_url) %>
                                 <%= image_tag("/thumbs/"+ model.thumb_url, :height => 205, :width => 145, :id => model.id) %>
                                 <div class="modeldata">
-                                <h5>Modelo Nivel 2</h5>
+                                <h5>Modelo Nivel <%= @nivel2 %></h5>
                                 <h6><b>CORTE: </b></br>
                                 <%= model.description %></h6>
                                 <p>Promedio:</p>
@@ -112,6 +136,54 @@
             </div>
         </div>
 
+        <% if @isInSpeciesList %>
+            <div id="tabs-4">
+                 <div class="left-arrow">
+                    <a href="#prev">
+                    </a>
+                </div>
+                <div class="showcase4">
+                    <ul class="modelost">
+                        <% @models.where(:level => @level3).each_with_index do |model, i| %>
+                            <li class="modelothumb">
+                                <div class="cajadatosm">
+                                <%= link_to "#", :class => 'model_link' do%>
+                                    <%= hidden_field_tag('imgsrc', model.img_url) %>
+                                    <%= image_tag("/thumbs/"+ model.thumb_url, :height => 205, :width => 145, :id => model.id) %>
+                                    <div class="modeldata">
+                                    <h5>Modelo Nivel 1</h5>
+                                    <h6><b>CORTE: </b></br>
+                                    <%= model.description %></h6>
+                                    <p>Promedio:</p>
+                                    <h3><%= model.average_rating %></h3>
+                                    <p>Votos: (<%= model.total_votes %>)</p>
+                                    </div>
+                                <% end %>
+                                </div>
+                                <div class="rankmod clearfix">
+                                    <% if user_signed_in? %>
+                                        <div class="user_star">
+                                            <%= hidden_field_tag('model', model.id, :class => 'mid' )  %>
+                                            <%= hidden_field_tag('myscore', @ratings[model.id], :class => 'myscore')  %>
+                                        </div>
+                                    <% end %>
+                                    <% if file_exists(model.id) %>
+                                        <%= link_to models_download_model_path(:m_id => model.id), :class => 'download', :remote => true do %>
+                                            <%= image_tag("descargar.png") %>
+                                        <% end %>
+                                    <% end %>
+                                </div>
+                            </li>
+                        <% end %>
+                    </ul>
+                </div>
+                <div class="right-arrow">
+                    <a href="#next">
+                    </a>
+                </div>
+            </div>
+        <% end %>
+
         <div id="tabs-3">
              <div class="left-arrow">
                 <a href="#prev">
@@ -119,7 +191,7 @@
             </div>
             <div class="showcase3">
                 <ul class="modelost">
-                    <% @models.where(:level => 0).each_with_index do |model, i| %>
+                    <% @models.where(:level => @levelc).each_with_index do |model, i| %>
                         <li class="modelothumb">
                             <div class="cajadatosm">
                             <%= link_to "#", :class => 'model_link' do%>
@@ -157,6 +229,54 @@
                 </a>
             </div>
         </div>
+
+        <% if @isInValList %>
+            <div id="tabs-5">
+                 <div class="left-arrow">
+                    <a href="#prev">
+                    </a>
+                </div>
+                <div class="showcase5">
+                    <ul class="modelost">
+                        <% @models.where(:level => 100).each_with_index do |model, i| %>
+                            <li class="modelothumb">
+                                <div class="cajadatosm">
+                                <%= link_to "#", :class => 'model_link' do%>
+                                    <%= hidden_field_tag('imgsrc', model.img_url) %>
+                                    <%= image_tag("/thumbs/"+ model.thumb_url, :height => 205, :width => 145, :id => model.id) %>
+                                    <div class="modeldata">
+                                    <h5>Modelo Validación</h5>
+                                    <h6><b>CORTE: </b></br>
+                                    <%= model.description %></h6>
+                                    <p>Promedio:</p>
+                                    <h3><%= model.average_rating %></h3>
+                                    <p>Votos: (<%= model.total_votes %>)</p>
+                                    </div>
+                                <% end %>
+                                </div>
+                                <div class="rankmod clearfix">
+                                    <% if user_signed_in? %>
+                                        <div class="user_star">
+                                            <%= hidden_field_tag('model', model.id, :class => 'mid' )  %>
+                                            <%= hidden_field_tag('myscore', @ratings[model.id], :class => 'myscore')  %>
+                                        </div>
+                                    <% end %>
+                                    <% if file_exists(model.id) %>
+                                        <%= link_to models_download_model_path(:m_id => model.id), :class => 'download', :remote => true do %>
+                                            <%= image_tag("descargar.png") %>
+                                        <% end %>
+                                    <% end %>
+                                </div>
+                            </li>
+                        <% end %>
+                    </ul>
+                </div>
+                <div class="right-arrow">
+                    <a href="#next">
+                    </a>
+                </div>
+            </div>
+        <% end %>
 
         </div>
         <p>Seleccionar, calificar o comentar sobre los distintos modelos.</br>Para comentar sobre un modelo específico dar el nombre del corte.</br></p>
@@ -239,15 +359,21 @@
     var div = $('div.showcase'),
         div2 = $('div.showcase2'),
         div3 = $('div.showcase3');
+        div4 = $('div.showcase4');
+        div5 = $('div.showcase5');
     var liNum = $(div).find('ul').children('li').length,
          liNum2 = $(div2).find('ul').children('li').length,
          liNum3 = $(div3).find('ul').children('li').length;
+         liNum4 = $(div4).find('ul').children('li').length;
+         liNum5 = $(div5).find('ul').children('li').length;
     var speed = 1000;
     var containerWidth = 682;
     var itemWidth = 165;
     $(div).css({overflow: 'hidden'});
     $(div2).css({overflow: 'hidden'});
     $(div3).css({overflow: 'hidden'});
+    $(div4).css({overflow: 'hidden'});
+    $(div5).css({overflow: 'hidden'});
     $('div.right-arrow').click(function(e){ 
         if(($(div).scrollLeft()+containerWidth)<(liNum*itemWidth)){
             $(div).animate({
@@ -261,6 +387,16 @@
         }
         if(($(div3).scrollLeft()+containerWidth)<(liNum3*itemWidth)){
             $(div3).animate({
+                  scrollLeft: '+='+containerWidth
+            }, speed);
+        }
+         if(($(div4).scrollLeft()+containerWidth)<(liNum4*itemWidth)){
+            $(div4).animate({
+                  scrollLeft: '+='+containerWidth
+            }, speed);
+        }
+        if(($(div5).scrollLeft()+containerWidth)<(liNum5*itemWidth)){
+            $(div5).animate({
                   scrollLeft: '+='+containerWidth
             }, speed);
         }
@@ -278,6 +414,16 @@
         }
         if(($(div3).scrollLeft()+containerWidth)>containerWidth){
             $(div3).animate({
+                scrollLeft: '-='+containerWidth
+            }, speed);
+        }
+        if(($(div4).scrollLeft()+containerWidth)>containerWidth){
+            $(div4).animate({
+                scrollLeft: '-='+containerWidth
+            }, speed);
+        }
+        if(($(div5).scrollLeft()+containerWidth)>containerWidth){
+            $(div5).animate({
                 scrollLeft: '-='+containerWidth
             }, speed);
         }

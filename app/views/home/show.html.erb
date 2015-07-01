@@ -131,7 +131,7 @@
 					    </ul>
 					</aside>
 				</li>
-				<li><a href="http://biomodelos.humboldt.org.co/models/visor?species_id=4239"><%= image_tag("enero2015.jpg") %></a></li>
+				<li><!--<a href="http://biomodelos.humboldt.org.co/models/visor?species_id=4239">--><%= image_tag("mini-marzo-2015.jpg") %><!--</a>--></li>
 				<li><%= image_tag("fotobogota.jpg") %></li>
 		        <li><%= image_tag("info.png") %></li>
 	        </ul>
@@ -172,7 +172,9 @@
 			</div>
 		</div>
 		<% end %>
-		<%= link_to home_groups_path do %>
+
+		<% if user_signed_in? %>
+        <%= link_to groups_path do %>
 		<div class="op">
 			<div class="imginicio op4"></div>
 			<div class="fondoinicio">
@@ -180,7 +182,18 @@
 				<h6>Intercambia información con expertos en tus grupos taxonómicos de interés.</h6>
 			</div>
 		</div>
-		<% end %>
+        <% end %>
+        <% else %>
+			<div class="op">
+				<div class="imginicio op4"></div>
+				<div class="fondoinicio">
+					<h1>INTERACTUA</h1>
+					<h6>Intercambia información con expertos en tus grupos taxonómicos de interés.</h6>
+				</div>
+			</div>
+        <% end %>
+
+		
 	</div>
 </article>
 

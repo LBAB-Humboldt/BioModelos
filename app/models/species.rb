@@ -2,6 +2,7 @@ class Species < ActiveRecord::Base
 	
 	has_many :models
 	has_and_belongs_to_many :groups
+	has_many :species_groups
 	acts_as_commentable
 
 	def self.search(query, classId)

@@ -1,0 +1,188 @@
+<h1>Pagina del Grupo: <%= @group.name %></h1>
+<br><br>
+<hr/>
+<div ng-controller="group_users_ctrl" >
+    <div id="group_info">
+        <h3>Información General</h3>
+        <p><%= @message %></p>
+        <table >
+          <tr><td rowspan="4"><%= image_tag(@group.logo.url(:thumb250).to_s) %></td><td>Nombre de Grupo:<%= @group.name %></td></tr>
+          <tr><td>Descripción:<%= @group.description %></td></tr>
+          <tr><td>Email de Contacto: <a href="mailto:<%= @group.email %>"><%= @group.email %></a></td></tr>
+          <tr><td>Link Externo: <a href="<%= @group.link %>"><%= @group.link %></a></td></tr>
+
+          <% if user_signed_in? && @is_member && @is_admin %>
+              <tr><td><button ng-click="edit_group=!edit_group">Editar Grupo</button></td></tr>
+              <tr><td><button ng-click="pending_approvals=!pending_approvals">Ver Solicitudes Pendientes</button></td></tr>
+              <tr><td><button ng-click="bulk_email=!bulk_email">Redactar Email al Grupo</button></td></tr>
+          <% end %>
+          <% if user_signed_in? && @is_member %>
+            <tr><td><button ng-click="email_invitation=!email_invitation">Invitar un Amigo</button></td></tr>
+          <% end %>
+          <tr><td>
+          <% if user_signed_in? %>
+              <%= simple_form_for @group_user do |f| %>
+                    <%= f.hidden_field :group_id, :value =>  @group.id %>
+                    <%= f.submit @text_join %>
+              <% end %>
+          <% end %>
+          </td></tr>
+        </table>
+    </div>
+    <hr/>
+    <div ng-show="bulk_email" >
+      <%= render "bulk_email" %>
+    </div>
+
+    <div ng-show="email_invitation" >
+      <%= render "email_invitation" %>
+    </div>
+
+    <div ng-show="pending_approvals" >
+      <div>
+        <table>
+          <tr>
+            <th><h3>Miembros Pendientes de Aprobación</h3></th>
+            <th>Nombre</th>
+            <th>Biografía</th>
+            <th>Acciones</th>
+          </tr>
+          <% @pending_members.each do |member| %>
+              <tr>
+                <td>&nbsp;</td>
+                <td><%= member.user.name %></td>
+                <td><%= member.user.bio %></td>
+                <td ng-init="is_member['<%= member.id %>']=<%= member.group_user_state_id  == 1 %>; was_rejected['<%= member.id %>']=<%= member.group_user_state_id  == 3 %>" >
+                  <image style="cursor: pointer" src="<%= asset_path('like_sel.png') %>" ng-if="!is_member['<%= member.id %>']" ng-click="approve_member('<%= member.id %>')" />
+                  <image style="cursor: pointer" class="btn" src="<%= asset_path('like.png') %>" ng-if="is_member['<%= member.id %>']" ng-click="approve_member('<%= member.id %>')" />
+                  <image style="cursor: pointer" src="<%= asset_path('borrar_sel.png') %>" ng-if="!was_rejected['<%= member.id %>']" ng-click="reject_member('<%= member.id %>')" />
+                  <image style="cursor: pointer" class="btn" src="<%= asset_path('borrar.png') %>" ng-if="was_rejected['<%= member.id %>']" ng-click="reject_member('<%= member.id %>')" />
+                </td>
+              </tr>
+          <% end %>
+        </table>
+      </div>
+      <div class="perfilcol2 clearfix fixfooter">
+        <table>
+          <tr>
+            <th><h3>Especies Pendientes de Aprobación</h3></th>
+            <th>Nombre</th>
+            <th>Familia</th>
+          </tr>
+          <% @pending_species_groups.each do |pending_species| %>
+              <tr>
+                <td>&nbsp;</td>
+                <td><%= pending_species.species.sci_name %></td>
+                <td><%= pending_species.species.family %></td>
+                <td ng-init="species_approved['<%= pending_species.id %>']=<%= pending_species.species_group_state_id  == 1 %>; species_rejected['<%= pending_species.id %>']=<%= pending_species.species_group_state_id  == 3 %>" >
+                  <image style="cursor: pointer" src="<%= asset_path('like_sel.png') %>" ng-if="!species_approved['<%= pending_species.id %>']" ng-click="approve_species('<%= pending_species.id %>')" />
+                  <image style="cursor: pointer" class="btn" src="<%= asset_path('like.png') %>" ng-if="species_approved['<%= pending_species.id %>']" ng-click="approve_species('<%= pending_species.id %>')" />
+                  <image style="cursor: pointer" src="<%= asset_path('borrar_sel.png') %>" ng-if="!species_rejected['<%= pending_species.id %>']" ng-click="reject_species('<%= pending_species.id %>')" />
+                  <image style="cursor: pointer" class="btn" src="<%= asset_path('borrar.png') %>" ng-if="species_rejected['<%= pending_species.id %>']" ng-click="reject_species('<%= pending_species.id %>')" />
+                </td>
+              </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+
+    <% if user_signed_in? && @is_member && @is_admin %>
+      <div ng-show="edit_group">
+        <%= render "group_form" %>
+      </div>
+    <hr/>
+    <% end %>
+
+
+    <div>
+      <table>
+        <tr>
+          <th><h3>Especies Relacionadas</h3></th>
+          <th>Especie</th>
+          <th>Familia</th>
+        </tr>
+          <% @species_groups.each do |species_group| %>
+              <tr>
+                <td>&nbsp;</td>
+                <td><%= species_group.species.sci_name %></td>
+                <td><%= species_group.species.family %></td>
+              </tr>
+          <% end %>
+          <% if user_signed_in? && @is_member %>
+            <tr><td><button ng-click="sugest_species=!sugest_species">Sugerir Especie</button></td></tr>
+          <% end %>
+      </table>
+
+
+    </div>
+    <hr/>
+    <% if user_signed_in? && @is_member && @is_admin %>
+        <%= render "species_form" %>
+        <hr/>
+    <% end %>
+  <div class="">
+    <table>
+      <tr>
+        <th><h3>Miembros del grupo</h3></th>
+        <th>Nombre</th>
+        <th>Biografía</th>
+      </tr>
+      <% @members.each do |member| %>
+          <tr>
+            <td>&nbsp;</td>
+            <td><a href="/users/<%= member.user.id %>"><%= member.user.name %></a></td>
+            <td><%= member.user.bio %></td>
+          </tr>
+      <% end %>
+    </table>
+    <table>
+      <tr>
+        <th><h3>Administradores del grupo</h3></th>
+        <th>Nombre</th>
+        <th>Biografía</th>
+      </tr>
+      <% @group_admins.each do |admin| %>
+          <tr>
+            <td>&nbsp;</td>
+            <td><a href="/users/<%= admin.user.id %>"><%= admin.user.name %></a></td>
+            <td><%= admin.user.bio %></td>
+          </tr>
+      <% end %>
+    </table>
+
+  </div>
+  <hr/>
+  <div class="" id="col2p">
+    <div class="cajas">
+      <h5>ranking</h5>
+      <% @group.users_ranking.each_with_index do |user, i| %>
+          <section class="ranking">
+            <h1><%= i+1 %></h1>
+            <p><a href="/users/<%= user.id %>"><%= user.name %></a> · <%= user.ediciones %> aporte(s) </p>
+            <div class="medalla1"></div>
+          </section>
+      <% end %>
+    </div>
+
+  </div>
+  <hr/>
+  <div>
+    <table>
+      <tr>
+        <th colspan="3"><h3>Notificaciones</h3></th>
+      </tr>
+      <% @group.notifications.each do |notification| %>
+          <tr>
+            <td>&nbsp;</td>
+            <% if notification.type == 'new_species' %>
+            <td>La especie <a href="/species/<%= notification.id %>"><%= notification.name %></a> fue añadida al grupo</td>
+            <% else %>
+            <td>El usuario <a href="/users/<%= notification.id %>"><%= notification.name %></a> se unió al grupo </td>
+            <% end %>
+          </tr>
+      <% end %>
+    </table>
+  </div>
+
+</div>
+<br/><br/>

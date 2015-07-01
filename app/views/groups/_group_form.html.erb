@@ -1,0 +1,13 @@
+<div>
+  <%= simple_form_for @group do |f| %>
+      <table>
+        <tr><td rowspan="8"><h3>Editar Grupo </h3></td></tr>
+        <tr><td><%= f.hidden_field :id %><%= f.file_field :logo %></td></tr>
+        <tr><td><%= f.input :name %></td></tr>
+        <tr><td><%= f.input :description %></td></tr>
+        <tr><td><%= f.email_field :email %></td></tr>
+        <tr><td><%= f.input :link %></td></tr>
+        <tr><td><%= f.submit "Guardar Cambios" %></td></tr>
+      </table>
+  <% end %>
+</div>

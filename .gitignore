@@ -31,6 +31,7 @@ kmz/
 thumbs/
 registros/
 public/assets/
+public/uploads/
 metadata/
 *.sql
 *.csv

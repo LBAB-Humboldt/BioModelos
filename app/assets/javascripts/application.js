@@ -11,11 +11,12 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery.turbolinks
+// require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery-ui-1.10.4.custom
 //= require jquery.tokeninput
-//= require lightbox-2.6.min
+//= require jquery.magnific-popup
+//= require angular
 //= require bjqs-1.3.min
 //= require_tree ./controllers
 //= require typeahead.min
@@ -25,4 +26,8 @@
 //= require jquery-csv.min
 //= require leaflet/leaflet.geocsv.min
 //= require jquery.raty.min
-//= require turbolinks
+//= require app/app
+//= require_tree ./app/controllers
+//= require_tree ./app/config
+// require turbolinks
+
