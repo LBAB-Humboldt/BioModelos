@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20150612162052) do
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
 
   create_table "activities", force: :cascade do |t|
-    t.string "name",        null: false
+    t.string "name",        limit: 255, null: false
     t.text   "description"
   end
 
@@ -69,18 +69,18 @@ ActiveRecord::Schema.define(version: 20150612162052) do
   end
 
   create_table "classes", force: :cascade do |t|
-    t.string   "class_name"
+    t.string   "class_name", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "comments", force: :cascade do |t|
-    t.integer  "commentable_id",   default: 0
-    t.string   "commentable_type"
-    t.string   "title"
+    t.integer  "commentable_id",               default: 0
+    t.string   "commentable_type", limit: 255
+    t.string   "title",            limit: 255
     t.text     "body"
-    t.string   "subject"
-    t.integer  "user_id",          default: 0, null: false
+    t.string   "subject",          limit: 255
+    t.integer  "user_id",                      default: 0, null: false
     t.integer  "parent_id"
     t.integer  "lft"
     t.integer  "rgt"
@@ -92,7 +92,7 @@ ActiveRecord::Schema.define(version: 20150612162052) do
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
   create_table "eco_variables", force: :cascade do |t|
-    t.string   "variable"
+    t.string   "variable",   limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -131,9 +131,9 @@ ActiveRecord::Schema.define(version: 20150612162052) do
   end
 
   create_table "groups", force: :cascade do |t|
-    t.string   "name",           null: false
+    t.string   "name",           limit: 255, null: false
     t.text     "description"
-    t.string   "img_url"
+    t.string   "img_url",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "email"
@@ -160,17 +160,17 @@ ActiveRecord::Schema.define(version: 20150612162052) do
 
   create_table "models", force: :cascade do |t|
     t.integer  "species_id"
-    t.string   "img_url"
+    t.string   "img_url",     limit: 255
     t.date     "model_date"
-    t.string   "author"
+    t.string   "author",      limit: 255
     t.text     "description"
-    t.integer  "rating",      default: 0
-    t.boolean  "validated",   default: false
+    t.integer  "rating",                  default: 0
+    t.boolean  "validated",               default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "thumb_url"
-    t.boolean  "current",     default: true
-    t.integer  "level",       default: 1
+    t.string   "thumb_url",   limit: 255
+    t.boolean  "current",                 default: true
+    t.integer  "level",                   default: 1
   end
 
   add_index "models", ["species_id", "current"], name: "index_models_on_species_id_and_current"
@@ -187,12 +187,12 @@ ActiveRecord::Schema.define(version: 20150612162052) do
     t.integer  "species_id"
     t.decimal  "lat"
     t.decimal  "lon"
-    t.boolean  "wrong_id",    default: false
-    t.boolean  "geo_problem", default: false
+    t.boolean  "wrong_id",                default: false
+    t.boolean  "geo_problem",             default: false
     t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "register_id"
+    t.string   "register_id", limit: 255
   end
 
   create_table "ratings", force: :cascade do |t|
@@ -204,7 +204,7 @@ ActiveRecord::Schema.define(version: 20150612162052) do
   end
 
   create_table "regions", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "region_id"
@@ -225,16 +225,16 @@ ActiveRecord::Schema.define(version: 20150612162052) do
 
   create_table "species", force: :cascade do |t|
     t.integer  "class_id"
-    t.string   "sci_name"
-    t.string   "order"
-    t.string   "family"
-    t.string   "sib_url"
+    t.string   "sci_name",              limit: 255
+    t.string   "order",                 limit: 255
+    t.string   "family",                limit: 255
+    t.string   "sib_url",               limit: 255
     t.integer  "ocurrence_records"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "ocurrence_records_url"
-    t.string   "iucn_id"
-    t.boolean  "current",               default: true
+    t.string   "ocurrence_records_url", limit: 255
+    t.string   "iucn_id",               limit: 255
+    t.boolean  "current",                           default: true
   end
 
   add_index "species", ["class_id"], name: "index_species_on_class_id"
@@ -254,13 +254,6 @@ ActiveRecord::Schema.define(version: 20150612162052) do
     t.datetime "updated_at",             null: false
   end
 
-  create_table "user_relationships", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "follower_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
   create_table "user_species_regions", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "region_id"
@@ -270,25 +263,25 @@ ActiveRecord::Schema.define(version: 20150612162052) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name"
-    t.string   "role"
-    t.string   "location"
-    t.string   "organization"
+    t.string   "name",                   limit: 255
+    t.string   "role",                   limit: 255
+    t.string   "location",               limit: 255
+    t.string   "organization",           limit: 255
     t.text     "bio"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
+    t.string   "email",                  limit: 255, default: "", null: false
+    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",                      default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.string   "avatarUrl"
-    t.string   "interestGroups"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
+    t.string   "avatarUrl",              limit: 255
+    t.string   "interestGroups",         limit: 255
     t.integer  "mail_periodicity"
     t.integer  "group_id"
     t.string   "requested_group_name"
