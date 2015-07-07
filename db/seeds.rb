@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 #Create active admin user.
-AdminUser.create!(:email => 'dlopez@humboldt.org.co', :password => 'abejamaya', :password_confirmation => 'abejamaya')
+AdminUser.create!(:email => 'cgutierrez@humboldt.org.co', :password => '1234qwerty', :password_confirmation => '1234qwerty')
 
 GroupState.create(:id => 1, :name => "Aprobado")
 GroupState.create(:id => 2, :name => "Pendiente Aprobación")
