@@ -40,7 +40,7 @@
 					<div class="medalla1"></div>
 				</div>
 				<h1>aportes</h1>
-				<a href="#" class="checkrev">revisar aportes</a>
+				<a href="#">revisar aportes</a>
 			<%= render 'reviews/reviews_by_user' %>
 			</section>
 	</div>
@@ -51,7 +51,7 @@
 			<% @users_by_reviews.each_with_index do |user, i| %>
 				<section class="ranking">
 					<h1><%= i+1 %></h1>
-					<p><a href="/users/<%= user.id %>"><%= user.Name %></a> · <%= user.Aportes %> aporte(s) </p>
+					<p><a href="/users/<%= user.id %>"><%= user.Name %></a> · <%= user.Aportes %> aportes </p>
 					<% if user.Aportes >= 100 %>
 						<div class="medalla1"></div><div class="medalla1"></div><div class="medalla1"></div>
 					<% elsif user.Aportes >= 50 %>
