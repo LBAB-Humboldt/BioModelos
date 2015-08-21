@@ -254,6 +254,13 @@ ActiveRecord::Schema.define(version: 20150612162052) do
     t.datetime "updated_at",             null: false
   end
 
+  create_table "user_relationships", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "follower_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "user_species_regions", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "region_id"
