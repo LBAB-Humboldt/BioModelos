@@ -1,14 +1,12 @@
-<div>
+<div class="cajas2 formedgroup forma mb45px">
   <%= form_tag({controller: "groups", action: "email_invitation"}, method: "post", class: "nifty_form") do  %>
-      <table>
-        <tr><td rowspan="7"><h3>Invitar a un amigo a unirse al grupo </h3></td></tr>
-        <tr><td><%= hidden_field_tag :id, @group.id %></td></tr>
-        <tr><td><%= email_field_tag :email, '', :placeholder => 'Email' %></td></tr>
-        <tr><td><%= text_field_tag :name, '', :placeholder => 'Nombre de Amigo' %></td></tr>
-        <tr><td><%= text_area_tag :message, nil, :rows => 4 %></td></tr>
-        <tr><td><%= submit_tag 'Enviar' %></td></tr>
+        <h3>Invitar experto a unirse al grupo </h3>
+        <%= hidden_field_tag :id, @group.id %>
+        <%= email_field_tag :email, '', :placeholder => 'Email' %>
+        <%= text_field_tag :name, '', :placeholder => 'Persona a invitar' %>
+        <%= text_area_tag :message, nil, :rows => 4, :class=> "textarea2" %>
+        <%= submit_tag 'Enviar', :class=> "boton1" %>
       </table>
   <% end %>
 
 </div>
-<hr/>
