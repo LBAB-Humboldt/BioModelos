@@ -10,6 +10,7 @@
 </div>
 <div class="perfilline" id="lineap"></div>
 <div class="contenedor">
+
 	<div class="perfilcol1 clearfix fixfooter" id="col1p">
 		<article class="perfildata" id="alturap">
 			<div class="perfilimg">
@@ -28,30 +29,46 @@
 	                      <%= simple_form_for @relationship do |f| %>
 	                          <%= f.hidden_field :user_id, :value =>  @user.id %>
 	                          <%= f.submit @text_relationship %>
-	                      <% end %>
 	                  <% end %>
-	                <% end %>
+	        <% end %>
+	      <% end %>
 			</section>
 		</article>
-			<div class="clearfix"></div>
-			<section class="aportes fixfooter">
-				<div class="medallas">
-					<div class="medalla1"></div>
-					<div class="medalla1"></div>
-				</div>
-				<h1>aportes</h1>
-				<a href="#" class="checkrev">revisar aportes</a>
-			<%= render 'reviews/reviews_by_user' %>
-			</section>
+
+		<div class="clearfix"></div>
+
+	  <section class="aportes">
+        
+        <div class="cajas2 formedgroup">
+  				<h3>aportes</h3>
+  			  <%= render 'reviews/reviews_by_user' %>
+        </div>
+
+        <div class="cajas2 formedgroup fixfooter">
+          <div><h3>Grupos del usuario</h3></div>
+            <% @user_groups.each do |user_group| %>
+            <div class="grupogen2 clearfix">
+              <ul>
+                <li class="crop"><%= link_to image_tag(user_group.group.logo.url(:thumb120).to_s), user_group.group %></li>
+                <li class="grtit"><%= link_to user_group.group.name, user_group.group %></li>
+                <li><%= user_group.group.description %></li>
+              </ul>
+            </div>
+            <% end %>
+        </div>
+
+
+		</section>
+
 	</div>
 	
 	<div class="perfilcol2 clearfix fixfooter" id="col2p">
-		<div class="cajas">
-			<h5>Top 10 de colaboradores</h5>
+		<div class="cajas2 formedgroup mt0">
+			<h3>Top 10 de colaboradores</h3>
 			<% @users_by_reviews.each_with_index do |user, i| %>
 				<section class="ranking">
 					<h1><%= i+1 %></h1>
-					<p><a href="/users/<%= user.id %>"><%= user.Name %></a> · <%= user.Aportes %> aporte(s) </p>
+					<p><a href="/users/<%= user.id %>"><%= user.Name %></a> · <%= user.Aportes %> aportes </p>
 					<% if user.Aportes >= 100 %>
 						<div class="medalla1"></div><div class="medalla1"></div><div class="medalla1"></div>
 					<% elsif user.Aportes >= 50 %>
@@ -63,29 +80,11 @@
 			<% end %>
 		</div>
 
-	</div>
-
-	<hr/>
-        <div class="clearfix">
-          <h5>Grupos del usuario</h5>
-          <table>
-
-            <% @user_groups.each do |user_group| %>
-                <tr>
-                  <td><%= link_to image_tag(user_group.group.logo.url(:thumb120).to_s), user_group.group %></td>
-                  <td><%= link_to user_group.group.name, user_group.group %></td>
-                  <td><%= user_group.group.description %></td>
-                </tr>
-            <% end %>
-          </table>
-
-        </div>
-    <hr/>
     <div>
       <% if user_signed_in? %>
         <% if @user.id != current_user.id%>
-              <div class="clearfix">
-                <h5>Acciones del Usuario</h5>
+          <div class="cajas2 formedgroup">
+                <h3>Acciones del Usuario</h3>
                 <table>
 
                   <% @user.own_notifications.each do |notification| %>
@@ -110,14 +109,14 @@
                         <td>El usuario realizó el un aporte sobre la especie: <a href="/species/<%= notification.id %>"><%= notification.name %></a></td>
                       </tr>
                     <% end %>
-
                   <% end %>
                 </table>
+          </div>
 
-              </div>
-        <% else %>
-              <div class="clearfix">
-                <h5>Acciones del Usuario</h5>
+          <% else %>
+          
+          <div class="cajas2 formedgroup">
+                <h3>Acciones del Usuario</h3>
                 <table>
 
                   <% @user.own_notifications.each do |notification| %>
@@ -125,21 +124,21 @@
                           <tr>
                             <td>&nbsp;</td>
                             <td><%= notification.updated_at.strftime("%F %R") %></td>
-                            <td>Tu solucitud para unirte al grupo: <a href="/groups/<%= notification.id %>"><%= notification.name %></a> fue <b>Aprobada</b></td>
+                            <td>Tu solicitud para unirte al grupo: <a href="/groups/<%= notification.id %>"><%= notification.name %></a> fue <b>Aprobada</b></td>
                           </tr>
                       <% end %>
                       <%if notification.state_id==2 %>
                           <tr>
                             <td>&nbsp;</td>
                             <td><%= notification.updated_at.strftime("%F %R") %></td>
-                            <td>Tu solucitud para unirte al grupo: <a href="/groups/<%= notification.id %>"><%= notification.name %></a> esta <b>Pendiente de aprobación</b></td>
+                            <td>Tu solicitud para unirte al grupo: <a href="/groups/<%= notification.id %>"><%= notification.name %></a> esta <b>Pendiente de aprobación</b></td>
                           </tr>
                       <% end %>
                       <%if notification.state_id==3 %>
                           <tr>
                             <td>&nbsp;</td>
                             <td><%= notification.updated_at.strftime("%F %R") %></td>
-                            <td>Tu solucitud para unirte al grupo: <a href="/groups/<%= notification.id %>"><%= notification.name %></a> fue <b>Rechazada</b></td>
+                            <td>Tu solicitud para unirte al grupo: <a href="/groups/<%= notification.id %>"><%= notification.name %></a> fue <b>Rechazada</b></td>
                           </tr>
                       <% end %>
                       <%if notification.state_id==4 %>
@@ -156,13 +155,12 @@
                             <td>Realizaste un aporte sobre la especie: <a href="/species/<%= notification.id %>"><%= notification.name %></a></td>
                           </tr>
                       <% end %>
-
                   <% end %>
                 </table>
+          </div>
+        </div>
 
-              </div>
-              <hr>
-              <div class="clearfix">
+          <div class="cajas2 formedgroup">
                 <h3>Mi Muro </h3><h5> Notificaciones de actividad de grupos y usuarios que sigues.</h5>
                 <table>
                   <% @user.wall_notifications.each do |notification| %>
@@ -189,12 +187,12 @@
                     <% end %>
                   <% end %>
                 </table>
-
-              </div>
+          </div>
         <% end %>
       <% end %>
 
     </div>
+  </div>
 
 </div>
 
