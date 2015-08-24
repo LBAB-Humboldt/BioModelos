@@ -134,6 +134,24 @@
 				<li><!--<a href="http://biomodelos.humboldt.org.co/models/visor?species_id=4239">--><%= image_tag("mini-marzo-2015.jpg") %><!--</a>--></li>
 				<li><%= image_tag("fotobogota.jpg") %></li>
 		        <li><%= image_tag("info.png") %></li>
+		        <li>
+		        	<aside class="activity2">
+					<% @users_by_reviews.each_with_index do |user, i| %>
+					<section class="ranking">
+						<h1><%= i+1 %></h1>
+						<p><a href="/users/<%= user.id %>"><%= user.Name %></a> · <%= user.Aportes %> aportes </p>
+						<% if user.Aportes >= 100 %>
+							<div class="medalla1"></div><div class="medalla1"></div><div class="medalla1"></div>
+						<% elsif user.Aportes >= 50 %>
+							<div class="medalla1"></div><div class="medalla1"></div>
+						<% else %>
+							<div class="medalla1"></div>
+						<% end %>
+					</section>
+					<% end %>
+					</aside>
+				</li>
+
 	        </ul>
 		</div>
 	</div>
