@@ -1,5 +1,7 @@
 class HomeController < ApplicationController
   def show
+    @user=User.new
+    @users_by_reviews = @user.users_most_reviews
     if user_signed_in?
       user=User.find_by_id(current_user.id)
       if user.group_id != 0 && user.group_id != nil

@@ -33,7 +33,7 @@
             <% if user_signed_in? %>
               <%= simple_form_for @group_user do |f| %>
                 <%= f.hidden_field :group_id, :value =>  @group.id %>
-                <%= f.submit "", :class=> "leavegroup", :title=>"Abandonar Grupo", data: { confirm: 'Are you sure?' } %>
+                <%= f.submit "", :class=> "leavegroup", :title=>"Abandonar Grupo", data: { confirm: '¿Está seguro de querer abandonar el grupo?' } %>
               <% end %>
             <% end %>
           </div>
@@ -57,21 +57,21 @@
         <h3>Notificaciones</h3>
           <% @group.notifications.each do |notification| %>  
             <% if notification.type == 'new_species' %>
-              La especie <a href="/species/<%= notification.id %>"><%= notification.name %></a> fue añadida al grupo
+              <p class="notif">· <%= notification.updated_at.to_time.strftime("%m/%d/%Y %I:%M:%S%p") %> La especie <a href="/species/<%= notification.id %>"><%= notification.name %></a> fue añadida al grupo</p>
             <% else %>
-              El usuario <a href="/users/<%= notification.id %>"><%= notification.name %></a> se unió al grupo 
+              <p class="notif">· <%= notification.updated_at.to_time.strftime("%m/%d/%Y %I:%M:%S%p") %> El usuario <a href="/users/<%= notification.id %>"><%= notification.name %></a> se unió al grupo</p>
             <% end %>
           <% end %> 
       </div>
 
-      <div class="cajas2 formedgroup">
+      <div class="cajas2 formedgroup fixfooter">
         <h3>Ranking</h3>
         <% @group.users_ranking.each_with_index do |user, i| %>
-          <section class="ranking">
+          <div class="ranking">
             <h1><%= i+1 %></h1>
               <p><a href="/users/<%= user.id %>"><%= user.name %></a> · <%= user.ediciones %> aportes </p>
               <div class="medalla1"></div>
-          </section>
+          </div>
         <% end %>
       </div>
       
@@ -109,9 +109,9 @@
             <div class="genero"><%= pending_species.species.sci_name %></div>
             <div class="familia"><%= pending_species.species.family %></div>
              <div class="vermodelo" ng-init="species_approved['<%= pending_species.id %>']=<%= pending_species.species_group_state_id  == 1 %>; species_rejected['<%= pending_species.id %>']=<%= pending_species.species_group_state_id  == 3 %>" >
-              <image style="cursor: pointer" src="<%= asset_path('like.png') %>" ng-if="!species_approved['<%= pending_species.id %>']" ng-click="approve_species('<%= pending_species.id %>')" />
+              <image style="cursor: pointer" src="<%= asset_path('like2.png') %>" ng-if="!species_approved['<%= pending_species.id %>']" ng-click="approve_species('<%= pending_species.id %>')" />
               <image style="cursor: pointer" class="btn" src="<%= asset_path('like.png') %>" ng-if="species_approved['<%= pending_species.id %>']" ng-click="approve_species('<%= pending_species.id %>')" />
-              <image style="cursor: pointer" src="<%= asset_path('borrar.png') %>" ng-if="!species_rejected['<%= pending_species.id %>']" ng-click="reject_species('<%= pending_species.id %>')" />
+              <image style="cursor: pointer" src="<%= asset_path('borrar2.png') %>" ng-if="!species_rejected['<%= pending_species.id %>']" ng-really-message="Are you sure" ng-really-click="reject_species('<%= pending_species.id %>')" />
               <image style="cursor: pointer" class="btn" src="<%= asset_path('borrar.png') %>" ng-if="species_rejected['<%= pending_species.id %>']" ng-click="reject_species('<%= pending_species.id %>')" />
             </div>
           </div>
@@ -124,7 +124,7 @@
           <%= render "species_form" %>
     <% end %>
 
-    <div class="cajas2 hs2 clearfix" id="tabs">
+    <div class="cajas2 hs2 clearfix fixfooter" id="tabs">
                 <ul class="tabsnav w100 clearfix">
                   <li><a href="#tabs-1" class='tabtn'>Especies</a></li>     
                   <li><a href="#tabs-2" class='tabtn'>Miembros</a></li>
@@ -132,9 +132,10 @@
 
 
       <div id="tabs-1">
-        <% @species_groups.each do |species_group| %>        
-          <%= species_group.species.sci_name %>
-          <%= species_group.species.family %>
+        <% @species_groups.each do |species_group| %>  
+        <p class="notif">
+        <a href="/models/visor?species_id=<%= species_group.species.id %>"><%= species_group.species.sci_name %></a>
+           · <%= species_group.species.family %></p>
         <% end %>
         
         <% if user_signed_in? && @is_member %>
@@ -144,10 +145,13 @@
 
       <div id="tabs-2">
         <% @group_admins.each do |admin| %>
-            <a href="/users/<%= admin.user.id %>"><%= admin.user.name %></a>
-        <% end %>
+        <p class="notif">
+          <a href="/users/<%= admin.user.id %>"><%= admin.user.name %></a> · <%= admin.user.organization %></p>
+          <% end %>
+        <p class="lineasep"></p>
         <% @members.each do |member| %>
-            <a href="/users/<%= member.user.id %>"><%= member.user.name %></a>
+        <p class="notif">
+            <a href="/users/<%= member.user.id %>"><%= member.user.name %></a> · <%= member.user.organization %></p>
         <% end %>
       </div>
 
@@ -189,19 +193,21 @@ classApp.controller('group_users_ctrl', function ($scope) {
 });
 
 
-classApp.directive('ngConfirmClick', [
-        function(){
-            return {
-                link: function (scope, element, attr) {
-                    var msg = attr.ngConfirmClick || "Are you sure?";
-                    var clickAction = attr.confirmedClick;
-                    element.bind('click',function (event) {
-                        if ( window.confirm(msg) ) {
-                            scope.$eval(clickAction)
-                        }
-                    });
-                }
-            };
+classApp.directive('ngReallyClick', [function() {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+           element.bind('click', function() {
+            //     var message = attrs.ngReallyMessage;
+            //     if (message && confirm(message)) {
+            //         scope.$apply(attrs.ngReallyClick);
+            //     }
+            // });
+
+            confirm("Hola");
+          });
+        }   
+    }
 }]);
 
 </script>

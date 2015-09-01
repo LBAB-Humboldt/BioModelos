@@ -12,11 +12,11 @@ class GroupsController < ApplicationController
   # Pagina principal de Grupo
   def show
     @group = Group.find(params[:id])
-    @species_groups = SpeciesGroup.where(:group_id => @group.id, :species_group_state_id => 1);
+    @species_groups = SpeciesGroup.where(:group_id => @group.id, :species_group_state_id => 1).joins(:species).order('species.sci_name');
     @pending_species_groups = SpeciesGroup.where(:group_id => @group.id, :species_group_state_id => 2);
-    @members = GroupUser.where(:group_id =>  @group.id, :group_user_state_id => 1, :is_admin => false)
+    @members = GroupUser.where(:group_id =>  @group.id, :group_user_state_id => 1, :is_admin => false).joins(:user).order('users.name')
     @pending_members = GroupUser.where(:group_id =>  @group.id, :group_user_state_id => 2)
-    @group_admins = GroupUser.where(:group_id =>  @group.id, :group_user_state_id => 1, :is_admin => true)
+    @group_admins = GroupUser.where(:group_id =>  @group.id, :group_user_state_id => 1, :is_admin => true).joins(:user).order('users.name')
     @species = Species.all
     @user = User.find(current_user.id)
     @users_by_reviews = @user.users_most_reviews
