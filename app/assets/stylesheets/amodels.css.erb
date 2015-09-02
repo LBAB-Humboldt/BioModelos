@@ -159,6 +159,15 @@
 	margin-top: 2px;
 }
 
+.sugsearch {
+	margin: 10px 0;
+}
+
+.sugsearch .twitter-typeahead {
+	width: 90%;
+}
+
+
 .tt-dropdown-menu {
 	width:220px;
 	height: auto;
@@ -168,8 +177,21 @@
 	border-top: none;
 }
 
+.sugsearch .tt-dropdown-menu  {
+	width: 90%;
+	background-image: url(<%= asset_path 'bg.jpg' %>);
+	font-size: 12px;
+	margin-top: -10px;
+	max-height: 82px;
+	overflow: auto;
+}
+
 .tt-suggestion p {
 	color:#3d3d3d !important;
+}
+
+.sugsearch .tt-dropdown-menu p {
+	color: #fff !important;
 }
 
 .searchbtn {

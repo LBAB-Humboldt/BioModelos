@@ -23,7 +23,7 @@
           <a class="mailingr2" href="<%= url_with_protocol(@group.link) %>" target="_blank"><%= @group.link %></a>
           <div class="grcontrols" >
             <% if user_signed_in? && @is_member %>
-              <button class="invgroup" ng-confirm-click="Are you sure" confirmed-click="email_invitation=!email_invitation" title="Invitar Experto"></button>
+              <button class="invgroup"  ng-click="email_invitation=!email_invitation" title="Invitar Experto"></button>
             <% end %>
             <% if user_signed_in? && @is_member && @is_admin %>
               <button class="mailgroup" ng-class="{'activebtn': isActive}"  ng-click="bulk_email=!bulk_email" title="Redactar Email al Grupo"></button>
@@ -57,9 +57,11 @@
         <h3>Notificaciones</h3>
           <% @group.notifications.each do |notification| %>  
             <% if notification.type == 'new_species' %>
-              <p class="notif">· <%= notification.updated_at.to_time.strftime("%m/%d/%Y %I:%M:%S%p") %> La especie <a href="/species/<%= notification.id %>"><%= notification.name %></a> fue añadida al grupo</p>
+            <p class="feedtimep lh1"><%= notification.updated_at.to_time.strftime("%F %R") %></p>
+              <p class="notif">· La especie <a href="/species/<%= notification.id %>"><%= notification.name %></a> fue añadida al grupo</p>
             <% else %>
-              <p class="notif">· <%= notification.updated_at.to_time.strftime("%m/%d/%Y %I:%M:%S%p") %> El usuario <a href="/users/<%= notification.id %>"><%= notification.name %></a> se unió al grupo</p>
+            <p class="feedtimep lh1"><%= notification.updated_at.to_time.strftime("%F %R") %></p>
+              <p class="notif">· El usuario <a href="/users/<%= notification.id %>"><%= notification.name %></a> se unió al grupo</p>
             <% end %>
           <% end %> 
       </div>

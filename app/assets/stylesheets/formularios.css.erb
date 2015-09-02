@@ -497,6 +497,21 @@ float:left;
   width: 90% !important;
 }
 
+.formedgroup label > input {
+  display:none;
+}
+
+.formedgroup label > input + img { 
+  margin-right: 5px;
+  cursor:pointer;
+  opacity:0.8;
+  width: 40px;
+  height:40px;
+}
+.formedgroup label > input:checked + img { 
+  opacity:1;
+}
+
 .wrapperbut {
   opacity: 0;
   cursor: pointer;
@@ -624,6 +639,13 @@ float:left;
 
 @media only screen and (min-width : 300px) {
 
+ .sugsearch ::-webkit-input-placeholder { color:#fff; }
+ .sugsearch ::-moz-placeholder { color:#fff; } /* firefox 19+ */
+ .sugsearch :-ms-input-placeholder { color:#fff; } /* ie */
+ .sugsearch input:-moz-placeholder { color:#fff; }
+
+}
+
 .contacto{
   width: 80%;
   height: -webkit-calc(100% - 238px);
@@ -642,7 +664,8 @@ float:left;
 .forma input[type="email"],
 .forma input[type="tel"] ,
 .forma input[type="password"],
-.nifty_form input[type="text"] {
+.nifty_form input[type="text"],
+.forma #search_field {
   border:none;
   border-bottom: 1px solid #e73a00;
   padding: 3px;
@@ -782,7 +805,7 @@ min-height: 108px;
   height: calc(100% - 85px);
 }
 
-}
+
 @media only screen and (min-width : 600px) {
   
   .contacto {
