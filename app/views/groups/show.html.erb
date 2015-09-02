@@ -63,17 +63,6 @@
             <% end %>
           <% end %> 
       </div>
-
-      <div class="cajas2 formedgroup fixfooter">
-        <h3>Ranking</h3>
-        <% @group.users_ranking.each_with_index do |user, i| %>
-          <div class="ranking">
-            <h1><%= i+1 %></h1>
-              <p><a href="/users/<%= user.id %>"><%= user.name %></a> · <%= user.ediciones %> aportes </p>
-              <div class="medalla1"></div>
-          </div>
-        <% end %>
-      </div>
       
   </div>
 
@@ -120,10 +109,22 @@
 
     </div>
 
+    
+      <div class="cajas2 formedgroup fixfooter">
+        <h3>Ranking</h3>
+        <% @group.users_ranking.each_with_index do |user, i| %>
+          <div class="ranking">
+            <h1><%= i+1 %></h1>
+              <p><a href="/users/<%= user.id %>"><%= user.name %></a> · <%= user.ediciones %> aportes </p>
+              <div class="medalla1"></div>
+          </div>
+        <% end %>
+      </div>
+
     <% if user_signed_in? && @is_member %>
           <%= render "species_form" %>
     <% end %>
-
+    
     <div class="cajas2 hs2 clearfix fixfooter" id="tabs">
                 <ul class="tabsnav w100 clearfix">
                   <li><a href="#tabs-1" class='tabtn'>Especies</a></li>     
