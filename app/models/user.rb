@@ -10,6 +10,9 @@ class User < ActiveRecord::Base
   has_many :user_relationships
   belongs_to :periodicity
 
+
+  mount_uploader :avatarUrl, AvatarUploader
+
   def users_most_reviews
   	User.find_by_sql(
       "SELECT t.user_id AS id, U.name AS Name, SUM(number) AS Aportes

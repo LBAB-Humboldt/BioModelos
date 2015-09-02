@@ -20,10 +20,10 @@
           <% end %>
           <p class="descgroup"><%= @group.description %></p>
           <a class="mailingr" href="mailto:<%= @group.email %>"><%= @group.email %></a>
-          <a class="mailingr2" href="<%= @group.link %>" target="_blank"><%= @group.link %></a>
+          <a class="mailingr2" href="<%= url_with_protocol(@group.link) %>" target="_blank"><%= @group.link %></a>
           <div class="grcontrols" >
             <% if user_signed_in? && @is_member %>
-              <button class="invgroup" ng-click="email_invitation=!email_invitation" title="Invitar Experto"></button>
+              <button class="invgroup" ng-confirm-click="Are you sure" confirmed-click="email_invitation=!email_invitation" title="Invitar Experto"></button>
             <% end %>
             <% if user_signed_in? && @is_member && @is_admin %>
               <button class="mailgroup" ng-class="{'activebtn': isActive}"  ng-click="bulk_email=!bulk_email" title="Redactar Email al Grupo"></button>
@@ -33,7 +33,7 @@
             <% if user_signed_in? %>
               <%= simple_form_for @group_user do |f| %>
                 <%= f.hidden_field :group_id, :value =>  @group.id %>
-                <%= f.submit "", :class=> "leavegroup", :title=>"Abandonar Grupo" %>
+                <%= f.submit "", :class=> "leavegroup", :title=>"Abandonar Grupo", data: { confirm: '¿Está seguro de querer abandonar el grupo?' } %>
               <% end %>
             <% end %>
           </div>
@@ -57,9 +57,9 @@
         <h3>Notificaciones</h3>
           <% @group.notifications.each do |notification| %>  
             <% if notification.type == 'new_species' %>
-              <p class="notif">· La especie <a href="/species/<%= notification.id %>"><%= notification.name %></a> fue añadida al grupo</p>
+              <p class="notif">· <%= notification.updated_at.to_time.strftime("%m/%d/%Y %I:%M:%S%p") %> La especie <a href="/species/<%= notification.id %>"><%= notification.name %></a> fue añadida al grupo</p>
             <% else %>
-              <p class="notif">· El usuario <a href="/users/<%= notification.id %>"><%= notification.name %></a> se unió al grupo</p>
+              <p class="notif">· <%= notification.updated_at.to_time.strftime("%m/%d/%Y %I:%M:%S%p") %> El usuario <a href="/users/<%= notification.id %>"><%= notification.name %></a> se unió al grupo</p>
             <% end %>
           <% end %> 
       </div>
@@ -98,9 +98,9 @@
             <div class="genero"><%= pending_species.species.sci_name %></div>
             <div class="familia"><%= pending_species.species.family %></div>
              <div class="vermodelo" ng-init="species_approved['<%= pending_species.id %>']=<%= pending_species.species_group_state_id  == 1 %>; species_rejected['<%= pending_species.id %>']=<%= pending_species.species_group_state_id  == 3 %>" >
-              <image style="cursor: pointer" src="<%= asset_path('like.png') %>" ng-if="!species_approved['<%= pending_species.id %>']" ng-click="approve_species('<%= pending_species.id %>')" />
+              <image style="cursor: pointer" src="<%= asset_path('like2.png') %>" ng-if="!species_approved['<%= pending_species.id %>']" ng-click="approve_species('<%= pending_species.id %>')" />
               <image style="cursor: pointer" class="btn" src="<%= asset_path('like.png') %>" ng-if="species_approved['<%= pending_species.id %>']" ng-click="approve_species('<%= pending_species.id %>')" />
-              <image style="cursor: pointer" src="<%= asset_path('borrar.png') %>" ng-if="!species_rejected['<%= pending_species.id %>']" ng-click="reject_species('<%= pending_species.id %>')" />
+              <image style="cursor: pointer" src="<%= asset_path('borrar2.png') %>" ng-if="!species_rejected['<%= pending_species.id %>']" ng-really-message="Are you sure" ng-really-click="reject_species('<%= pending_species.id %>')" />
               <image style="cursor: pointer" class="btn" src="<%= asset_path('borrar.png') %>" ng-if="species_rejected['<%= pending_species.id %>']" ng-click="reject_species('<%= pending_species.id %>')" />
             </div>
           </div>
@@ -152,8 +152,7 @@
         <p class="lineasep"></p>
         <% @members.each do |member| %>
         <p class="notif">
-            <a href="/users/<%= member.user.id %>"><%= member.user.name %></a>
-             · <%= member.user.organization %></p>
+            <a href="/users/<%= member.user.id %>"><%= member.user.name %></a> · <%= member.user.organization %></p>
         <% end %>
       </div>
 
@@ -183,6 +182,8 @@ $(document).on('page:change', ready);
 
 $( "#tabs" ).tabs();
 
+
+//Angular App y controlador
 var classApp = angular.module('classApp', []);
 
 classApp.controller('group_users_ctrl', function ($scope) {
@@ -191,5 +192,23 @@ classApp.controller('group_users_ctrl', function ($scope) {
     $scope.isActive = !$scope.isActive;
   }  
 });
+
+
+classApp.directive('ngReallyClick', [function() {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+           element.bind('click', function() {
+            //     var message = attrs.ngReallyMessage;
+            //     if (message && confirm(message)) {
+            //         scope.$apply(attrs.ngReallyClick);
+            //     }
+            // });
+
+            confirm("Hola");
+          });
+        }   
+    }
+}]);
 
 </script>
