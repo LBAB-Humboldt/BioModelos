@@ -1,5 +1,3 @@
-
-
 .bbton {
 	padding: 1px 10px;
 	background-color: #1ab0b5;
@@ -547,7 +545,6 @@ float:left;
   border-bottom: 1px solid #8d8d8d;
   padding: 6px;
   font-size: 13px;
-
 }
 
 .crop {
@@ -559,13 +556,18 @@ float:left;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
+  position: relative;
 }
 
 .crop img {
-  height: auto;
-  min-height: 110px;
-  width: 110px;
-  max-width: 110px;
+  position: absolute;
+  left: -100%;
+  right: -100%;
+  top: -100%;
+  bottom: -100%;
+  margin: auto;
+  min-height: 100%;
+  min-width: 100%;
 }
 
 .crop2 {
@@ -578,13 +580,18 @@ float:left;
   -moz-border-radius: 50%;
   border-radius: 50%;
   margin-bottom: 30px;
+  position: relative;
 }
 
 .crop2 img {
-  height: auto;
-  min-height: 170px;
-  width: 170px;
-  max-width: 170px;
+  position: absolute;
+  left: -100%;
+  right: -100%;
+  top: -100%;
+  bottom: -100%;
+  margin: auto;
+  min-height: 100%;
+  min-width: 100%;
 }
 
 .subcol {
@@ -643,8 +650,6 @@ float:left;
  .sugsearch ::-moz-placeholder { color:#fff; } /* firefox 19+ */
  .sugsearch :-ms-input-placeholder { color:#fff; } /* ie */
  .sugsearch input:-moz-placeholder { color:#fff; }
-
-}
 
 .contacto{
   width: 80%;

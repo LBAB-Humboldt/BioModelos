@@ -69,14 +69,20 @@
 	height: 150px;
 	float: left;
 	margin-bottom: 25px;
+	overflow: hidden;
+	position: relative;
 }
 
 
 .perfilimg img {
-	width: 150px;
-	height: 150px;
-	border: 1px solid #adc010;
-	float: left;
+  position: absolute;
+  left: -100%;
+  right: -100%;
+  top: -100%;
+  bottom: -100%;
+  margin: auto;
+  min-height: 100%;
+  min-width: 100%;
 }
 
 .perfilexp {
@@ -254,6 +260,21 @@
 	float: left;
 	margin-right: 5px;
 	vertical-align: middle;
+	height: 30px;
+	width: 30px;
+	overflow: hidden;
+	position: relative;
+}
+
+.minavatar2 img {
+  position: absolute;
+  left: -100%;
+  right: -100%;
+  top: -100%;
+  bottom: -100%;
+  margin: auto;
+  min-height: 100%;
+  min-width: 100%;
 }
 
 .vermodelo {
