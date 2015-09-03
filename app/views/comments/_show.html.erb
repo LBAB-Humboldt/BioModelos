@@ -1,7 +1,14 @@
 <%= content_tag :div, :id => "comment-#{comment.id}", :class => 'comment-tab' do %>
-	<div class="minavatar"><%= image_tag("minavatar.png") %></div>
+	<div class="minavatar">
+		<% miniavat = User.find(comment.user_id).avatarUrl.url(:thumb30).to_s
+			if  miniavat == "fotoperfil.png" %>
+				<%= image_tag('minavatar.png') %>
+			<% else %>
+				<%= image_tag(miniavat) %>
+			<% end %>
+		</div>
 		<%= link_to User.find(comment.user_id).name, root_url + 'users/'+ comment.user_id.to_s, {:class => 'feeduserp' } %>
-		<div class="feedtimep2"><%= comment.updated_at %></div>
+		<div class="feedtimep2"><%= comment.updated_at.to_time.strftime("%F %R") %></div>
 		<div class="comment-space"><p class="feedcontentp2"><%= comment.body %></p></div>
 		<% if user_signed_in? %>
 			<div class="btn-reply-cmt"><%= link_to 'Responder', comments_child_comments_path(:parent_id => comment.id), :remote => true, :class => 'reply replyfl' %></div>

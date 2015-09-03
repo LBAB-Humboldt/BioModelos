@@ -13,6 +13,8 @@ Biomodis::Application.routes.draw do
   post "home/send_message"
   get "home/groups"
   post "ratings/rate_model"
+  post "group_users/set_state"
+  post "species_groups/set_state"
   post "species/comment_point"
   post "species/create_comment_point"
   post "groups/bulk_email"

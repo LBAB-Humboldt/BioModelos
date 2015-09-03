@@ -16,7 +16,7 @@
 
 		<article class="perfildata" id="alturap">
 			<div class="perfilimg">
-				<%= image_tag("fotoperfil.png") %>
+				<%= image_tag(@user.avatarUrl.url(:thumb150).to_s) %>
 			</div>
 			<section class="perfilexp">
 				<h1><%= @user.name %></h1>

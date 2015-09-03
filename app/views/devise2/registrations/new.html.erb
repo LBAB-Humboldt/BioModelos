@@ -15,6 +15,7 @@ los siguientes datos para generar tu perfil.</p>
     <%= f.input :password, :required => true, label: false, :placeholder => "Contraseña *", :input_html => { :class => "inputforma inp2" } %>
     <%= f.input :password_confirmation, :required => true, label: false, :placeholder => "Confirmar Contraseña *", :input_html => { :class => "inputforma inp2" } %>
     <%= f.input :bio, :as => :text, label: false, :placeholder => "Biografía resumida (max 1000 caracteres)", :input_html => { :class => "inputforma inp2", :cols => 50, :rows => 7, :maxlength => 1000 } %>
+    <%= f.file_field :avatarUrl %>
     <h1>Periodicidad de Notificaciones a email:</h1>
     <%= f.select :periodicity_id, options_from_collection_for_select(@periodicities, 'id', 'name'), :default => 3 %>
     <h1>Selecciona un grupo de interes:</h1>
