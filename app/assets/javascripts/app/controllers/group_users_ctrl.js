@@ -37,39 +37,47 @@ angular.module('biomodelos').controller('group_users_ctrl', ['$scope', '$http', 
     }
 
     $scope.approve_member=function(id){
-        $http.post('/group_users/set_state', {id: id, state: 1}).success(function (data) {
-            $scope.is_member[id] = true;
-            $scope.was_rejected[id] = false;
-        }).error(function () {
-
-        });
+        if(confirm("¿Desea aprobar al usuario?")){
+            $http.post('/group_users/set_state', {id: id, state: 1}).success(function (data) {
+                $scope.is_member[id] = true;
+                $scope.was_rejected[id] = false;
+            }).error(function () {
+                alert("Ha ocurrido un error. El usuario no pudo ser aprobado.");
+            });
+        }
     }
 
     $scope.reject_member=function(id){
-        $http.post('/group_users/set_state', {id: id, state: 3}).success(function (data) {
-        $scope.is_member[id] = false;
-        $scope.was_rejected[id] = true;
-        }).error(function () {
-
-        });
+        if(confirm("¿Desea rechazar al usuario?")){
+            $http.post('/group_users/set_state', {id: id, state: 3}).success(function (data) {
+            $scope.is_member[id] = false;
+            $scope.was_rejected[id] = true;
+            }).error(function () {
+                alert("Ha ocurrido un error. El usuario no pudo ser rechazado.");
+            });
+        }
     }
 
     $scope.approve_species=function(id){
-        $http.post('/species_groups/set_state', {id: id, state: 1}).success(function (data) {
-        $scope.species_approved[id] = true;
-        $scope.species_rejected[id] = false;
-        }).error(function () {
-
-        });
+        if(confirm("¿Desea aprobar la especie?")){
+            $http.post('/species_groups/set_state', {id: id, state: 1}).success(function (data) {
+            $scope.species_approved[id] = true;
+            $scope.species_rejected[id] = false;
+            }).error(function () {
+                alert("Ha ocurrido un error. La especie no pudo ser aprobada.");
+            });
+        }
     }
 
     $scope.reject_species=function(id){
-        $http.post('/species_groups/set_state', {id: id, state: 3}).success(function (data) {
-        $scope.species_approved[id] = false;
-        $scope.species_rejected[id] = true;
-        }).error(function () {
-
-        });
+        if(confirm("¿Desea aprobar la especie?")){
+            $http.post('/species_groups/set_state', {id: id, state: 3}).success(function (data) {
+            $scope.species_approved[id] = false;
+            $scope.species_rejected[id] = true;
+            }).error(function () {
+                alert("Ha ocurrido un error. La especie no pudo ser rechazada.");
+            });
+        }
     }
 }
 ]);
