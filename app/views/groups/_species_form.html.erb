@@ -5,6 +5,7 @@
         <div class="sugsearch">
         <%= f.hidden_field :group_id, :value =>  @group.id %><%= f.hidden_field :species_group_state_id, :value => 2 %>
         <%= f.hidden_field :species_id, :id => "species_id" %>
+        <%= f.error_notification %>
         
         <div>
           <label>

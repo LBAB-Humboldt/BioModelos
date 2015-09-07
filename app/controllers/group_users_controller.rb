@@ -37,7 +37,7 @@ class GroupUsersController < ApplicationController
   def update
   end
 
-  # Establece el estado de la relaciòn entre un usuario y un grupo
+  # Establece el estado de la relación entre un usuario y un grupo
   def set_state
     @return = false
     group_user = GroupUser.find(params[:id])

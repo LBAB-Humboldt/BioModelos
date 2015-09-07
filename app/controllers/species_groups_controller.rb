@@ -14,6 +14,8 @@ class SpeciesGroupsController < ApplicationController
     @species_group.species_group_state_id=species_params[:species_group_state_id]
     if @species_group.save
       redirect_to group_path(id:species_params[:group_id])
+    else
+      # todo
     end
   end
 

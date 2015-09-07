@@ -2,7 +2,7 @@
   <div class="faqtitle clearfix"><h1><%= @group.name %></h1></div>
 </div>
 <div class="perfilline" id="lineap"></div>
-<div class="contenedor" ng-app="classApp" ng-controller="group_users_ctrl">
+<div class="contenedor" ng-controller="group_users_ctrl">
   
   <div id="col1p">
     <div id="alturap">
@@ -26,9 +26,9 @@
               <button class="invgroup"  ng-click="email_invitation=!email_invitation" title="Invitar Experto"></button>
             <% end %>
             <% if user_signed_in? && @is_member && @is_admin %>
-              <button class="mailgroup" ng-class="{'activebtn': isActive}"  ng-click="bulk_email=!bulk_email" title="Redactar Email al Grupo"></button>
-              <button class="editgroup" ng-class="{'activebtn': isActive}" ng-click="activeButton(); edit_group=!edit_group" title="Editar Grupo"></button>
-              <button class="notgroup" ng-class="{'activebtn': isActive}" ng-click="pending_approvals=!pending_approvals" title="Ver Solicitudes Pendientes"></button>
+              <button class="mailgroup" ng-click="bulk_email=!bulk_email" title="Redactar Email al Grupo"></button>
+              <button class="editgroup" ng-click="edit_group=!edit_group" title="Editar Grupo"></button>
+              <button class="notgroup" ng-click="pending_approvals=!pending_approvals" title="Ver Solicitudes Pendientes"></button>
             <% end %>
             <% if user_signed_in? %>
               <%= simple_form_for @group_user do |f| %>
@@ -185,32 +185,7 @@ $(document).on('page:change', ready);
 $( "#tabs" ).tabs();
 
 
-//Angular App y controlador
-var classApp = angular.module('classApp', []);
-
-classApp.controller('group_users_ctrl', function ($scope) {
-  $scope.isActive = false;
-  $scope.activeButton = function() {
-    $scope.isActive = !$scope.isActive;
-  }  
-});
 
 
-classApp.directive('ngReallyClick', [function() {
-    return {
-        restrict: 'A',
-        link: function(scope, element, attrs) {
-           element.bind('click', function() {
-            //     var message = attrs.ngReallyMessage;
-            //     if (message && confirm(message)) {
-            //         scope.$apply(attrs.ngReallyClick);
-            //     }
-            // });
-
-            confirm("Hola");
-          });
-        }   
-    }
-}]);
 
 </script>

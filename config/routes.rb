@@ -11,7 +11,6 @@ Biomodis::Application.routes.draw do
   get "comments/child_comments"
   get "home/feedback"
   post "home/send_message"
-  get "home/groups"
   post "ratings/rate_model"
   post "group_users/set_state"
   post "species_groups/set_state"
