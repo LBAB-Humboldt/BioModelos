@@ -78,9 +78,7 @@
 
 .fondo1 {
   width: 100%;
-  height: -moz-calc(100% - 130px);
-  height: -webkit-calc(100% - 130px);
-  height: calc(100% - 130px);
+  height: 100%;
   background-image: url(<%= asset_path 'ranaf1.jpg' %>);
   background-repeat: no-repeat;
   background-size: cover;
@@ -787,7 +785,7 @@ min-height: 108px;
   background-color: #FAC205;
   font-size: 12px;
   width: 90%;
-  height: auto;
+  max-height: 600px;
   padding: 15px 18px 10px 15px;
   border-bottom: 5px solid #FAE49B;
   background-image: url(<%= asset_path 'arroww.png' %>);
@@ -797,6 +795,9 @@ min-height: 108px;
   margin-right: 5px;
 }
 
+.fondo1 .contenedor {
+  overflow: auto;
+}   
 }
 
 @media only screen and (min-width : 349px) {
