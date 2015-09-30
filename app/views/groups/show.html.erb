@@ -111,7 +111,10 @@
 
     </div>
 
-    
+    <% if user_signed_in? && @is_member %>
+          <%= render "species_form" %>
+    <% end %>
+
       <div class="cajas2 formedgroup pabs fixfooter">
         <h3>Ranking</h3>
         <% @group.users_ranking.each_with_index do |user, i| %>
@@ -155,10 +158,6 @@
       </div>
 
     </div>
-
-    <% if user_signed_in? && @is_member %>
-          <%= render "species_form" %>
-    <% end %>
 
   </div>
 
