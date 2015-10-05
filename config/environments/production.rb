@@ -20,7 +20,7 @@ Biomodis::Application.configure do
   # config.action_dispatch.rack_cache = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this).
-  config.serve_static_assets = true
+  config.serve_static_files = true
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -60,7 +60,8 @@ Biomodis::Application.configure do
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 
-  config.assets.precompile = ['*.js', '*.css', '*.css.erb']
+  #config.assets.precompile = ['*.js', '*.css', '*.css.erb']
+  config.assets.precompile += ['active_admin.css', 'active_admin.js']
 
   config.action_mailer.default_url_options = { :host => "biomodelos.humboldt.org.co" }
   # Ignore bad email addresses and do not raise email delivery errors.
