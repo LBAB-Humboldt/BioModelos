@@ -68,11 +68,19 @@
       
   </div>
 
+
   <div class="perfilcol2 clearfix h100 fixfooter">
+
+    <% if user_signed_in? && @is_member %>
+      <button class="sugspp topbtn" ng-click="sugest_species=!sugest_species">Sugerir Especie</button>
+    <% end %>
+    <% if user_signed_in? && @is_member %>
+      <%= render "species_form" %>
+    <% end %>
     
-      <div ng-show="edit_group">
-        <%= render "group_form" %>
-      </div>
+    <div ng-show="edit_group">
+      <%= render "group_form" %>
+    </div>
 
 
     <div class="cajas2 pb10px" ng-show="pending_approvals">
@@ -111,10 +119,6 @@
 
     </div>
 
-    <% if user_signed_in? && @is_member %>
-          <%= render "species_form" %>
-    <% end %>
-
       <div class="cajas2 formedgroup pabs fixfooter">
         <h3>Ranking</h3>
         <% @group.users_ranking.each_with_index do |user, i| %>
@@ -138,13 +142,8 @@
         <p class="notif">
         <a href="/models/visor?species_id=<%= species_group.species.id %>"><%= species_group.species.sci_name %></a>
            · <%= species_group.species.family %></p>
-        <% end %>
-        
-        <% if user_signed_in? && @is_member %>
-          <button class="sugspp nobtn topbtn" ng-click="sugest_species=!sugest_species">Sugerir Especie</button>
-        <% end %>
+        <% end %>   
       </div>
-
       <div id="tabs-2">
         <% @group_admins.each do |admin| %>
         <p class="notif">

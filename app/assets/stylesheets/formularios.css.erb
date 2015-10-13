@@ -139,6 +139,7 @@
   line-height: 1;
   color: #fff;
   margin-bottom: 10px;
+  margin-right: 5px;
 }
 
 .faqtitle h2 {
@@ -341,10 +342,6 @@
   line-height: 0px;
 }
 
-.sugspp {
-  
-}
-
 .grcontrols button, .leavegroup {
     width: 40px;
     height: 40px;
@@ -498,9 +495,16 @@ float:left;
 }
 
 .topbtn {
-  position: absolute;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  position: relative;
+  margin-top: -30px;
+  float: right;
+  padding: 20px 10px;
+  background-color: #fff;
+  border: none;
+}
+
+.topbtn:hover {
+  color: #fff;
 }
 
 .formedgroup textarea {
@@ -554,7 +558,7 @@ float:left;
     background-image: url(<%= asset_path 'upload.png' %>);
     background-repeat: no-repeat;
     background-position: 5px center;
-    width: 101px;
+    width: 105px;
     margin-bottom: 8px;
     cursor: pointer;
 }
@@ -769,8 +773,14 @@ min-height: 108px;
   float: right;
   margin-right: 15px;
   background-image: url(<%= asset_path 'fondobla.jpg' %>);
-  padding: 15px;
+  padding: 15px 30px;
   overflow: scroll;
+}
+
+.faqshow #tabs-1,
+.faqshow #tabs-2,
+.faqshow #tabs-3 {
+  margin-top: 40px;
 }
 
 .formalogin {
@@ -855,7 +865,7 @@ min-height: 108px;
   }
 
   .faqshow {
-  width: 415px;
+  width: 80%;
   margin-right: 50px;
   height: -moz-calc(100% - 30px);
   height: -webkit-calc(100% - 30px);
