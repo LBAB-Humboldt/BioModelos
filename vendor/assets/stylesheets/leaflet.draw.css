@@ -297,6 +297,11 @@
     cursor:pointer;
 }
 
+.xtrpad {
+	padding: 2px 7px;
+	float: left !important;
+}
+
 .leaflet-popup-tip-container {
 	clear: both;
 }

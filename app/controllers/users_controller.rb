@@ -28,6 +28,7 @@ class UsersController < ApplicationController
   end
 
   def edit_profile
+    @periodicities = Periodicity.all
     respond_to do |format|
       format.js
     end

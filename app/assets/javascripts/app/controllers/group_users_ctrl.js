@@ -70,7 +70,7 @@ angular.module('biomodelos').controller('group_users_ctrl', ['$scope', '$http', 
     }
 
     $scope.reject_species=function(id){
-        if(confirm("¿Desea aprobar la especie?")){
+        if(confirm("¿Desea rechazar la especie?")){
             $http.post('/species_groups/set_state', {id: id, state: 3}).success(function (data) {
             $scope.species_approved[id] = false;
             $scope.species_rejected[id] = true;
