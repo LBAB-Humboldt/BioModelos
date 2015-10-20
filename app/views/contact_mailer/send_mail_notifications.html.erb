@@ -1,0 +1,39 @@
+<%
+case @periodicity
+  when 1
+  subj = "Notificaciones de actividad diaria de grupos y usuarios que sigues en Biomodelos"
+  when 2
+  subj = "Notificaciones de actividad semanal de grupos y usuarios que sigues en Biomodelos"
+  when 3
+  subj = "Notificaciones de actividad mensual de grupos y usuarios que sigues en Biomodelos"
+end
+%>
+<h1><%= subj %></h1><br/>
+<%= @name %><br/>
+email:<%= @email %><br/>
+
+<table>
+  <% @notifications.each do |notification| %>
+      <%if notification.type=='new_specie' %>
+          <tr>
+            <td>&nbsp;</td>
+            <td><%= notification.updated_at.strftime("%F %R") %></td>
+            <td>La especie <b><%= notification.user_name %></b> fue incluida e el grupo <b><%= notification.name %></b></td>
+          </tr>
+      <% end %>
+      <%if notification.type=='new_user' %>
+          <tr>
+            <td>&nbsp;</td>
+            <td><%= notification.updated_at.strftime("%F %R") %></td>
+            <td><b><%= notification.user_name %></b> fue aceptado en el grupo <b><%= notification.name %></b></td>
+          </tr>
+      <% end %>
+      <%if notification.type=='review' %>
+          <tr>
+            <td>&nbsp;</td>
+            <td><%= notification.updated_at.strftime("%F %R") %></td>
+            <td><b><%= notification.user_name %></b> realizó un aporte sobre la especie <b><%= notification.name %></b></td>
+          </tr>
+      <% end %>
+  <% end %>
+</table>

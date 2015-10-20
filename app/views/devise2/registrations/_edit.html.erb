@@ -22,7 +22,7 @@
             <%= f.file_field :avatarUrl %>
           </div>
         </div>
-    <%= f.select :periodicity_id, options_from_collection_for_select(@periodicities, 'id', 'name'), :default => 3 %>
+    <%= f.select :periodicity_id, options_from_collection_for_select(@periodicities, 'id', 'name', selected: current_user.periodicity_id.blank? ? 3 : current_user.periodicity_id) %>
     <%= f.input :password, :autocomplete => "off", label: false, :placeholder => "Cambiar contraseña?", :required => false, :input_html => { :class => "inputforma inp2"} %>
     <%= f.input :password_confirmation, label: false, :placeholder => "Confirmar contraseña", :required => false, :input_html => { :class => "inputforma inp2" }, :hint => "Dejar en blanco lo que no quiere cambiar" %>
     <%= f.input :current_password, label: false, :placeholder => "Clave actual *", :hint => "* Necesaria para confirmar cambios", :required => true, :input_html => { :class => "inputforma inp2" }  %>

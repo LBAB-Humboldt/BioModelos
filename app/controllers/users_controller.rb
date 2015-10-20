@@ -15,14 +15,16 @@ class UsersController < ApplicationController
     else
       @reviews = Review.where(:user_id => @user.id).order("created_at DESC").limit(15)
       @user_groups = GroupUser.where(:user_id => params[:id], :group_user_state_id => 1).order("created_at DESC")
-      if @user.id != current_user.id
-        user_relationship = UserRelationship.find_by_user_id_and_follower_id(@user.id, current_user.id)
-        if user_relationship
-          @text_relationship = "Dejar de Seguir"
-        else
-          @text_relationship = "Seguir"
+      if user_signed_in?
+        if @user.id != current_user.id
+          user_relationship = UserRelationship.find_by_user_id_and_follower_id(@user.id, current_user.id)
+          if user_relationship
+            @text_relationship = "Dejar de Seguir"
+          else
+            @text_relationship = "Seguir"
+          end
+          @relationship = UserRelationship.new
         end
-        @relationship = UserRelationship.new
       end
     end
   end
