@@ -3,9 +3,7 @@
 
 <%= simple_form_for(resource, :html => {:class => 'formasignin fixfooter' }, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= f.error_notification %>
-<p>Si eres experto en algún campo de BioModelos y has
-recibido un código de verificación, por favor completa 
-los siguientes datos para generar tu perfil.</p>
+<p>Completa los siguientes datos para generar tu perfil:</p>
     <%= f.input :name, :required => true, :autofocus => true, label: false, :placeholder => "Nombre y Apellido *", :input_html => { :class => "inputforma inp2", :maxlength => 55 } %>
     <%= f.input :interestGroups, label: false, :placeholder => "Grupo(s) taxonómico(s) de interés", :input_html => { :class => "inputforma inp2", :maxlength => 80 } %>
     <%= f.input :location, label: false, :placeholder => "Ciudad o Municipio", :input_html => { :class => "inputforma inp2", :maxlength => 50 } %>

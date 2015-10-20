@@ -21,22 +21,29 @@
           <p class="descgroup"><%= @group.description %></p>
           <a class="mailingr" href="mailto:<%= @group.email %>"><%= @group.email %></a>
           <a class="mailingr2" href="<%= url_with_protocol(@group.link) %>" target="_blank"><%= @group.link %></a>
-          <div class="grcontrols" >
-            <% if user_signed_in? && @is_member %>
-              <button class="invgroup"  ng-click="email_invitation=!email_invitation" title="Invitar Experto"></button>
-            <% end %>
-            <% if user_signed_in? && @is_member && @is_admin %>
-              <button class="mailgroup" ng-click="bulk_email=!bulk_email" title="Redactar Email al Grupo"></button>
-              <button class="editgroup" ng-click="edit_group=!edit_group" title="Editar Grupo"></button>
-              <button class="notgroup" ng-click="pending_approvals=!pending_approvals" title="Ver Solicitudes Pendientes"></button>
-            <% end %>
-            <% if user_signed_in? %>
-              <%= simple_form_for @group_user do |f| %>
-                <%= f.hidden_field :group_id, :value =>  @group.id %>
-                <%= f.submit "", :class=> "leavegroup", :title=>"Abandonar Grupo", data: { confirm: '¿Está seguro de querer abandonar el grupo?' } %>
+          <% if user_signed_in? %>
+            <div class="grcontrols" >
+              <% if @is_member %>
+                <button class="invgroup"  ng-click="email_invitation=!email_invitation" title="Invitar Experto"></button>
               <% end %>
-            <% end %>
-          </div>
+              <% if @is_member && @is_admin %>
+                <button class="mailgroup" ng-click="bulk_email=!bulk_email" title="Redactar Email al Grupo"></button>
+                <button class="editgroup" ng-click="edit_group=!edit_group" title="Editar Grupo"></button>
+                <button class="notgroup" ng-click="pending_approvals=!pending_approvals" title="Ver Solicitudes Pendientes"></button>
+              <% end %>
+              <% if @user_group.blank? %>
+                <%= simple_form_for @group_user do |f| %>
+                  <%= f.hidden_field :group_id, :value =>  @group.id %>
+                  <%= f.submit "", :class=> "joingroup", :title=>"Unirse al grupo" %>
+                <% end %>
+              <% elsif @user_group.group_user_state_id == 1 %>
+                <%= simple_form_for @group_user do |f| %>
+                  <%= f.hidden_field :group_id, :value =>  @group.id %>
+                  <%= f.submit "", :class=> "leavegroup", :title=>"Abandonar Grupo", data: { confirm: '¿Está seguro de querer abandonar el grupo?' }%>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
         </div>
       </div>
       <div class="clearfix"></div>
@@ -58,7 +65,7 @@
           <% @group.notifications.each do |notification| %>  
             <% if notification.type == 'new_species' %>
             <p class="feedtimep lh1"><%= notification.updated_at.to_time.strftime("%F %R") %></p>
-              <p class="notif">· La especie <a href="/species/<%= notification.id %>"><%= notification.name %></a> fue añadida al grupo</p>
+              <p class="notif">· La especie <a href="/models/visor?species_id=<%= notification.id %>"><%= notification.name %></a> fue añadida al grupo</p>
             <% else %>
             <p class="feedtimep lh1"><%= notification.updated_at.to_time.strftime("%F %R") %></p>
               <p class="notif">· El usuario <a href="/users/<%= notification.id %>"><%= notification.name %></a> se unió al grupo</p>

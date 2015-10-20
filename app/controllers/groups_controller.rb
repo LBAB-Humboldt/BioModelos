@@ -18,7 +18,11 @@ class GroupsController < ApplicationController
     @pending_members = GroupUser.where(:group_id =>  @group.id, :group_user_state_id => 2)
     @group_admins = GroupUser.where(:group_id =>  @group.id, :group_user_state_id => 1, :is_admin => true).joins(:user).order('users.name')
     @species = Species.all
-    @user = User.find(current_user.id)
+    if user_signed_in?
+      @user = User.find(current_user.id)
+    else
+      @user = User.new
+    end
     @users_by_reviews = @user.users_most_reviews
     @species_group = SpeciesGroup.new
     @group_user = GroupUser.new
@@ -79,4 +83,19 @@ class GroupsController < ApplicationController
     ContactMailer.email_invitation(params[:message], params[:name], params[:email], group.name, current_user.email, current_user.name).deliver_now
     redirect_to group_path(id:params[:id])
   end
+
+  # Envía un email al equipo de BioModelos cuando se sugiere un nuevo grupo
+  def email_new_group
+    @message = Message.new(message_params)
+    ContactMailer.email_new_group(@message).deliver
+    redirect_to groups_path
+  end
+
+  private
+
+    def message_params
+      params.require(:message).permit(:name, :email, :subject, :content)
+    end
+
+  
 end

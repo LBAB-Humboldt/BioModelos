@@ -33,5 +33,6 @@ registros/
 public/assets/
 public/uploads/
 metadata/
+.sass-cache/
 *.sql
 *.csv

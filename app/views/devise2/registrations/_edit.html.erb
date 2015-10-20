@@ -4,6 +4,7 @@
   <%= f.error_notification %>
 
 <h2 class="avatarlink nofl">Edición Perfil</h2>
+<br \>
 <h1>Usuario: <%= resource.email %></h1></br>
     <!--<%= f.input :email, :required => true, :autofocus => true %>
 
@@ -16,8 +17,11 @@
     <%= f.input :location, label: false, :placeholder => "Ciudad o Municipio", :input_html => { :class => "inputforma inp2", :maxlength => 50 } %>
     <%= f.input :organization, label: false, :placeholder => "Organización", :input_html => { :class => "inputforma inp2", :maxlength => 100 } %>
     <%= f.input :bio, :as => :text, label: false, :placeholder => "Biografía resumida (max 1000 caracteres)", :input_html => { :class => "inputforma inp2", :cols => 50, :rows => 8, :maxlength => 1000 } %>
-    <%= f.input :password, :autocomplete => "off", label: false, :placeholder => "Cambiar contraseña?", :required => false, :input_html => { :class => "inputforma inp2"} %>
-    <%= f.input :password_confirmation, label: false, :placeholder => "Confirmar contraseña", :required => false, :input_html => { :class => "inputforma inp2" }, :hint => "Dejar en blanco lo que no quiere cambiar" %>
+    <h1> Periodicidad de recepción de notificaciones vía e-mail </h1>
+    <%= f.select :periodicity_id, options_from_collection_for_select(@periodicities, 'id', 'name', selected: current_user.periodicity_id.blank? ? 3 : current_user.periodicity_id) %>
+    <h1> Cambiar contraseña </h1>
+    <%= f.input :password, :autocomplete => "off", label: false, :placeholder => "Nueva contraseña", :required => false, :input_html => { :class => "inputforma inp2"} %>
+    <%= f.input :password_confirmation, label: false, :placeholder => "Confirmar contraseña", :required => false, :input_html => { :class => "inputforma inp2" } %>
         <div class="stylebut">
           cambiar Foto
           <div class="wrapperbut">
