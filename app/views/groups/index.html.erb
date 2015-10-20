@@ -9,8 +9,12 @@
               <%= submit_tag("Ir", class: "searchbtn flleft") %>
           <% end %>
         </div>
+          
+          <div class="sug-group-btn">
+            <h1>+</h1>SUGERIR</br>GRUPO
+          <input type='button' value="submit" class="invisible">
+          </div>
 
-        
           <% @groups.each do |group| %>
           <div class="grupogen">
               <ul>
@@ -20,8 +24,6 @@
               </ul>
           </div>
           <% end %>
-
-          <input type='button' value="sugerir" class="sug-group-btn">
 
           <div class="new-group-form"><%= render partial: 'groups/new_group_form' %></div>
 
