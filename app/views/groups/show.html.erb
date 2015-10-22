@@ -152,6 +152,7 @@
         <% end %>   
       </div>
       <div id="tabs-2">
+        <div class="mb45px"></div>
         <% @group_admins.each do |admin| %>
         <p class="notif">
           <a href="/users/<%= admin.user.id %>"><%= admin.user.name %></a> · <%= admin.user.organization %></p>
