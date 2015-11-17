@@ -1,9 +1,11 @@
-Se ha recibido un mensaje del Administrador del grupo <b><%= @group_name %></b> desde la aplicación BioModelos:<br/><br/>
-
-Hora de recepción: <%= @datetime %><br/><br/>
-
-Nombre de Grupo: <%= @group_name %><br/>
-De (email): <%= @email_from %><br/>
-Para (E-Mail): <%= @email %><br/>
+Ha recibido un mensaje de <%= @admin_name %>, administrador del grupo <b><%= @group_name %></b> desde la aplicación BioModelos:<br/>
+<br/>
+Hora de recepción: <%= @datetime.strftime("%F %r") %><br/>
+<br/>
 Asunto: <b><%= @subject %></b><br/>
 Contenido: <%= @message %><br/>
+<br/>
+<br/>
+<br />
+Este mensaje ha sido generado de forma automática por lo cual le agradecemos no responder este correo. Ante cualquier inquietud puede comunicarse con nosotros al correo electrónico biomodelos@humboldt.org.co o desde la forma de contacto en <a href="http://biomodelos.humboldt.org.co/home/feedback">BioModelos</a>
+

@@ -121,23 +121,6 @@
 	</div>
 	
 	<div class="perfilcol2 fixfooter">
-<!-- 		<div class="cajas2 formedgroup mt0">
-			<h3>Top 10 de colaboradores</h3>
-			<% @users_by_reviews.each_with_index do |user, i| %>
-				<section class="ranking">
-					<h1><%= i+1 %></h1>
-					<p><a href="/users/<%= user.id %>"><%= user.Name %></a> · <%= user.Aportes %> aportes </p>
-					<% if user.Aportes >= 100 %>
-						<div class="medalla1"></div><div class="medalla1"></div><div class="medalla1"></div>
-					<% elsif user.Aportes >= 50 %>
-						<div class="medalla1"></div><div class="medalla1"></div>
-					<% else %>
-						<div class="medalla1"></div>
-					<% end %>
-				</section>
-			<% end %>
-		</div> -->
-
         <div class="cajas2 formedgroup pabs">
             <h3>aportes</h3>
             <%= render 'reviews/reviews_by_user' %>

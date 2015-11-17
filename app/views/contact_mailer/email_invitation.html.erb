@@ -1,9 +1,15 @@
-Hola <%= @name %>, <b><%= @name_from %></b> te ha invitado al grupo <b><%= @group_name %></b> desde la aplicación BioModelos:<br/><br/>
-
-Hora de recepción: <%= @datetime %><br/><br/>
-
-Nombre de Grupo: <%= @group_name %><br/>
-De (email): <%= @email_from %><br/>
-Para (E-Mail): <%= @email %><br/>
-Asunto: <b><%= @subject %></b><br/>
-Contenido: <%= @message %><br/>
+Hola <%= @name %>,<br/>
+<br/>
+<b><a href="http://biomodelos.humboldt.org.co/users/<%= @user.id %>"><%= @user.name %></a></b> te ha invitado al grupo <b><a href="http://biomodelos.humboldt.org.co/groups/<%= @group.id %>"><%= @group.name %></a></b> desde la aplicación BioModelos:<br/>
+<br/>
+<%= @message %><br/>
+<br/>
+Para aceptar la invitación, debes registrarte en BioModelos y seleccionar el grupo <b><%= @group.name %></b> como tu grupo de interés en el momento de hacerlo. Si ya estás registrado, visita el <a href="http://biomodelos.humboldt.org.co/groups/<%= @group.id %>">perfil del grupo</a> y haz clic en el botón "Unirse al grupo".<br/>
+<br/>
+Regístrate en BioModelos <a href="http://biomodelos.humboldt.org.co/users/sign_up">aquí</a>.<br/>
+<br/>
+Atentamente,<br/>
+<br/>
+Equipo BioModelos<br/>
+<a href="http://biomodelos.humboldt.org.co">biomodelos.humboldt.org.co</a><br/>
+biomodelos@humboldt.org.co

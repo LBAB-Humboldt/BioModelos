@@ -8,6 +8,6 @@
     <%= f.input :subject, :maxlength => 50, :placeholder => "Nombre del grupo", :name => "asunto", label: false %>
     <%= f.input :content, :placeholder => "Descripción del grupo", :as => :text, :input_html => {:maxlength => 800, :cols => "20", :rows => "12"}, :name => "cuerpo", label: false %>
     <%= f.button :submit, :value => "ENVIAR", :class => 'boton1'%>
-    <%= link_to "CANCELAR", '', {:id => '', :class => 'boton1 botchanges'}%>
+    <%= link_to "CANCELAR", '', {:id => 'can-newgroup-btn', :class => 'boton1 botchanges'}%>
 <% end %>
 </div>

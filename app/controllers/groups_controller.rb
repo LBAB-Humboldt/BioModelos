@@ -69,24 +69,35 @@ class GroupsController < ApplicationController
 
   # Envía un email Masivo a todos los Usuarios Activos del Grupo
   def bulk_email
+    mails = []
     group = Group.find(params[:id])
     group_users = GroupUser.where(:group_id => params[:id], :group_user_state_id => 1)
     group_users.each do |f|
-      ContactMailer.bulk_email_group(params[:message], params[:subject], f.user.email, group.name, current_user.email).deliver_now
+      mails.push(f.user.email)
     end
+    ContactMailer.bulk_email_group(params[:message], params[:subject], mails, group.name, current_user.name).deliver_now
     redirect_to group_path(id:params[:id])
   end
 
   # Envía un email para invitar a un usuario externo a un grupo de biomodelos
   def email_invitation
     group = Group.find(params[:id])
-    ContactMailer.email_invitation(params[:message], params[:name], params[:email], group.name, current_user.email, current_user.name).deliver_now
+    ContactMailer.email_invitation(params[:message], params[:name], params[:email], group, current_user).deliver_now
     redirect_to group_path(id:params[:id])
+  end
+
+  def form_new_group
+    respond_to do |format|
+      format.js
+    end
   end
 
   # Envía un email al equipo de BioModelos cuando se sugiere un nuevo grupo
   def email_new_group
-    @message = Message.new(message_params)
+    mp = message_params
+    mp[:name] = current_user.name
+    mp[:email] = current_user.email
+    @message = Message.new(mp)
     ContactMailer.email_new_group(@message).deliver
     redirect_to groups_path
   end
@@ -97,5 +108,5 @@ class GroupsController < ApplicationController
       params.require(:message).permit(:name, :email, :subject, :content)
     end
 
-  
+
 end

@@ -10,10 +10,12 @@
           <% end %>
         </div>
           
-          <div class="sug-group-btn">
-            <h1>+</h1>SUGERIR</br>GRUPO
-          <input type='button' value="submit" class="invisible">
-          </div>
+          <% if user_signed_in? %>
+            <div class="sug-group-btn">
+              <h1>+</h1>SUGERIR</br>GRUPO
+              <input type='button' value="submit" class="invisible">
+            </div>
+          <% end %>
 
           <% @groups.each do |group| %>
           <div class="grupogen">
@@ -25,12 +27,16 @@
           </div>
           <% end %>
 
-          <div class="new-group-form"><%= render partial: 'groups/new_group_form' %></div>
+          <div class="new-group-form"></div>
 
   </article>
 </div>
 <script>
   $(".sug-group-btn").click(function(e){
-    
+    e.preventDefault();
+    $.ajax({
+            type: "POST",
+            url: "/groups/form_new_group"
+    });
   });
 </script>

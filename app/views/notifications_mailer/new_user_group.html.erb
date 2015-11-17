@@ -1,0 +1,17 @@
+Hola, moderador del grupo <%= @group.name %><br/>
+<br/>
+Se ha recibido una solicitud por parte de un usuario para unirse al grupo con la siguiente información:<br/>
+<br/>
+Solicitud recibida: <%= @datetime.strftime("%F %R") %><br/>
+Usuario: <%= @user.name %><br/>
+Organización: <%= @user.organization %><br/>
+<br/>
+<a href="http://biomodelos.humboldt.org.co/users/<%= @user.id %>">ver perfil</a><br/> 
+<br/>
+Para realizar alguna acción sobre esta solicitud, ingrese al perfil del <a href="http://biomodelos.humboldt.org.co/groups/<%= @group.id %>">grupo</a> y allí podrá consultar las solicitudes pendientes haciendo clic en el botón "Ver solicitudes Pendientes".<br/>
+<br/>
+Atentamente,<br/>
+<br/>
+Equipo BioModelos<br/>
+<a href="http://biomodelos.humboldt.org.co">biomodelos.humboldt.org.co</a><br/>
+biomodelos@humboldt.org.co

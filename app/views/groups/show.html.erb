@@ -31,7 +31,7 @@
                 <button class="editgroup" ng-click="edit_group=!edit_group" title="Editar Grupo"></button>
                 <button class="notgroup" ng-click="pending_approvals=!pending_approvals" title="Ver Solicitudes Pendientes"></button>
               <% end %>
-              <% if @user_group.blank? %>
+              <% if @user_group.blank? || @user_group.group_user_state_id == 4 %>
                 <%= simple_form_for @group_user do |f| %>
                   <%= f.hidden_field :group_id, :value =>  @group.id %>
                   <%= f.submit "", :class=> "joingroup", :title=>"Unirse al grupo" %>
@@ -66,6 +66,9 @@
             <% if notification.type == 'new_species' %>
             <p class="feedtimep lh1"><%= notification.updated_at.to_time.strftime("%F %R") %></p>
               <p class="notif">· La especie <a href="/models/visor?species_id=<%= notification.id %>"><%= notification.name %></a> fue añadida al grupo</p>
+            <% elsif notification.type == 'review' %>
+              <p class="feedtimep lh1"><%= notification.updated_at.to_time.strftime("%F %R") %></p>
+              <p class="notif">· El usuario <a href="/users/<%= notification.id %>"><%= notification.name %></a> realizó una edición sobre la especie <a href="/models/visor?species_id=<%= notification.sp_id %>"><%= notification.info %></a> </p>
             <% else %>
             <p class="feedtimep lh1"><%= notification.updated_at.to_time.strftime("%F %R") %></p>
               <p class="notif">· El usuario <a href="/users/<%= notification.id %>"><%= notification.name %></a> se unió al grupo</p>

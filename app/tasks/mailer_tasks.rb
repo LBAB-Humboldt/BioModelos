@@ -49,7 +49,7 @@ class MailerTasks
       # ---------------------------------------------------------------------
 
       if last_email_send + days.day <= Date.today && days!=0
-        ContactMailer.send_mail_notifications(f.id, f.name, f.email, last_email_send, periodicity_id).deliver_now
+        NotificationsMailer.send_mail_notifications(f.id, f.name, f.email, last_email_send, periodicity_id).deliver_now
       else
         date = last_email_send + days.day
         puts date.to_s
