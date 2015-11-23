@@ -107,6 +107,7 @@
               <image style="cursor: pointer" src="<%= asset_path('borrar.png') %>" ng-if="!was_rejected['<%= member.id %>']" ng-click="reject_member('<%= member.id %>')" />
               <image style="cursor: pointer" class="btn" src="<%= asset_path('borrar.png') %>" ng-if="was_rejected['<%= member.id %>']" ng-click="reject_member('<%= member.id %>')" />
             </div>
+            <div class="clearfix"></div>
           </div>
         <% end %>
       </div>
@@ -117,12 +118,13 @@
           <div class="miembrospen">               
             <div class="genero"><%= pending_species.species.sci_name %></div>
             <div class="familia"><%= pending_species.species.family %></div>
-             <div class="vermodelo" ng-init="species_approved['<%= pending_species.id %>']=<%= pending_species.species_group_state_id  == 1 %>; species_rejected['<%= pending_species.id %>']=<%= pending_species.species_group_state_id  == 3 %>" >
+            <div class="vermodelo" ng-init="species_approved['<%= pending_species.id %>']=<%= pending_species.species_group_state_id  == 1 %>; species_rejected['<%= pending_species.id %>']=<%= pending_species.species_group_state_id  == 3 %>" >
               <image style="cursor: pointer" src="<%= asset_path('like2.png') %>" ng-if="!species_approved['<%= pending_species.id %>']" ng-click="approve_species('<%= pending_species.id %>')" />
               <image style="cursor: pointer" class="btn" src="<%= asset_path('like.png') %>" ng-if="species_approved['<%= pending_species.id %>']" ng-click="approve_species('<%= pending_species.id %>')" />
               <image style="cursor: pointer" src="<%= asset_path('borrar2.png') %>" ng-if="!species_rejected['<%= pending_species.id %>']" ng-really-message="Are you sure" ng-really-click="reject_species('<%= pending_species.id %>')" />
               <image style="cursor: pointer" class="btn" src="<%= asset_path('borrar.png') %>" ng-if="species_rejected['<%= pending_species.id %>']" ng-click="reject_species('<%= pending_species.id %>')" />
             </div>
+            <div class="clearfix"></div>
           </div>
         <% end %>
       </div>
