@@ -570,18 +570,20 @@ float:left;
   width: 90% !important;
 }
 
-.formedgroup label > input {
+.formedgroup label > input, #class_checker label > input {
   display:none;
 }
 
-.formedgroup label > input + img { 
+.formedgroup label > input + img,
+#class_checker label > input + img { 
   margin-right: 5px;
   cursor:pointer;
   opacity:0.8;
   width: 40px;
   height:40px;
 }
-.formedgroup label > input:checked + img { 
+.formedgroup label > input:checked + img,
+#class_checker label > input:checked + img { 
   opacity:1;
 }
 
