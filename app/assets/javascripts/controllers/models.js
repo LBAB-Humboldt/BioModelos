@@ -49,7 +49,7 @@ $( document ).ready(function() {
   });
   $("#avessh").click(function(e){
     $('#cajasearch2').show('slow');
-    $('#class_id').val(2);
+    //$('#class_id').val(2);
     $('#cajasearch1,#cajasearch3,#cajasearch4,#cajasearch5,#cajasearch6,#cajasearch7').hide('slow');
     clearShowBox();
     ajaxGetSpecies(2);
@@ -104,7 +104,9 @@ $( document ).ready(function() {
           _mapVisorModule.unloadReview();
           _mapVisorModule.unloadPoints();
           $('#species_id').val('');
-          $('.selectores').show('slow');
+          ajaxGetSpecies("");
+          $('.cajabusqueda').show('slow');
+          //$('.selectores').show('slow');
           $(".botonmodelos").removeClass("w55");
           $(".ecologicas").removeClass("w55");
           $(".edicionbar").removeClass("w55");

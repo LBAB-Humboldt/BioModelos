@@ -57,7 +57,7 @@ private
 
   def send_email_to_admin (group_user)
     #Envía notificación a administrador(es)
-        group_admins = GroupUser.where(:group_id => group_user.group_id, :is_admin => true)
+        group_admins = GroupUser.where(:group_id => group_user.group_id, :is_admin => true, :group_user_state_id => 1)
         group = Group.find(group_user.group_id)
         if group_admins.blank?
           NotificationsMailer.new_user_group(User.find(group_user.user_id), group, "biomodelos@humboldt.org.co").deliver

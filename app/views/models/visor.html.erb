@@ -12,7 +12,7 @@
   <% end %>
 <a href="" class="findbar" title="Búsqueda Especie"></a>
 <div id="allsearchers">
-        <div class="cajabusqueda">
+        <div class="cajabusqueda">>
                 <div class="searchcateg srchanfibios" id="cajasearch1">Anfibios</div>
                 <div class="searchcateg srchaves" id="cajasearch2">Aves</div>
                 <div class="searchcateg srchinvertebrados" id="cajasearch3">Invertebrados</div>
@@ -20,9 +20,9 @@
                 <div class="searchcateg srchpeces" id="cajasearch5">Peces</div>
                 <div class="searchcateg srchreptiles" id="cajasearch6">Reptiles</div>
                 <div class="searchcateg srchplantas" id="cajasearch7">Plantas</div>
-                <%= render 'species/search_form' %>
-                <section class="resultados"></section>
-</div>
+              <%= render 'species/search_form' %>
+              <section class="resultados"></section>
+        </div>
 <% if user_signed_in? %>
     <a href="" class="edicionbar" title="Ediciones Realizadas"></a>
         <div class="cajaediciones">    
@@ -33,17 +33,7 @@
         </div>
 <% end %>
         <a href="" class="botonmodelos" title="Modelos y Comentarios"></a>    
-        <div class="selectores">
-                <p class="titulomapa">Selecciona una categoría</p>
-                <a href="#" id="anfsh"><%= image_tag("anfibiosg.png", :title => 'Anfibios') %></a>
-                <a href="#" id="avessh"><%= image_tag("avesg.png", :title => 'Aves') %></a>
-                <a href="#" id="invsh"><%= image_tag("invertebradosg.png", :title => 'Invertebrados') %></a>
-                <a href="#" id="mamsh"><%= image_tag("mamiferosg.png", :title => 'Mamiferos') %></a>
-                <a href="#" id="pecsh"><%= image_tag("pecesg.png", :title => 'Peces') %></a>
-                <a href="#" id="repsh"><%= image_tag("reptilesg.png", :title => 'Reptiles') %></a>
-                <a href="#" id="plash"><%= image_tag("plantasg.png", :title => 'Plantas') %></a>
-                <input type="hidden" id="class_id"/>
-        </div>
+        
 </div>
 <div class="selecshowcase">
 </div>

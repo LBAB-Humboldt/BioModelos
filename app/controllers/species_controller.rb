@@ -2,7 +2,7 @@ class SpeciesController < ApplicationController
   
   def species_by_class
     if params[:class_id].blank?
-      @species = nil
+      @species = Species.all.order('sci_name ASC')
     else
       @species = Species.where(:class_id => params[:class_id], :current => true).order('sci_name ASC')
     end
@@ -12,7 +12,10 @@ class SpeciesController < ApplicationController
   end
 
   def autocomplete
-    species = Species.search(params[:query], params[:classId])
+    if params[:classId] = nil
+      species = Species.search(query: params[:query])
+    end
+    species = Species.search(query: params[:query], class_id:params[:classId])
     result = species.collect do |t|
       { value: t.sci_name, id: t.id }
     end

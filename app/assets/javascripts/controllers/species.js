@@ -1,11 +1,27 @@
 $( document ).ready(function() {
 
+  var ajaxGetSpecies = function(class_id){
+        $.ajax({
+            type: "POST",
+            url: "/species/species_by_class",
+            data: { class_id: class_id}
+        });
+  }
+
   /* Model animation */
   $("body").on("mouseenter",".cajadatosm",function(e){
         $(this).animate({scrollTop:$(".cajadatosm").scrollTop() + $(this).find(".modeldata").position().top},600);
   });
   $("body").on("mouseleave",".cajadatosm",function(e){
         $(this).animate({scrollTop:$(".cajadatosm").position().top - '20'},600).finish();
+  });
+
+  //Set species class
+  $('#class_checker input:radio').change(function(){
+      $("#class_id").val($("#class_checker input[type='radio']:checked").val());
+        $('#search_field').val('');
+        $('#search_field').typeahead('setQuery', '');
+        ajaxGetSpecies($("#class_id").val());
   });
 
 

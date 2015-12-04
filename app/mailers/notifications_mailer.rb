@@ -91,4 +91,13 @@ class NotificationsMailer < ApplicationMailer
     mail to: admin_mail, subject: "Un usuario quiere unirse a tu grupo " + @group.name + " en BioModelos"
   end
 
+  # Envío de notificación instantanea a administrador(es) de grupo de un usuario sugiriendo una especie
+  def new_species_group(user, group, species, admin_mail)
+    @user = user
+    @group = group
+    @species = species
+    @datetime = DateTime.now
+    mail to: admin_mail, subject: "Sugerencia de especie para tu grupo " + @group.name + " en BioModelos"
+  end
+
 end

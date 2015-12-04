@@ -1,8 +1,39 @@
+<div id="class_checker">
+  <label>
+    <input type="radio" name="taxon" value="" checked="checked"/>
+  </label>
+  <label>
+    <input type="radio" name="taxon" value="1" />
+  </label>
+  <label>
+    <input type="radio" name="taxon" value="2" />
+  </label>
+  <label>
+    <input type="radio" name="taxon" value="3" />
+  </label>
+  <label>
+    <input type="radio" name="taxon" value="4" />
+  </label>
+  <label>
+    <input type="radio" name="taxon" value="5" />
+  </label>
+  <label>
+     <input type="radio" name="taxon" value="6" />
+  </label>
+  <label>
+	 <input type="radio" name="taxon" value="7" />
+  </label>
+</div>
+
 <%= form_tag({:controller => :species, :action => :species_models}, {:method => :get, :remote => true, :id => 'sp_search_form'})  do %>
   <%= text_field_tag :query, '', :id => 'search_field', :placeholder => 'Ingrese nombre de la especie', :collection => 'get_species_name', :include_blank => false, :rel => 'autocomplete' %>
   <%= hidden_field_tag 'species_id' %>
+  <%= hidden_field_tag 'class_id'%>
   <%= submit_tag 'ir', :name => nil, :class => 'searchbtn', :id => 'species_src_btn' %>
 <% end %>
 
 <p class="clearfix">Busqueda por nombre científico.</p>
 
+<script>
+
+</script>
