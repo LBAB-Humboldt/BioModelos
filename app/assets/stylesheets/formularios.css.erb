@@ -172,15 +172,85 @@
   font-weight: 700;
 }
 
-.qya h4 {
-  color:#f3523d;
-  font-weight: 700;
-  font-size: 20px;
-  margin-bottom: 10px;
+.blogg {
+  border-bottom: 1px solid #9d9d9d;
+  padding: 15px;
+  max-width: 700px
 }
 
-.qya br {
-  line-height: 2 !important;
+.blogg img {
+  width: 100%;
+  max-width: 700px;
+}
+
+.blogg h4 {
+  text-transform: uppercase;
+  font-size: 22px;
+  letter-spacing: 2px;
+  line-height: 20px;
+  padding-bottom: 5px;
+  width: 70%;
+  color: #f3523d;
+}
+
+.blogg h6 {
+  text-transform: uppercase;
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: #e3af24;
+}
+
+.blogg h5 {
+  margin-bottom: 20px;
+  font-size: 12px;
+  color: #7d7d7d;
+}
+.blogg h5 b {
+  margin-bottom: 20px;
+  color: #34312b;
+}
+.blogg h5 i {
+  font-size: 10px;
+  color: #8d8a80;
+  font-style: normal;
+  text-transform: uppercase;
+}
+.blogg p {
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: #6d6d6d;
+  width: 100%;
+  max-width: 700px;
+}
+.blogg a {
+  color: #00b2bd;
+}
+
+.cajathumb {
+    width: 220px;
+    background-color: #fff;
+    display: inline-block;
+    border: none;
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin:10px 15px 10px 0;
+    vertical-align: top;
+}
+
+.cajathumb p {
+  text-transform: uppercase;
+  color: #00b2bd;
+  padding: 5px 15px 10px;
+  font-size: 34px;
+  float: right;
+}
+
+.cajathumb img {
+  width: 100%;
 }
 
 .claverec {
@@ -425,11 +495,33 @@ float:left;
   background: none !important;
 }
 
+.wimg100 {
+  position: relative;
+}
+
 .wimg100 img {
   width: 100%;
   max-width: 800px;
   margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  position: relative;
+  z-index: 2;
+  float: left;
+}
+
+.wimg100 button {
+  text-transform: uppercase;
+  background-color: #00b2bd;
+  color:#fff;
+  padding: 5px;
+  font-size: 18px;
+  float: left;
+  border: none;
+  line-height: 1;
+  margin-top: 15px;
+  position: absolute;
+  z-index: 3;
+  margin-left: -20px;
 }
 
 .w610 {
@@ -869,8 +961,7 @@ min-height: 108px;
 }
 
 .noround {
-  float: left;
-  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .formalogin {
