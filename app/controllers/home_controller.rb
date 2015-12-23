@@ -47,6 +47,9 @@ class HomeController < ApplicationController
   	end
   end
 
+  def validated_models
+  end
+
   private
 
     def message_params
