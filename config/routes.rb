@@ -12,6 +12,7 @@ Biomodis::Application.routes.draw do
   get "home/feedback"
   post "home/send_message"
   post "ratings/rate_model"
+  post "ratings/exists_rating"
   post "group_users/set_state"
   post "groups/form_new_group"
   post "groups/email_new_group"
@@ -29,7 +30,7 @@ Biomodis::Application.routes.draw do
   resources :regions do
     get :regions_by_user, :on => :collection
   end
-  resources :ratings, only: :update
+  resources :ratings, only: [:destroy]
   resources :comments, :only => [:create, :destroy, :edit, :update]
   resources :home, :only => [:show]
   resources :reviews, :only => [:show, :create, :destroy]

@@ -53,11 +53,11 @@
                   <% @user.wall_notifications.each do |notification| %>
                     <%if notification.type=='new_specie' %>
                         <p class="feedtimep lh1"><%= notification.updated_at.to_time.strftime("%F %R") %></p>
-                        <p class="notif">La especie <a href="/species/<%= notification.user_id %>"><%= notification.user_name %> </a> fue incluida en el grupo <a href="/groups/<%= notification.id %>"><%= notification.name %></a></p>
+                        <p class="notif">La especie <a href="/models/visor?species_id=<%= notification.user_id %>"><%= notification.user_name %> </a> fue incluida en el grupo <a href="/groups/<%= notification.id %>"><%= notification.name %></a></p>
                     <% end %>
                     <%if notification.type=='new_user' %>
                         <p class="feedtimep lh1"><%= notification.updated_at.to_time.strftime("%F %R") %></p>
-                        <p class="notif"><a href="/users/<%= notification.user_id %>"><%= notification.user_name %> </a> fue aceptad@ en el grupo <a href="/groups/<%= notification.id %>"><%= notification.name %></a></p>
+                        <p class="notif"><a href="/users/<%= notification.user_id %>"><%= notification.user_name %> </a> fue aceptado en el grupo <a href="/groups/<%= notification.id %>"><%= notification.name %></a></p>
                     <% end %>
                     <%if notification.type=='review' %>
                         <p class="feedtimep lh1"><%= notification.updated_at.to_time.strftime("%F %R") %></p>

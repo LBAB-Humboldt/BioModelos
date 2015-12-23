@@ -52,13 +52,15 @@
 
   <div class="perfilcol1 clearfix fixfooter">
 
-    <div ng-show="email_invitation" >
-      <%= render "email_invitation" %>
-    </div>
+    <% if user_signed_in? && @is_member && @is_admin %>
+      <div ng-show="email_invitation" >
+          <%= render "email_invitation" %>
+      </div>
     
      <div ng-show="bulk_email" >
-      <%= render "bulk_email" %>
-    </div>
+        <%= render "bulk_email" %>
+      </div>
+    <% end %>
 
       <div class="cajas2 formedgroup pabs">  
         <h3>Notificaciones</h3>
@@ -83,53 +85,52 @@
 
     <% if user_signed_in? && @is_member %>
       <button class="sugspp topbtn" ng-click="sugest_species=!sugest_species">Sugerir Especie</button>
-    <% end %>
-    <% if user_signed_in? && @is_member %>
+      
       <%= render "species_form" %>
+      
+      <% if @is_admin %>
+        <div ng-show="edit_group">
+          <%= render "group_form" %>
+        </div>
+      
+        <div class="cajas2 pb10px" ng-show="pending_approvals">
+
+          <div class="formedgroup">    
+            <h3>Miembros Pendientes de Aprobación</h3>     
+            <% @pending_members.each do |member| %>
+              <div class="miembrospen">
+                <div class="userforgroup"><%= member.user.name %></div>
+                <p class="descgroup fz14"><%= member.user.bio %></p>
+                <div class="vermodelo" ng-init="is_member['<%= member.id %>']=<%= member.group_user_state_id  == 1 %>; was_rejected['<%= member.id %>']=<%= member.group_user_state_id  == 3 %>" >
+                  <image style="cursor: pointer" src="<%= asset_path('like.png') %>" ng-if="!is_member['<%= member.id %>']" ng-click="approve_member('<%= member.id %>')" />
+                  <image style="cursor: pointer" class="btn" src="<%= asset_path('like.png') %>" ng-if="is_member['<%= member.id %>']" ng-click="approve_member('<%= member.id %>')" />
+                  <image style="cursor: pointer" src="<%= asset_path('borrar.png') %>" ng-if="!was_rejected['<%= member.id %>']" ng-click="reject_member('<%= member.id %>')" />
+                  <image style="cursor: pointer" class="btn" src="<%= asset_path('borrar.png') %>" ng-if="was_rejected['<%= member.id %>']" ng-click="reject_member('<%= member.id %>')" />
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="formedgroup">
+            <h3>Especies Pendientes de Aprobación</h3>
+            <% @pending_species_groups.each do |pending_species| %>
+              <div class="miembrospen">               
+                <div class="genero"><%= pending_species.species.sci_name %></div>
+                <div class="familia"><%= pending_species.species.family %></div>
+                <div class="vermodelo" ng-init="species_approved['<%= pending_species.id %>']=<%= pending_species.species_group_state_id  == 1 %>; species_rejected['<%= pending_species.id %>']=<%= pending_species.species_group_state_id  == 3 %>" >
+                  <image style="cursor: pointer" src="<%= asset_path('like2.png') %>" ng-if="!species_approved['<%= pending_species.id %>']" ng-click="approve_species('<%= pending_species.id %>')" />
+                  <image style="cursor: pointer" class="btn" src="<%= asset_path('like.png') %>" ng-if="species_approved['<%= pending_species.id %>']" ng-click="approve_species('<%= pending_species.id %>')" />
+                  <image style="cursor: pointer" src="<%= asset_path('borrar2.png') %>" ng-if="!species_rejected['<%= pending_species.id %>']" ng-really-message="Are you sure" ng-really-click="reject_species('<%= pending_species.id %>')" />
+                  <image style="cursor: pointer" class="btn" src="<%= asset_path('borrar.png') %>" ng-if="species_rejected['<%= pending_species.id %>']" ng-click="reject_species('<%= pending_species.id %>')" />
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
     <% end %>
-    
-    <div ng-show="edit_group">
-      <%= render "group_form" %>
-    </div>
-
-
-    <div class="cajas2 pb10px" ng-show="pending_approvals">
-
-      <div class="formedgroup">    
-        <h3>Miembros Pendientes de Aprobación</h3>     
-        <% @pending_members.each do |member| %>
-          <div class="miembrospen">
-            <div class="userforgroup"><%= member.user.name %></div>
-            <p class="descgroup fz14"><%= member.user.bio %></p>
-            <div class="vermodelo" ng-init="is_member['<%= member.id %>']=<%= member.group_user_state_id  == 1 %>; was_rejected['<%= member.id %>']=<%= member.group_user_state_id  == 3 %>" >
-              <image style="cursor: pointer" src="<%= asset_path('like.png') %>" ng-if="!is_member['<%= member.id %>']" ng-click="approve_member('<%= member.id %>')" />
-              <image style="cursor: pointer" class="btn" src="<%= asset_path('like.png') %>" ng-if="is_member['<%= member.id %>']" ng-click="approve_member('<%= member.id %>')" />
-              <image style="cursor: pointer" src="<%= asset_path('borrar.png') %>" ng-if="!was_rejected['<%= member.id %>']" ng-click="reject_member('<%= member.id %>')" />
-              <image style="cursor: pointer" class="btn" src="<%= asset_path('borrar.png') %>" ng-if="was_rejected['<%= member.id %>']" ng-click="reject_member('<%= member.id %>')" />
-            </div>
-            <div class="clearfix"></div>
-          </div>
-        <% end %>
-      </div>
-
-      <div class="formedgroup">
-        <h3>Especies Pendientes de Aprobación</h3>
-        <% @pending_species_groups.each do |pending_species| %>
-          <div class="miembrospen">               
-            <div class="genero"><%= pending_species.species.sci_name %></div>
-            <div class="familia"><%= pending_species.species.family %></div>
-            <div class="vermodelo" ng-init="species_approved['<%= pending_species.id %>']=<%= pending_species.species_group_state_id  == 1 %>; species_rejected['<%= pending_species.id %>']=<%= pending_species.species_group_state_id  == 3 %>" >
-              <image style="cursor: pointer" src="<%= asset_path('like2.png') %>" ng-if="!species_approved['<%= pending_species.id %>']" ng-click="approve_species('<%= pending_species.id %>')" />
-              <image style="cursor: pointer" class="btn" src="<%= asset_path('like.png') %>" ng-if="species_approved['<%= pending_species.id %>']" ng-click="approve_species('<%= pending_species.id %>')" />
-              <image style="cursor: pointer" src="<%= asset_path('borrar2.png') %>" ng-if="!species_rejected['<%= pending_species.id %>']" ng-really-message="Are you sure" ng-really-click="reject_species('<%= pending_species.id %>')" />
-              <image style="cursor: pointer" class="btn" src="<%= asset_path('borrar.png') %>" ng-if="species_rejected['<%= pending_species.id %>']" ng-click="reject_species('<%= pending_species.id %>')" />
-            </div>
-            <div class="clearfix"></div>
-          </div>
-        <% end %>
-      </div>
-
-    </div>
 
       <div class="cajas2 formedgroup pabs fixfooter">
         <h3>Ranking</h3>

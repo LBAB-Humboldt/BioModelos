@@ -15,34 +15,17 @@
         <div class="familia"><%= @species.family %></div>
         <a href="http://www.biodiversidad.co/" target="_blank">www.biodiversidad.co</a></div>
 
-        <% @level1 = 1 %>
-        <% @level2 = 2 %>
-        <% @levelc = 0 %>
-        <% @level3 = 99 %>
-        <% @nivel2 = 2 %>
-
-        <% @newtabs_sp = [5090, 5091, 141, 378, 931, 932, 933, 2483, 6569, 4238, 4239, 983, 6842,6843,6844,6845,2717,6846,6847,6848,6849,6850,6851,6852,6853,6854,6855,6856,6028,6857,6858,6859,6860,6861,6862,6863,6864,6865,6029,6866,6867,6868,6869,6870,6030,6871,6872,6873,6874,6875,6876,6877,6878,6879,6880,6881,6882,6883,6884,6885,6886,6887,6888,6889,6842,6843,6844,6845,2717,6846,6847,6848,6849,6850,6851,6852,6853,6854,6855,6856,6028,6857,6858,6859,6860,6861,6862,6863,6864,6865,6029,6866,6867,6868,6869,6870,6030,6871,6872,6873,6874,6875,6876,6877,6878,6879,6880,6881,6882,6883,6884,6885,6886,6887,6888,6889,6890] %>
-        <% @validacion_sp = [5090, 5091, 141, 378, 931, 932, 933, 2483, 6569, 4238, 4239, 5331, 5208, 5302, 5328, 5329, 983] %>
-        <% @isInSpeciesList = @newtabs_sp.include? @species.id %>
-        <% @isInValList = @validacion_sp.include? @species.id %>
+        <% @validacion = 99 %>
+        <% @bioclim = 1 %>
+        <% @brt = 2 %>
+        <% @maxent = 3 %>
 
         <div class="hs clearfix" id="tabs">
                 <ul class="tabsnav clearfix">
-                    <% if @isInSpeciesList %>
-                        <li><a href="#tabs-1" class='tabtn'>Bioclim</a></li>     
-                        <li><a href="#tabs-2" class='tabtn'>BRT</a></li>
-                        <li><a href="#tabs-4" class='tabtn'>Maxent</a></li>
-                        <% @level1 = 97 %>
-                        <% @level2 = 98 %>
-                        <% @nivel2 = 1 %>
-                    <% else %>
-                        <li><a href="#tabs-1" class='tabtn'>Nivel 1</a></li>     
-                        <li><a href="#tabs-2" class='tabtn'>Nivel 2</a></li>
-                    <% end %>
-                    <li><a href="#tabs-3" class='tabtn'>Consenso</a></li>
-                    <% if @isInValList %>
-                        <li><a href="#tabs-5" class='tabtn'>Validación</a></li>
-                    <% end %>
+                    <li><a href="#tabs-1" class='tabtn'>Validación</a></li>     
+                    <li><a href="#tabs-2" class='tabtn'>Bioclim</a></li>
+                    <li><a href="#tabs-3" class='tabtn'>BRT</a></li>
+                    <li><a href="#tabs-4" class='tabtn'>Maxent</a></li>
 
                     <div class="urls" title="Enlace directo">URL:<input id="idUrl" type="text" value="biomodelos.humboldt.org.co/models/visor?species_id=<%= @species.id %>" /></div>
                 </ul>
@@ -54,37 +37,140 @@
             </div>
             <div class="showcase">
                 <ul class="modelost">
-                    <% @models.where(:level => @level1).order(:img_url).each_with_index do |model, i| %>
+                    <% model_lba = @models.where(:img_url => @species.sci_name + "_lba.png").first %>
+                    <% model_lban2 = @models.where(:img_url => @species.sci_name + "_lba_n2.png").first %>
+                    <%  if !model_lba.blank? %>
+                            <li class="modelothumb">
+                                <div class="cajadatosm">
+                                <%= link_to "#", :class => 'model_link' do%>
+                                    <%= hidden_field_tag('imgsrc', model_lba.img_url) %>
+                                    <% if !model_lban2.blank? %>
+                                        <%= hidden_field_tag('imgsrc2', model_lban2.img_url) %>
+                                    <% end %>
+                                    <%= image_tag("/thumbs/"+ model_lba.thumb_url, :height => 205, :width => 145, :id => model_lba.id) %>
+                                    <div class="modeldata">
+                                    <h5>Modelo Inductivo</h5>
+                                    <h6><b>LBA</b></br></h6>
+                                    <p>Promedio:</p>
+                                    <h3><%= model_lba.average_rating %></h3>
+                                    <p>Votos: (<%= model_lba.total_votes %>)</p>
+                                    </div>
+                                <% end %>
+                                </div>
+                                <div class="rankmod clearfix">
+                                    <% if user_signed_in? %>
+                                        <div class="user_star">
+                                            <%= hidden_field_tag('model', model_lba.id, :class => 'mid' )  %>
+                                            <%= hidden_field_tag('level', model_lba.level, :class => 'lvl' )  %>
+                                            <%= hidden_field_tag('myscore', @ratings[model_lba.id], :class => 'myscore')  %>
+                                        </div>
+                                    <% end %>
+                                    <% if file_exists(model_lba.id) %>
+                                        <%= link_to models_download_model_path(:m_id => model_lba.id), :class => 'download', :remote => true do %>
+                                            <%= image_tag("descargar.png") %>
+                                        <% end %>
+                                    <% end %>
+                                </div>
+                            </li>
+                    <% else %>
+                    <% end %>
+                    <% model_bm = @models.where(:img_url => @species.sci_name + "_bm.png").first %>
+                    <% model_bmn2 = @models.where(:img_url => @species.sci_name + "_bm_n2.png").first %>
+                    <% if !model_bm.blank? %>
+                            <li class="modelothumb">
+                                <div class="cajadatosm">
+                                <%= link_to "#", :class => 'model_link_nivel2' do%>
+                                    <%= hidden_field_tag('imgsrc', model_bm.img_url) %>
+                                    <% if !model_bmn2.blank? %>
+                                        <%= hidden_field_tag('imgsrc2', model_bmn2.img_url) %>
+                                    <% end %>
+                                    <%= image_tag("/thumbs/"+ "nohaybioM.jpg", :height => 205, :width => 145) %>
+                                    <div class="modeldata">
+                                    <h5>Modelo Híbrido</h5>
+                                    <h6><b>BioModelos </b></br></h6>
+                                    <p>Promedio:</p>
+                                    <h3><%= model_bm.average_rating %></h3>
+                                    <p>Votos: (<%= model_bm.total_votes %>)</p>
+                                    </div>
+                                <% end %>
+                                </div>
+                                <div class="rankmod clearfix">
+                                    <% if user_signed_in? %>
+                                        <div class="user_star">
+                                            <%= hidden_field_tag('model', model_bm.id, :class => 'mid' )  %>
+                                            <%= hidden_field_tag('level', model_bm.level, :class => 'lvl' )  %>
+                                            <%= hidden_field_tag('myscore', @ratings[model_bm.id], :class => 'myscore')  %>
+                                        </div>
+                                    <% end %>
+                                    <% if file_exists(model_bm.id) %>
+                                        <%= link_to models_download_model_path(:m_id => model_bm.id), :class => 'download', :remote => true do %>
+                                            <%= image_tag("descargar.png") %>
+                                        <% end %>
+                                    <% end %>
+                                </div>
+                            </li>
+                    <% else %>
+                        <li class="modelothumb">
+                                <div class="cajadatosm">
+                                    <%= image_tag("nohayBioM.png", :height => 205, :width => 145) %>
+                                    <div class="modeldata textogrande">
+                                        <h6><b>No hay aportes de expertos.</b><br><br>Califica y edita los modelos en las pestañas Maxent, Bioclim y BRT.</h6>
+                                    </div>
+                                </div>
+                                <% if user_signed_in? %>
+                                    <div class="rankmod2 clearfix">
+                                    </div>
+                                <% end %>
+                        </li>
+                    <% end %>
+                    <% model_iucn = @models.where(:img_url => @species.sci_name + "_iucn.png").first %>
+                    <% model_iucnn2 = @models.where(:img_url => @species.sci_name + "_iucn_n2.png").first %>
+                    <% if !model_iucn.blank? %>
                         <li class="modelothumb">
                             <div class="cajadatosm">
                             <%= link_to "#", :class => 'model_link' do%>
-                                <%= hidden_field_tag('imgsrc', model.img_url) %>
-                                <%= image_tag("/thumbs/"+ model.thumb_url, :height => 205, :width => 145, :id => model.id) %>
+                                <%= hidden_field_tag('imgsrc', model_iucn.img_url) %>
+                                <% if !model_iucnn2.blank? %>
+                                    <%= hidden_field_tag('imgsrc2', model_iucnn2.img_url) %>
+                                <% end %>
+                                <%= image_tag("/thumbs/"+ model_iucn.thumb_url, :height => 205, :width => 145, :id => model_iucn.id) %>
                                 <div class="modeldata">
-                                <h5>Modelo Nivel 1</h5>
-                                <h6><b>CORTE: </b></br>
-                                <%= model.description %></h6>
+                                <h5>Modelo Deductivo</h5>
+                                <h6><b>Experto</b></br></h6>
                                 <p>Promedio:</p>
-                                <h3><%= model.average_rating %></h3>
-                                <p>Votos: (<%= model.total_votes %>)</p>
+                                <h3><%= model_iucn.average_rating %></h3>
+                                <p>Votos: (<%= model_iucn.total_votes %>)</p>
                                 </div>
                             <% end %>
                             </div>
                             <div class="rankmod clearfix">
                                 <% if user_signed_in? %>
                                     <div class="user_star">
-                                        <%= hidden_field_tag('model', model.id, :class => 'mid' )  %>
-                                        <%= hidden_field_tag('level', model.level, :class => 'lvl' )  %>
-                                        <%= hidden_field_tag('myscore', @ratings[model.id], :class => 'myscore')  %>
+                                        <%= hidden_field_tag('model', model_iucn.id, :class => 'mid' )  %>
+                                        <%= hidden_field_tag('level', model_iucn.level, :class => 'lvl' )  %>
+                                        <%= hidden_field_tag('myscore', @ratings[model_iucn.id], :class => 'myscore')  %>
                                     </div>
                                 <% end %>
-                                <% if file_exists(model.id) %>
-                                    <%= link_to models_download_model_path(:m_id => model.id), :class => 'download', :remote => true do %>
+                                <% if file_exists(model_iucn.id) %>
+                                    <%= link_to models_download_model_path(:m_id => model_iucn.id), :class => 'download', :remote => true do %>
                                         <%= image_tag("descargar.png") %>
                                     <% end %>
                                 <% end %>
                             </div>
                         </li>
+                    <% else %>
+                        <li class="modelothumb">
+                                <div class="cajadatosm">
+                                    <%= image_tag("nohayexp.png", :height => 205, :width => 145) %>
+                                    <div class="modeldata textogrande">
+                                        <h6><b>Mapa de IUCN no disponible.</b><br><br>Contactános para publicar modelos de otras fuentes.</h6>
+                                    </div>
+                                </div>
+                                <% if user_signed_in? %>
+                                    <div class="rankmod2 clearfix">
+                                    </div>
+                                <% end %>
+                            </li>   
                     <% end %>
                 </ul>
             </div>
@@ -101,14 +187,14 @@
             </div>
             <div class="showcase2">
                 <ul class="modelost">
-                    <% @models.where(:level => @level2).each_with_index do |model, i| %>
+                    <% @models.where(:level => @bioclim).each_with_index do |model, i| %>
                         <li class="modelothumb">
                             <div class="cajadatosm">
                             <%= link_to "#", :class => 'model_link' do%>
                                 <%= hidden_field_tag('imgsrc', model.img_url) %>
                                 <%= image_tag("/thumbs/"+ model.thumb_url, :height => 205, :width => 145, :id => model.id) %>
                                 <div class="modeldata">
-                                <h5>Modelo Nivel <%= @nivel2 %></h5>
+                                <h5>Modelo Bioclim</h5>
                                 <h6><b>CORTE: </b></br>
                                 <%= model.description %></h6>
                                 <p>Promedio:</p>
@@ -140,55 +226,6 @@
                 </a>
             </div>
         </div>
-
-        <% if @isInSpeciesList %>
-            <div id="tabs-4">
-                 <div class="left-arrow">
-                    <a href="#prev">
-                    </a>
-                </div>
-                <div class="showcase4">
-                    <ul class="modelost">
-                        <% @models.where(:level => @level3).each_with_index do |model, i| %>
-                            <li class="modelothumb">
-                                <div class="cajadatosm">
-                                <%= link_to "#", :class => 'model_link' do%>
-                                    <%= hidden_field_tag('imgsrc', model.img_url) %>
-                                    <%= image_tag("/thumbs/"+ model.thumb_url, :height => 205, :width => 145, :id => model.id) %>
-                                    <div class="modeldata">
-                                    <h5>Modelo Nivel 1</h5>
-                                    <h6><b>CORTE: </b></br>
-                                    <%= model.description %></h6>
-                                    <p>Promedio:</p>
-                                    <h3><%= model.average_rating %></h3>
-                                    <p>Votos: (<%= model.total_votes %>)</p>
-                                    </div>
-                                <% end %>
-                                </div>
-                                <div class="rankmod clearfix">
-                                    <% if user_signed_in? %>
-                                        <div class="user_star">
-                                            <%= hidden_field_tag('model', model.id, :class => 'mid' )  %>
-                                            <%= hidden_field_tag('level', model.level, :class => 'lvl' )  %>
-                                            <%= hidden_field_tag('myscore', @ratings[model.id], :class => 'myscore')  %>
-                                        </div>
-                                    <% end %>
-                                    <% if file_exists(model.id) %>
-                                        <%= link_to models_download_model_path(:m_id => model.id), :class => 'download', :remote => true do %>
-                                            <%= image_tag("descargar.png") %>
-                                        <% end %>
-                                    <% end %>
-                                </div>
-                            </li>
-                        <% end %>
-                    </ul>
-                </div>
-                <div class="right-arrow">
-                    <a href="#next">
-                    </a>
-                </div>
-            </div>
-        <% end %>
 
         <div id="tabs-3">
              <div class="left-arrow">
@@ -197,14 +234,14 @@
             </div>
             <div class="showcase3">
                 <ul class="modelost">
-                    <% @models.where(:level => @levelc).each_with_index do |model, i| %>
+                    <% @models.where(:level => @brt).each_with_index do |model, i| %>
                         <li class="modelothumb">
                             <div class="cajadatosm">
                             <%= link_to "#", :class => 'model_link' do%>
                                 <%= hidden_field_tag('imgsrc', model.img_url) %>
                                 <%= image_tag("/thumbs/"+ model.thumb_url, :height => 205, :width => 145, :id => model.id) %>
                                 <div class="modeldata">
-                                <h5>Modelo Consenso</h5>
+                                <h5>Modelo BRT</h5>
                                 <h6><b>CORTE: </b></br>
                                 <%= model.description %></h6>
                                 <p>Promedio:</p>
@@ -237,54 +274,53 @@
             </div>
         </div>
 
-        <% if @isInValList %>
-            <div id="tabs-5">
-                 <div class="left-arrow">
-                    <a href="#prev">
-                    </a>
-                </div>
-                <div class="showcase5">
-                    <ul class="modelost">
-                        <% @models.where(:level => 100).each_with_index do |model, i| %>
-                            <li class="modelothumb">
-                                <div class="cajadatosm">
-                                <%= link_to "#", :class => 'model_link' do%>
-                                    <%= hidden_field_tag('imgsrc', model.img_url) %>
-                                    <%= image_tag("/thumbs/"+ model.thumb_url, :height => 205, :width => 145, :id => model.id) %>
-                                    <div class="modeldata">
-                                    <h5>Modelo Validación</h5>
-                                    <h6><b>CORTE: </b></br>
-                                    <%= model.description %></h6>
-                                    <p>Promedio:</p>
-                                    <h3><%= model.average_rating %></h3>
-                                    <p>Votos: (<%= model.total_votes %>)</p>
+        
+        <div id="tabs-4">
+             <div class="left-arrow">
+                <a href="#prev">
+                </a>
+            </div>
+            <div class="showcase4">
+                <ul class="modelost">
+                    <% @models.where(:level => @maxent).each_with_index do |model, i| %>
+                        <li class="modelothumb">
+                            <div class="cajadatosm">
+                            <%= link_to "#", :class => 'model_link' do%>
+                                <%= hidden_field_tag('imgsrc', model.img_url) %>
+                                <%= image_tag("/thumbs/"+ model.thumb_url, :height => 205, :width => 145, :id => model.id) %>
+                                <div class="modeldata">
+                                <h5>Modelo Maxent</h5>
+                                <h6><b>CORTE: </b></br>
+                                <%= model.description %></h6>
+                                <p>Promedio:</p>
+                                <h3><%= model.average_rating %></h3>
+                                <p>Votos: (<%= model.total_votes %>)</p>
+                                </div>
+                            <% end %>
+                            </div>
+                            <div class="rankmod clearfix">
+                                <% if user_signed_in? %>
+                                    <div class="user_star">
+                                        <%= hidden_field_tag('model', model.id, :class => 'mid' )  %>
+                                        <%= hidden_field_tag('level', model.level, :class => 'lvl' )  %>
+                                        <%= hidden_field_tag('myscore', @ratings[model.id], :class => 'myscore')  %>
                                     </div>
                                 <% end %>
-                                </div>
-                                <div class="rankmod clearfix">
-                                    <% if user_signed_in? %>
-                                        <div class="user_star">
-                                            <%= hidden_field_tag('model', model.id, :class => 'mid' )  %>
-                                            <%= hidden_field_tag('level', model.level, :class => 'lvl' )  %>
-                                            <%= hidden_field_tag('myscore', @ratings[model.id], :class => 'myscore')  %>
-                                        </div>
+                                <% if file_exists(model.id) %>
+                                    <%= link_to models_download_model_path(:m_id => model.id), :class => 'download', :remote => true do %>
+                                        <%= image_tag("descargar.png") %>
                                     <% end %>
-                                    <% if file_exists(model.id) %>
-                                        <%= link_to models_download_model_path(:m_id => model.id), :class => 'download', :remote => true do %>
-                                            <%= image_tag("descargar.png") %>
-                                        <% end %>
-                                    <% end %>
-                                </div>
-                            </li>
-                        <% end %>
-                    </ul>
-                </div>
-                <div class="right-arrow">
-                    <a href="#next">
-                    </a>
-                </div>
+                                <% end %>
+                            </div>
+                        </li>
+                    <% end %>
+                </ul>
             </div>
-        <% end %>
+            <div class="right-arrow">
+                <a href="#next">
+                </a>
+            </div>
+        </div>
 
         </div>
         <p>Califica sólo uno de los modelos por pestaña.</br></br></p>
@@ -304,7 +340,6 @@
         </div>
 <div class ="termbox"></div>
 <script>
-
     $("#save-tags").click(function(e){
         
         var t_values,
@@ -350,13 +385,11 @@
                     model_clicked_id = $(this).find('.mid').val();
                     if(evt.currentTarget.className === "raty-cancel")
                     {
-                        if(<%= user_signed_in? %>){
                             $.ajax({
                                 type: "DELETE",
                                 url: "/ratings/destroy",
                                 data: { mid: $(this).find('.mid').val(), uid: $('#bio_user_id').val()}
                             });
-                        }
                     }
                     else{
 

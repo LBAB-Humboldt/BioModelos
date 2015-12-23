@@ -12,10 +12,11 @@ class SpeciesController < ApplicationController
   end
 
   def autocomplete
-    if params[:classId] = nil
+    if params[:classId].blank?
       species = Species.search(query: params[:query])
+    else
+      species = Species.search(query: params[:query], class_id:params[:classId])
     end
-    species = Species.search(query: params[:query], class_id:params[:classId])
     result = species.collect do |t|
       { value: t.sci_name, id: t.id }
     end

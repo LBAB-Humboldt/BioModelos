@@ -3,8 +3,8 @@ class Rating < ActiveRecord::Base
 	belongs_to :models
 	belongs_to :users
 
-	def rating_exists(model_id, user_id)
-		exists?(":model_id = ? and :user_id = ?", "#{model_id}", "#{user_id}")
-	end 
+	def self.rating_exists(options)
+		exists?(model_id: options[:model_id], user_id: options[:user_id])
+	end
 
 end
