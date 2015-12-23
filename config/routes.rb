@@ -10,6 +10,7 @@ Biomodis::Application.routes.draw do
   get "users/edit_profile"
   get "comments/child_comments"
   get "home/feedback"
+  get "home/validated_models"
   post "home/send_message"
   post "ratings/rate_model"
   post "group_users/set_state"
