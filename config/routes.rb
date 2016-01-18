@@ -10,7 +10,7 @@ Biomodis::Application.routes.draw do
   get "users/edit_profile"
   get "comments/child_comments"
   get "home/feedback"
-  get "home/validated_models"
+  get "home/active_species"
   post "home/send_message"
   post "ratings/rate_model"
   post "ratings/exists_rating"

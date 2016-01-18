@@ -38,7 +38,9 @@ $( document ).ready(function() {
   }
 
   $('.searchcateg,.showmodels,.editControls,#cancBtn,.cajabusqueda,.showmodels,.cajaediciones,.edicionbar,.botonmodelos,.cajaecolog,.ecologicas').hide();
-  
+  $('.cajabusqueda').show('slow');
+  ajaxGetSpecies($("#class_checker input[type='radio']:checked").val());
+  $(".findbar").addClass("w55");
   $(".findbar").click(function(e){
           e.preventDefault();
           if($(".cajabusqueda").is(':visible')){
@@ -52,6 +54,7 @@ $( document ).ready(function() {
             editButtonsOff();
             _mapVisorModule.deactivateEdition();
             _mapVisorModule.unloadModel();
+            _mapVisorModule.unloadModel_n2();
             _mapVisorModule.unloadReview();
             _mapVisorModule.unloadPoints();
             $('#species_id').val('');
@@ -129,6 +132,7 @@ $( document ).ready(function() {
     $('.resultados').html("");
     e.preventDefault();
   });
+
 
 });
 

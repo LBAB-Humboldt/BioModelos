@@ -18,7 +18,7 @@
           <% @group_admins.each do |admin| %>
           <a class="adminuser" href="/users/<%= admin.user.id %>"><%= admin.user.name %></a> <p class="adminuser adminwhere">· <%= admin.user.organization %> </p></br>
           <% end %>
-          <p class="descgroup"><%= @group.description %></p>
+          <p class="descgroup"><%= @group.description.blank? ? "Descripción pendiente." : @group.description %></p>
           <a class="mailingr" href="mailto:<%= @group.email %>"><%= @group.email %></a>
           <a class="mailingr2" href="<%= url_with_protocol(@group.link) %>" target="_blank"><%= @group.link %></a>
           <% if user_signed_in? %>

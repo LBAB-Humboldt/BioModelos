@@ -1,6 +1,6 @@
 var _mapVisorModule = function() {
 
-	var map, drawnItems, layerControl, modelOverlay, currentLayer, drawControl, reviewLayer, csvLayer, cluster,
+	var map, drawnItems, layerControl, modelOverlay, modelOverlay2, currentLayer, drawControl, reviewLayer, csvLayer, cluster,
 		isEditOn = false,
 		commentForm = '<div class="commentForm">' +
 			'<input id="review_type" type="hidden">'+
@@ -88,6 +88,7 @@ var _mapVisorModule = function() {
        }
 	}
 
+
 	var loadModel = function (modelUrl, speciesID) {
 
 		var imageUrl = modelUrl;
@@ -102,21 +103,56 @@ var _mapVisorModule = function() {
 		else
 			imageBounds = [[12.675, -60.48333], [-13.84166, -82.94999]];
 
-
-
        /* Dispose older model if it exists */
-       unloadModel();
+        unloadModel();
        	
 	    modelOverlay = new L.ImageOverlay(imageUrl, imageBounds, {opacity: 0.6});
+	    
 	    map.addLayer(modelOverlay, true);
 	    layerControl.addOverlay(modelOverlay, "Modelo");
-	    
-	    
+	        
 	    map.on('overlayadd', function(e) {
-	        if(e.layer === modelOverlay)
-	            modelOverlay.bringToBack();
+	         if(e.layer === modelOverlay)
+	             modelOverlay.bringToBack();
 	    });
 	};
+
+	var unloadModel_n2 = function() {
+		if(map.hasLayer(modelOverlay2)) {
+       		map.removeLayer(modelOverlay2);
+       		layerControl.removeLayer(modelOverlay2);
+       }
+	}
+
+
+	var loadModel_n2 = function (modelUrl, speciesID) {
+
+		var imageUrl = modelUrl;
+
+		if (speciesID == 5090)
+			imageBounds = [[12.46667, -59.86666], [-13.84166, -84.86666]];
+			//imageBounds = [[12.466957766, -59.864685059], [-13.841375567, -84.864685059]];
+		else if (speciesID == 5091)
+			//imageBounds = [[28.8, -83.14999],[9.34167, -102]];
+			imageBounds = [[29.35000466,-83.149994949],[9.341670283, -101.999995932]];
+			//imageBounds = [[29.352815756, -83.148901367], [9.344482423, -101.998901367]];
+		else
+			imageBounds = [[12.675, -60.48333], [-13.84166, -82.94999]];
+
+       /* Dispose older model if it exists */
+        unloadModel_n2();
+       	
+	    modelOverlay2 = new L.ImageOverlay(imageUrl, imageBounds, {opacity: 0.6});
+	    
+	    map.addLayer(modelOverlay2, true);
+	    layerControl.addOverlay(modelOverlay2, "Modelo Nivel 2");
+	        
+	    map.on('overlayadd', function(e) {
+	         if(e.layer === modelOverlay2)
+	             modelOverlay2.bringToBack();
+	    });
+	};
+
 
 	var unloadReview = function (){
 		if(map.hasLayer(reviewLayer)) {
@@ -439,7 +475,9 @@ var _mapVisorModule = function() {
 
 		init: init,
 		loadModel: loadModel,
+		loadModel_n2 : loadModel_n2,
 		unloadModel: unloadModel,
+		unloadModel_n2: unloadModel_n2,
 		activateEdition: activateEdition,
 		deactivateEdition: deactivateEdition,
 		cancelLayer: cancelLayer,

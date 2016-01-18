@@ -47,8 +47,8 @@ $( document ).ready(function() {
   /* Model selection */
   $("body").on("click",".model_link",function (event) {
                 _mapVisorModule.loadModel("/modelos/"+$(this).find('#imgsrc').val(), $('#species_id').val());
-                if($(this).find('#imgsrc2').length) {
-                  _mapVisorModule.loadModel("/modelos/"+$(this).find('#imgsrc2').val(), $('#species_id').val());
+                if($("#imgsrc2").length) {
+                  _mapVisorModule.loadModel_n2("/modelos/"+$(this).find('#imgsrc2').val(), $('#species_id').val());
                 }
                 $("#review_model_id").val($(this).find('img').attr('id'));
                 $('.editControls').show('slow');
