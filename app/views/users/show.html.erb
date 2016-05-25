@@ -1,8 +1,10 @@
 <div class="editform"></div>
 <div class="botonesperfil clearfix">
-	<% if @user.id == get_current_user_id%>	
-		<%= link_to '', {:action => 'edit_profile'}, :remote => true, :class =>"editperfil", :title=>"Editar Perfil" %>
-	<% end %>
+  <% if user_signed_in? %>
+  	<% if @user.id == current_user.id%>	
+  		<%= link_to '', {:action => 'edit_profile'}, :remote => true, :class =>"editperfil", :title=>"Editar Perfil" %>
+  	<% end %>
+  <% end %>
 	<div class="funcperfil">
 		<a href="#"></a>
 		<a href="#"></a>

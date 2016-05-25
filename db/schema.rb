@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150612162052) do
+ActiveRecord::Schema.define(version: 20160122155421) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -66,6 +66,12 @@ ActiveRecord::Schema.define(version: 20150612162052) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "alt_max",    default: 0
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "classes", force: :cascade do |t|
@@ -239,6 +245,15 @@ ActiveRecord::Schema.define(version: 20150612162052) do
 
   add_index "species", ["class_id"], name: "index_species_on_class_id"
   add_index "species", ["sci_name"], name: "index_species_on_sci_name", unique: true
+
+  create_table "species_categories", force: :cascade do |t|
+    t.integer  "species_id",    null: false
+    t.integer  "categories_id", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "species_categories", ["species_id", "categories_id"], name: "index_species_categories_on_species_id_and_categories_id"
 
   create_table "species_group_states", force: :cascade do |t|
     t.string   "name"

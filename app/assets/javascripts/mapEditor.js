@@ -129,16 +129,7 @@ var _mapVisorModule = function() {
 
 		var imageUrl = modelUrl;
 
-		if (speciesID == 5090)
-			imageBounds = [[12.46667, -59.86666], [-13.84166, -84.86666]];
-			//imageBounds = [[12.466957766, -59.864685059], [-13.841375567, -84.864685059]];
-		else if (speciesID == 5091)
-			//imageBounds = [[28.8, -83.14999],[9.34167, -102]];
-			imageBounds = [[29.35000466,-83.149994949],[9.341670283, -101.999995932]];
-			//imageBounds = [[29.352815756, -83.148901367], [9.344482423, -101.998901367]];
-		else
-			imageBounds = [[12.675, -60.48333], [-13.84166, -82.94999]];
-
+		imageBounds = [[12.675, -81.84153], [-4.230506812, -66.8665291615771]];
        /* Dispose older model if it exists */
         unloadModel_n2();
        	
@@ -193,14 +184,30 @@ var _mapVisorModule = function() {
 	};
 
 	var loadPoints = function (csvUrl) {
-		var csvTitles = ["ID","Nombre original","Localidad","Municipio","Departamento","Altitud","Fecha","Institución","Colector","Evidencia"];
+		var csvTitles = ["id","EspecieOriginal","Localidad","Municipio","Departamento","Altitud","Fecha","Institucion","Colector","Evidencia"];
+		var hashTitles = {
+						    id: "ID",
+						    EspecieOriginal: "Especie Original",
+						    Localidad: "Localidad",
+						    Municipio: "Municipio",
+						    Departamento: "Departamento",
+						    Altitud: "Altitud",
+						    Fecha: "Fecha",
+						    Institucion: "Institución",
+						    Colector: "Colector",
+						    Evidencia: "Evidencia"
+  		}
 
 		csvLayer = L.geoCsv(null, {		
 										onEachFeature: function (feature, layer) {
 												var popup = '<div class="cajita">';
 												popup += '<b><div id="point_lon">'+ feature.geometry.coordinates[0]+'</div>, <div id="point_lat"> '+ feature.geometry.coordinates[1] + '</div></b><br /><br />';
 												for (var i=0; i < csvTitles.length; i++) {
-													popup += '<b>'+csvTitles[i]+'</b><br />'+ feature.properties[csvLayer.getPropertyName(csvTitles[i])]+'<br /><br />';
+													if (csvTitles[i] == "id"){
+														popup += '<b>'+hashTitles[csvTitles[i]]+'</b><br />'+ '<div id="rep_reg_id">' + feature.properties[csvLayer.getPropertyName(csvTitles[i])]+'</div><br />';
+													}else{
+														popup += '<b>'+ hashTitles[csvTitles[i]]+'</b><br />'+ feature.properties[csvLayer.getPropertyName(csvTitles[i])]+'<br /><br />';
+													}
 												}
 												popup += '<a href="/species/comment_point" data-method="post" data-remote="true" rel="nofollow" class="wrongbtn">Reportar Error</a></div>'
 												//popup += '<a href="/species/workshop_test" data-method="post" data-remote="true" rel="nofollow" class="wrongbtn">Reportar Error</a></div>'

@@ -1,5 +1,6 @@
 <%= simple_form_for @point_comment, :url => species_create_comment_point_path, :method => :post, :remote => true, :html => {:class => "pointcomm" } do |f| %>
 	<%= f.input :user_id, :as => :hidden, :input_html => {:value => get_current_user_id} %>
+	<%= f.input :register_id, :as => :hidden %>
 	<%= f.input :species_id, :as => :hidden %>
 	<%= f.input :lat, :as => :hidden %>
 	<%= f.input :lon, :as => :hidden %>

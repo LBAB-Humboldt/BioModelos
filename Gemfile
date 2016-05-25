@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.1.4'
+ruby '2.3.0'
 #ruby-gemset=railstutorial_rails_4_0
 
 gem 'rails', '4.2.1'
@@ -10,7 +10,7 @@ gem 'rails', '4.2.1'
 # end
 
 group :development, :test do
-  gem 'sqlite3', '1.3.7'
+  gem 'sqlite3'
   gem 'rspec-rails', '2.13.1'
 end
 

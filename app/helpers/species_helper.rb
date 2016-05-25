@@ -21,4 +21,10 @@ module SpeciesHelper
         end
 	end
 
+	# User must be an accepted member of a group
+	def user_is_in_group(user_id)
+		gu = GroupUser.where(user_id:user_id, group_user_state_id:1).first
+		return gu.blank? ? false : true
+	end
+
 end

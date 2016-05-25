@@ -72,7 +72,7 @@ es:
         other: menos de %{count} minutos
       less_than_x_seconds:
         one: menos de 1 segundo
-        other: menos de %{count} segundos
+        other: menos de  %{count} segundos
       over_x_years:
         one: más de 1 año
         other: más de %{count} años
@@ -196,4 +196,17 @@ es:
       <<: *errors
   activerecord:
     errors:
-      <<: *errors
+      models:
+          user:
+            attributes:
+              email:
+                blank: "Ingrese una dirección de correo electrónico"
+                taken: "El correo que ingresó ya existe en BioModelos"
+                invalid: "Ingrese una dirección de correo válida"
+              password:
+                blank: "Ingrese una contraseña"
+                confirmation: "La contraseña y su confirmación no coinciden"
+                too_long: La contraseña es demasiado larga (%{count} caracteres máximo)
+                too_short: La contraseña es demasiado corta (%{count} caracteres mínimo)
+              password_confirmation:
+                blank: "Ingrese la confirmación de la contraseña"

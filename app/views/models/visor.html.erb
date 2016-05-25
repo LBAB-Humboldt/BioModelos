@@ -17,7 +17,7 @@
               <%= render 'species/search_form' %>
               <section class="resultados"></section>
         </div>
-<% if user_signed_in? %>
+<% if user_signed_in? && user_is_in_group(current_user.id) %>
     <a href="" class="edicionbar" title="Ediciones Realizadas"></a>
         <div class="cajaediciones">    
         </div>
@@ -34,12 +34,12 @@
 <div class="showmodels">
 </div>
 <div class="editControls">
-    <% if user_signed_in? %>
+    <% if user_signed_in? && user_is_in_group(current_user.id) %>
         <a class="editbtn" id="editBtn">editar</a>
         <a class="cbtn" id="cancBtn">terminar</a>
         <%= simple_form_for @review, :remote => true do |f| %>
            <%= f.hidden_field :model_id %>
-           <%= f.hidden_field :user_id, :value => get_current_user_id %>
+           <%= f.hidden_field :user_id, :value => current_user.id %>
            <%= f.hidden_field :geoJSON %>
        <% end %>  
     <% end %>
@@ -149,16 +149,12 @@ $(".ecologicas").click(function(e) {
     $(".slider").each(function () {
 
       var ecoVar;
-          min_val = 0.0,
-          mean_val = 0.5,
-          max_val = 1.0;
+          mean_val = 0.5;
 
 
       ecoVar = getEcoVariable($(this).attr('name'))
       if (ecoVar != undefined){
-          min_val = ecoVar.min,
-          mean_val = ecoVar.mean,
-          max_val = ecoVar.max;
+          mean_val = ecoVar.mean;
           //$(this).parent('div').find('input:checkbox').click();
       }
 
@@ -166,7 +162,7 @@ $(".ecologicas").click(function(e) {
           min: 0.0,
           max: 1.0, 
           step: 0.1,
-          values: [ min_val, mean_val, max_val ],
+          values: [mean_val]
        });
     });
 
@@ -209,15 +205,13 @@ $(".ecobtn").click(function(e) {
 
   $("#othervar div.slider").each(function(e) {
     
-    var sli_1 = $(this).slider("values", 0),
-        sli_2 = $(this).slider("values", 1),
-        sli_3 = $(this).slider("values", 2),
+    var sli = $(this).slider("values", 0),
         sli_name = $(this).attr("name");
 
     $.ajax({
       type: "POST",
       url: "/species/add_ecological_variable",
-      data: { species_id: sp_id, eco_variable_id: sli_name, min: sli_1, max: sli_3, mean: sli_2},
+      data: { species_id: sp_id, eco_variable_id: sli_name, mean: sli},
       error: function( jqXHR, textStatus ) {
           isError = true;
           alert( "Ha ocurrido un error: " + textStatus );
@@ -229,14 +223,12 @@ $(".ecobtn").click(function(e) {
     if($(this).prop("checked")){
 
       var sli_id = $(this).parent('div').find('div.slider').attr("name"),
-          sli_1 = $(this).parent('div').find('div.slider').slider("values", 0),
-          sli_2 = $(this).parent('div').find('div.slider').slider("values", 1),
-          sli_3 = $(this).parent('div').find('div.slider').slider("values", 2);
+          sli= $(this).parent('div').find('div.slider').slider("values", 0);
 
       $.ajax({
         type: "POST",
         url: "/species/add_ecological_variable",
-        data: { species_id: sp_id, eco_variable_id: sli_id, min: sli_1, max: sli_3, mean: sli_2 },
+        data: { species_id: sp_id, eco_variable_id: sli_id, mean: sli },
         error: function( jqXHR, textStatus ) {
           isError = true;
           alert( "Ha ocurrido un error: " + textStatus );

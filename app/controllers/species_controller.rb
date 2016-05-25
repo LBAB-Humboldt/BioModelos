@@ -136,9 +136,9 @@ class SpeciesController < ApplicationController
     @eco_variable = EcoVariablesSpecies.where(:species_id => params[:species_id], :user_id => current_user.id, :eco_variable_id => params[:eco_variable_id]).first
 
     if @eco_variable.blank?
-      EcoVariablesSpecies.create({:species_id => params[:species_id], :user_id => current_user.id, :eco_variable_id => params[:eco_variable_id], :min => params[:min], :max => params[:max], :mean => params[:mean]})
+      EcoVariablesSpecies.create({:species_id => params[:species_id], :user_id => current_user.id, :eco_variable_id => params[:eco_variable_id],:mean => params[:mean]})
     else
-      EcoVariablesSpecies.update(@eco_variable.id, {:min => params[:min], :max => params[:max], :mean => params[:mean]})
+      EcoVariablesSpecies.update(@eco_variable.id, {:mean => params[:mean]})
     end
 
     respond_to do |format|
@@ -171,10 +171,10 @@ class SpeciesController < ApplicationController
     end
 
     def point_comment_params
-      params.require(:point_comment).permit(:user_id, :species_id, :lat, :lon, :wrong_id, :geo_problem, :comment)
+      params.require(:point_comment).permit(:user_id, :species_id, :lat, :lon, :wrong_id, :geo_problem, :comment, :register_id)
     end
 
     def eco_params
-      params.require(:eco_variables_species).permit(:species_id, :user_id, :eco_variable_id, :max, :min, :mean)
+      params.require(:eco_variables_species).permit(:species_id, :user_id, :eco_variable_id, :mean)
     end
 end

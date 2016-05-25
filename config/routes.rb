@@ -1,7 +1,7 @@
 Biomodis::Application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  devise_for :users, controllers: { registrations: "devise2/registrations", sessions: "devise2/sessions" }
+  devise_for :users, controllers: { registrations: "devise2/registrations", sessions: "devise2/sessions", passwords: "devise2/passwords"}
   #devise_for :users
   get "models/visor"
   get "models/download_model"

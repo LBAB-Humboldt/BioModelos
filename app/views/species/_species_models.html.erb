@@ -71,7 +71,7 @@
                             <% end %>
                             </div>
                             <div class="rankmod clearfix">
-                                <% if user_signed_in? %>
+                                <% if user_signed_in? && user_is_in_group(current_user.id) %>
                                     <div class="user_star">
                                         <%= hidden_field_tag('model', model.id, :class => 'mid' )  %>
                                         <%= hidden_field_tag('level', model.level, :class => 'lvl' )  %>
@@ -120,7 +120,7 @@
                             <% end %>
                             </div>
                             <div class="rankmod clearfix">
-                                <% if user_signed_in? %>
+                                <% if user_signed_in? && user_is_in_group(current_user.id) %>
                                     <div class="user_star">
                                         <%= hidden_field_tag('model', model.id, :class => 'mid' )  %>
                                         <%= hidden_field_tag('level', model.level, :class => 'lvl' )  %>
@@ -170,7 +170,7 @@
                                 <% end %>
                                 </div>
                                 <div class="rankmod clearfix">
-                                    <% if user_signed_in? %>
+                                    <% if user_signed_in? && user_is_in_group(current_user.id) %>
                                         <div class="user_star">
                                             <%= hidden_field_tag('model', model.id, :class => 'mid' )  %>
                                             <%= hidden_field_tag('level', model.level, :class => 'lvl' )  %>
@@ -220,7 +220,7 @@
                             <% end %>
                             </div>
                             <div class="rankmod clearfix">
-                                <% if user_signed_in? %>
+                                <% if user_signed_in? && user_is_in_group(current_user.id) %>
                                     <div class="user_star">
                                         <%= hidden_field_tag('model', model.id, :class => 'mid' )  %>
                                         <%= hidden_field_tag('level', model.level, :class => 'lvl' )  %>
@@ -270,7 +270,7 @@
                                 <% end %>
                                 </div>
                                 <div class="rankmod clearfix">
-                                    <% if user_signed_in? %>
+                                    <% if user_signed_in? && user_is_in_group(current_user.id) %>
                                         <div class="user_star">
                                             <%= hidden_field_tag('model', model.id, :class => 'mid' )  %>
                                             <%= hidden_field_tag('level', model.level, :class => 'lvl' )  %>
@@ -298,14 +298,14 @@
 
         </div>
         <p>Califica sólo uno de los modelos por pestaña.</br></br></p>
-        <% if user_signed_in? %>
+        <% if user_signed_in? && user_is_in_group(current_user.id) %>
         <input type="checkbox" class="arealim"><label title="En casos en que se desee delimitar el area de conocimiento de la especie, podrá agregar tags geográficos por municipios o departamentos en un lenguaje controlado">Marque si su conocimiento sobre esta especie corresponde a un área limitada <i>(agregar tags geográficos)</i></label></input>
         <input type="text" id="tags-input" class="borders clearfix"></input>
         <input id="save-tags"class="cbton tagbtn" type="submit" value="guardar"></input>
         <% end %> 
         <div class="commentspace">
         <h3>Comentarios sobre esta especie y sus modelos</h3>
-        <% if user_signed_in? %>
+        <% if user_signed_in? && user_is_in_group(current_user.id) %>
             <%= render :partial => 'comments/new', :locals => {:new_comment => @new_comment} %>
         <% end %>
         </div>
@@ -360,7 +360,7 @@
                     model_clicked_id = $(this).find('.mid').val();
                     if(evt.currentTarget.className === "raty-cancel")
                     {
-                        if(<%= user_signed_in? %>){
+                        if(<%= user_signed_in? && user_is_in_group(current_user.id) %>){
                             $.ajax({
                                 type: "DELETE",
                                 url: "/ratings/destroy",
@@ -515,7 +515,7 @@ var loadRegionTags = function (){
     return regions_usr_sp;
 };
 
-<% if user_signed_in? %>
+<% if user_signed_in? && user_is_in_group(current_user.id) %>
     $("#tags-input").tokenInput("/species/regions_autocomplete",
     {
         preventDuplicates: true,

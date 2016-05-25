@@ -1,0 +1,8 @@
+Se ha recibido un mensaje desde la aplicación BioModelos con la siguiente información:
+
+Hora de recepción: <%= @datetime.strftime("%F %r") %>
+
+Nombre o institución: <%= @message.name %>
+E-Mail: <%= @message.email %>
+Asunto: <%= @message.subject %>
+Contenido: <%= @message.content %>

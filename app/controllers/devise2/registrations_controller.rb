@@ -12,6 +12,7 @@ class Devise2::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     @groups =Group.where(:group_state_id => 1)
+    @periodicities = Periodicity.all
     super
   end
 
