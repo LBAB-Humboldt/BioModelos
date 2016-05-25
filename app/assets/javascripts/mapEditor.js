@@ -7,11 +7,12 @@ var _mapVisorModule = function() {
            '<label><strong>Observación:</strong></label><br />' +
 	       '<textarea rows="4" cols="30" placeholder="Ingrese una observación" id="comment" class="cmtArea"></textarea>' +
 	       '<div class="row-fluid clearfix">' +
-	       '<label class="labelcom clearfix"><strong>Acción:</strong></label><input type="radio" name="EditType" value="Add" class="radiogaga">Extensión de presencia</input></br>' +
- 	       '<input type="radio" name="EditType" value="Cut" class="radiogaga">Sobrepredicción</input></br>' +
- 	       '<input type="radio" name="EditType" value="Other" class="radiogaga" checked>Otro</input></br>'+
+	       '<label class="labelcom clearfix"><strong>Acción:</strong></label><input type="radio" name="EditType" value="Add" class="radiogaga">Agregar al modelo</input></br>' +
+ 	       '<input type="radio" name="EditType" value="Cut" class="radiogaga">Eliminar del modelo</input></br>' +
+ 	       '<input type="radio" name="EditType" value="Intersect" class="radiogaga">Recortar por polígono</input></br>'+
 	       '<button class="btn2" id="saveBtn" type="button">guardar</button>' +
-           '<button class="btn2" id="popUpCancelBtn" type="button">cancelar</button></div>'; 
+           '<button class="btn2" id="popUpCancelBtn" type="button">cancelar</button>' +
+           '<a title="Cómo utilizamos este aporte?" class="infolink" id="gotofaq"></a></div>';
         pointForm = '<div class="commentForm">' +
            '<input id="review_type" type="hidden">'+
            '<label class="tituloformas">Registro:</label><br />' +
@@ -109,7 +110,7 @@ var _mapVisorModule = function() {
 	    modelOverlay = new L.ImageOverlay(imageUrl, imageBounds, {opacity: 0.6});
 	    
 	    map.addLayer(modelOverlay, true);
-	    layerControl.addOverlay(modelOverlay, "Modelo");
+	    layerControl.addOverlay(modelOverlay, "Modelo Nivel 1 (naranja)");
 	        
 	    map.on('overlayadd', function(e) {
 	         if(e.layer === modelOverlay)
@@ -136,7 +137,7 @@ var _mapVisorModule = function() {
 	    modelOverlay2 = new L.ImageOverlay(imageUrl, imageBounds, {opacity: 0.6});
 	    
 	    map.addLayer(modelOverlay2, true);
-	    layerControl.addOverlay(modelOverlay2, "Modelo Nivel 2");
+	    layerControl.addOverlay(modelOverlay2, "Modelo Nivel 2 (verde)");
 	        
 	    map.on('overlayadd', function(e) {
 	         if(e.layer === modelOverlay2)
