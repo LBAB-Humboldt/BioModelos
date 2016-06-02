@@ -16,12 +16,31 @@ $( document ).ready(function() {
         $(this).animate({scrollTop:$(".cajadatosm").position().top - '20'},600).finish();
   });
 
-  //Set species class
-  $('#class_checker input:radio').change(function(){
-      $("#class_id").val($("#class_checker input[type='radio']:checked").val());
-        $('#search_field').val('');
-        $('#search_field').typeahead('setQuery', '');
-        ajaxGetSpecies($("#class_id").val());
+  /* 
+    Species search form buttons logic
+  */
+  $("input:checkbox").on('click', function() {
+    var $box = $(this),
+        box_val = "";
+    if ($box.is(":checked")) {
+      // the name of the box is retrieved using the .attr() method
+      // as it is assumed and expected to be immutable
+      var group = "input:checkbox[name='" + $box.attr("name") + "']";
+      // the checked state of the group/box on the other hand will change
+      // and the current value is retrieved using .prop() method
+      $(group).prop("checked", false);
+      $box.prop("checked", true);
+      box_val = $box.val();
+      $("#class_checker label").addClass("nonchecked");
+      $box.parent().removeClass("nonchecked");
+    } else {
+      $box.prop("checked", false);
+      $("#class_checker label").removeClass("nonchecked");
+    }
+    $("#class_id").val(box_val);
+    $('#search_field').val('');
+    $('#search_field').typeahead('setQuery', '');
+    ajaxGetSpecies($("#class_id").val());
   });
 
 
@@ -47,6 +66,7 @@ $( document ).ready(function() {
   /* Model selection */
   $("body").on("click",".model_link",function (event) {
                 _mapVisorModule.loadModel("/modelos/"+$(this).find('#imgsrc').val(), $('#species_id').val());
+                $("#current_model").val($(this).find('#imgsrc').val().split(".")[0]);
                 if($("#imgsrc2").length) {
                   _mapVisorModule.loadModel_n2("/modelos/"+$(this).find('#imgsrc2').val(), $('#species_id').val());
                 }

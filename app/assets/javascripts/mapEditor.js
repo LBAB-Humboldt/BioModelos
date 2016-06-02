@@ -12,7 +12,7 @@ var _mapVisorModule = function() {
  	       '<input type="radio" name="EditType" value="Intersect" class="radiogaga">Recortar por polígono</input></br>'+
 	       '<button class="btn2" id="saveBtn" type="button">guardar</button>' +
            '<button class="btn2" id="popUpCancelBtn" type="button">cancelar</button>' +
-           '<a title="Cómo utilizamos este aporte?" class="infolink" id="gotofaq"></a></div>';
+           '<a href="http://biomodelos.humboldt.org.co/faq#faq" target="_blank" title="Cómo utilizamos este aporte?" class="infolink" id="gotofaq"></a></div>';
         pointForm = '<div class="commentForm">' +
            '<input id="review_type" type="hidden">'+
            '<label class="tituloformas">Registro:</label><br />' +
@@ -455,7 +455,9 @@ var _mapVisorModule = function() {
 	        else
 	            geoJSONLayer += '[' + coords + ']';
 
-	        geoJSONLayer += '}, "properties": {"Comentario": "' + $('#puComment').text().replace(/(?:\r\n|\r|\n)/g, ' ');
+	        geoJSONLayer += '}, "properties": {"Especie": "'+ $(".areaespecie").text() + '"' +
+	        					',"Experto": "'+ $("#user_name").val() + '"' +
+	        					', "Comentario": "' + $('#puComment').text().replace(/(?:\r\n|\r|\n)/g, ' ');
 	        if (ltG.geometry.type === 'Point'){
 	        	geoJSONLayer += '", "Fecha de Registro": "' + $('#puFechaRegistro').text() + '"' +
 	        					', "Localidad": "' + $('#puLocalidad').text() + '"' +
@@ -464,7 +466,7 @@ var _mapVisorModule = function() {
 	        					', "Cita": "' + $('#puCita').text();
 	        }
 	        else
-	        	geoJSONLayer += '", "Accion": "' + $('#puAction').text();
+	        	geoJSONLayer += '", "Accion": "' + $('#puAction').text() + '"' + ',"Modelo": "' + $('#current_model').val(); 
 
 	        geoJSONLayer += '"}}';
 

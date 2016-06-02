@@ -20,6 +20,7 @@
 			  <% if user_signed_in? %>
 			  <div class="usuario">
 			    <%= link_to current_user.email, user_path(:id => current_user.id), :title=>'Perfil' %>
+			    <%= hidden_field_tag 'user_name', current_user.name %>
 			    <%= link_to 'X', destroy_user_session_path, :method=>'delete', :class=>'xsalir', :title=>'Salir' %>
 			  </div>
 			  <% else %>

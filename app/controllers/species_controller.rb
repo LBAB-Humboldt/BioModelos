@@ -34,9 +34,9 @@ class SpeciesController < ApplicationController
   end  
 
   def eco_variables_search
-    ecovar = EcoVariablesSpecies.search(params[:user_id], params[:species_id])
+    ecovar = EcoVariablesSpecies.where(user_id:current_user.id, :species_id => params[:species_id])
     result = ecovar.collect do |t|
-      { eco_id: t.eco_variable_id, max: t.max, min: t.min, mean: t.mean}
+      { eco_id: t.eco_variable_id, certainty: t.certainty}
     end
 
     render json: result
@@ -136,9 +136,9 @@ class SpeciesController < ApplicationController
     @eco_variable = EcoVariablesSpecies.where(:species_id => params[:species_id], :user_id => current_user.id, :eco_variable_id => params[:eco_variable_id]).first
 
     if @eco_variable.blank?
-      EcoVariablesSpecies.create({:species_id => params[:species_id], :user_id => current_user.id, :eco_variable_id => params[:eco_variable_id],:mean => params[:mean]})
+      EcoVariablesSpecies.create({:species_id => params[:species_id], :user_id => current_user.id, :eco_variable_id => params[:eco_variable_id],:certainty => params[:certainty]})
     else
-      EcoVariablesSpecies.update(@eco_variable.id, {:mean => params[:mean]})
+      EcoVariablesSpecies.update(@eco_variable.id, {:certainty => params[:certainty]})
     end
 
     respond_to do |format|

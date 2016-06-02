@@ -20,14 +20,6 @@ $( document ).ready(function() {
   }
 
   var resetEcoVariables = function(){
-    // $("div.slider").each(function(e) {
-    //         $(this).slider("values", 0, 0);
-    //         $(this).slider("values", 1, 0.5);
-    //         $(this).slider("values", 2, 1);
-    //  });
-    $("#accordion .slider").each(function(e) {
-            $(this).hide();
-    });
     $("#accordion h6").each(function(e) {
             $(this).hide();
     });
@@ -39,7 +31,7 @@ $( document ).ready(function() {
 
   $('.searchcateg,.showmodels,.editControls,#cancBtn,.cajabusqueda,.showmodels,.cajaediciones,.edicionbar,.botonmodelos,.cajaecolog,.ecologicas').hide();
   $('.cajabusqueda').show('slow');
-  ajaxGetSpecies($("#class_checker input[type='radio']:checked").val());
+  ajaxGetSpecies("");
   $(".findbar").addClass("w55");
   $(".findbar").click(function(e){
           e.preventDefault();
@@ -50,7 +42,7 @@ $( document ).ready(function() {
           else{
             $('.cajabusqueda').show('slow');
             $('.showmodels, .editControls, .edicionbar, .botonmodelos, .cajaediciones, .cajaecolog, .ecologicas, .areaespecie').hide('slow');
-            ajaxGetSpecies($("#class_checker input[type='radio']:checked").val());
+            ajaxGetSpecies("");
             editButtonsOff();
             _mapVisorModule.deactivateEdition();
             _mapVisorModule.unloadModel();
@@ -102,7 +94,6 @@ $( document ).ready(function() {
         $(".showmodels").show();
         $(".botonmodelos").addClass("w55");
       }
-      
       e.preventDefault();
   });
 
@@ -133,7 +124,180 @@ $( document ).ready(function() {
     e.preventDefault();
   });
 
+  //*****************//
+  // REVIEWS BOX     //
+  //*****************//
 
+  $(".edicionbar").click(function(e) {
+
+    var sid = $('#species_id').val();
+
+    $.ajax({
+        'type': "POST",
+        'global': false,
+        url: "/reviews/reviews_by_species",
+        data: {id: sid},
+        error: function( jqXHR, textStatus ) {
+            isError = true;
+            alert( "Ha ocurrido un error: " + textStatus );
+        }
+    });
+
+    e.preventDefault();
+  });
+
+  //********************************//
+  // ECOLOGICAL VARIABLES FUNCTIONS //
+  //********************************//
+
+  var ecoVars;
+
+  //Get the variable from the array
+  function getEcoVariable(key){
+    for (var i in ecoVars) {
+      if(ecoVars[i].eco_id == key)
+        return ecoVars[i];
+    }
+  }
+  //Set the accordion function
+  $( "#accordion" ).accordion({ heightStyle: "content", collapsible: true });
+
+  //Plus button function of showing and hiding the checkboxes.
+  $('.subcbtn').click(function() {
+    $(this).parent('div').parent('div').find('div.subcecos').toggle('slow', function() {
+    });
+  });
+
+  //Actions when the ecological variables button is pushed
+  $(".ecologicas").click(function(e) {
+    console.log("CLICK");
+    var alt_range = "";
+
+    //Check if the eco variables box is visible
+    console.log($(".cajaecolog").is(":visible"));
+    if($(".cajaecolog").is(":visible")){
+      console.log("CLICK 2");
+      var sid = $('#species_id').val();
+
+      //Get previously saved ecological variables
+      $.ajax({
+          'async': false,
+          'type': "GET",
+          'global': false,
+          'dataType': 'json',
+          url: "/species/eco_variables_search",
+          data: {species_id: sid},
+          'success': function (data) {
+              ecoVars = data;
+          },
+          error: function( jqXHR, textStatus ) {
+              isError = true;
+              alert( "Ha ocurrido un error: " + textStatus );
+          }
+      });
+
+      // Get previously saved altitude range
+      $.ajax({
+          'async': false,
+          'type': "POST",
+          'global': false,
+          'dataType': 'json',
+          url: "/species/get_altitude_range",
+          data: {sid: sid},
+          'success': function (data) {
+              alt_range = data;
+          },
+          error: function( jqXHR, textStatus ) {
+              isError = true;
+              alert( "Ha ocurrido un error: " + textStatus );
+          }
+      });
+
+      //Put the saved values in the altitude boxes
+      if(alt_range != null){
+        $("#ralt_min").val(alt_range.alt_min);
+        $("#ralt_max").val(alt_range.alt_max);
+      }
+      else{
+        $("#ralt_min").val("");
+        $("#ralt_max").val("");
+      }  
+
+      //Initialize checkboxes with previous value
+      $('input[type=checkbox]').each(function(e){
+        var $this = $(this),
+            ecoVar,
+            box_val = 0.0;
+
+        ecoVar = getEcoVariable($(this).attr('name'));
+
+        if (ecoVar != undefined)
+            box_val = ecoVar.certainty;
+
+        if (box_val == 1.0)
+            $this.prop("checked", true);
+      });
+    }
+  });
+
+  /* 
+    Saves or updates the altitude range 
+  */
+  $(".ecobtn").click(function(e) {
+    var sp_id = $('#species_id').val(),
+        isError = false,
+        re = /^([0-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9])$/,
+        ralt_str_min = $("#ralt_min").val(),
+        ralt_str_max = $("#ralt_max").val();
+
+    if (re.test(ralt_str_min) && re.test(ralt_str_max)){
+      if(parseInt(ralt_str_min) < parseInt(ralt_str_max)){
+        $.ajax({
+          type: "POST",
+          url: "/species/add_altitude_range",
+          data: { sid: sp_id, alt_min: ralt_str_min, alt_max: ralt_str_max},
+          error: function( jqXHR, textStatus ) {
+            isError = true;
+            alert( "Ha ocurrido un error: " + textStatus );
+          } 
+        });
+      }
+      else{
+        alert("El valor mínimo debe ser menor que el valor máximo.");
+        isError = true;
+      }
+    }
+    else{
+       alert("Ingrese valores de Rango Altitudinal válidos.");
+       isError = true;
+    }
+
+  if(!isError)
+    alert("El rango altitudinal ha sido guardado con éxito.")
+
+  });
+
+  /* 
+    Saves or updates the ecological variable
+  */
+  $("#accordion input[type=checkbox]").change(function () {
+    var sp_id = $('#species_id').val(),
+        box_id = $(this).attr('name'),
+        eco_var_val = 0.0;
+
+      if ($(this).prop("checked"))
+        eco_var_val = 1.0;
+
+      $.ajax({
+          type: "POST",
+          url: "/species/add_ecological_variable",
+          data: { species_id: sp_id, eco_variable_id: box_id, certainty: eco_var_val },
+          error: function( jqXHR, textStatus ) {
+            isError = true;
+            alert( "Ha ocurrido un error: " + textStatus );
+          }
+      });
+  });
 });
 
 
