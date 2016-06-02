@@ -7,9 +7,9 @@ var _mapVisorModule = function() {
            '<label><strong>Observación:</strong></label><br />' +
 	       '<textarea rows="4" cols="30" placeholder="Ingrese una observación" id="comment" class="cmtArea"></textarea>' +
 	       '<div class="row-fluid clearfix">' +
-	       '<label class="labelcom clearfix"><strong>Acción:</strong></label><input type="radio" name="EditType" value="Add" class="radiogaga">Agregar al modelo</input></br>' +
+	       '<label class="labelcom clearfix"><strong>Acción:</strong></label><input type="radio" name="EditType" value="Intersect" class="radiogaga">Recortar por polígono</input></br>' +
+ 	       '<input type="radio" name="EditType" value="Add" class="radiogaga">Agregar al modelo</input></br>' +
  	       '<input type="radio" name="EditType" value="Cut" class="radiogaga">Eliminar del modelo</input></br>' +
- 	       '<input type="radio" name="EditType" value="Intersect" class="radiogaga">Recortar por polígono</input></br>'+
 	       '<button class="btn2" id="saveBtn" type="button">guardar</button>' +
            '<button class="btn2" id="popUpCancelBtn" type="button">cancelar</button>' +
            '<a href="http://biomodelos.humboldt.org.co/faq#faq" target="_blank" title="Cómo utilizamos este aporte?" class="infolink" id="gotofaq"></a></div>';
