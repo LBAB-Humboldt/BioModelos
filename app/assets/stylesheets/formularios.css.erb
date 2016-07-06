@@ -701,19 +701,31 @@ float:left;
   width: 90% !important;
 }
 
-.formedgroup label > input, #class_checker label > input {
+.formedgroup label > input, #class_checker label > input, .cclicenses2 label > input {
   display:none;
 }
 
 .formedgroup label > input + img,
-#class_checker label > input + img { 
+#class_checker label > input + img, 
+.cclicenses img { 
   margin-right: 5px;
   cursor:pointer;
   opacity:1;
   width: 40px;
   height:40px;
 }
+
+.pubcontent #class_checker label > input + img {
+    margin-right: 5px;
+    cursor:pointer;
+    opacity:1;
+    width: 100px;
+    height:35px;
+}
+}
+
 .formedgroup label > input:checked + img,
+.cclicenses label > input:checked + img,
 #class_checker label > input:checked + img { 
   opacity:1;
 }
