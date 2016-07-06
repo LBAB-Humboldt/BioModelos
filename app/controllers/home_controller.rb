@@ -52,6 +52,10 @@ class HomeController < ApplicationController
     @species = Species.where(:id => val_sp_ids)
   end
 
+  def publish
+      
+  end
+
   private
 
     def message_params
