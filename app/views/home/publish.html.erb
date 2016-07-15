@@ -62,8 +62,13 @@
             <p><b>5.</b> <a href="http://biomodelos.humboldt.org.co/plantilla_metadatos_modelo.xlsx" download>Descargar</a> y llenar la plantilla excel de metadatos del modelo</p>
             <p><b>6.</b> <a href="http://biomodelos.humboldt.org.co/plantilla_metadatos_registros.xlsx" download>Descargar</a> y llenar la plantilla excel de metadatos del conjunto de datos</p>
             <p><b>7.</b> Subir en un zip comprimido la metodología, las dos plantillas y el modelos binario.</br><i>Para muchos modelos hacer un zip con todos los modelos por carpetas.</i></p>
-            <button class="upzip">SUBIR ZIP</button>
-            <%= f.input :files, :as => :file, :required => true, label: false, error_html: {:id => 'name_error'} %>
+            <div class="inputBtnSection">
+            <input id="uploadFile" class="disableInputField" placeholder="Seleccionar Archivo" />
+                  <label class="fileUpload">
+                  <%= f.input :files, :as => :file, :required => true, label: false, error_html: {:id => 'name_error'}, :input_html => { :id => "uploadBtn", :class => "upload"} %>
+                  <span class="uploadBtn">SUBIR ZIP</span>
+                  </label>
+            </div>
             <p><b>8.</b> Leer y aceptar los <a ng-click="terminos=!terminos; activeButton()" ng-class="{'anglnkact': isActive}">términos y condiciones</a></p>
             <div ng-show="terminos" class="pubcontent clearfix">
                   <h4>términos y condiciones</h4>
@@ -83,7 +88,7 @@
                   <p><b>3.</b> Utilizará los registros biológicos que acompañan el modelo únicamente para la visualización en BioModelos bajo las condiciones determinadas por los publicadores en el formulario de publicación del modelo. En ningún caso su uso o descarga estará habilitada en BioModelos, a menos que esto sea expresamente autorizado en el formulario de publicación de modelos.</p>
                   <p><b>4.</b> Se reserva el derecho de publicar los modelos así como de bajarlos en cualquier momento de la página.</p>
                   
-                  <%= f.input :terminos, label: false, :as => :boolean, :required => true %>He leído y acepto los términos y condiciones</br>
+                  <%= f.input :terminos, label: false, :as => :boolean, :required => true, error_html: {:id => 'name_error'} %>He leído y acepto los términos y condiciones</br>
                   <%= f.input :atlas_agreement, label: false, :as => :boolean %>Deseo postular mi trabajo para publicar en el <a href="http://biomodelos.humboldt.org.co/publicacion.pdf" target="_blank">Atlas de la Biodiversidad de Colombia</a>
             </div>
             <p>Cualquier inquietud escríbanos a <a mailto="biomodelos@humboldt.org.co">biomodelos@humboldt.org.co</a></p>
@@ -91,3 +96,9 @@
             <% end %>
 	</div>
 </div>
+
+<script>
+document.getElementById("uploadBtn").onchange = function () {
+    document.getElementById("uploadFile").value = this.value;
+};
+</script>

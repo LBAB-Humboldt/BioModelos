@@ -336,6 +336,84 @@ background: transparent;
     letter-spacing: 1px;
 }
 
+.wrapperbut * {
+    cursor: pointer;
+}
+
+#name_error:before {
+    clear: both;
+}
+
+#name_error,
+.publish .alert {
+    position: absolute;
+    z-index: 101;
+    top: 17px;
+    left: initial;
+    padding: 10px;
+    right: 20px;
+    background-color: #1b3337;
+    display: block;
+    border: none;
+    font-size: 14px !important;
+    color:#fff;
+}
+
+#name_error {
+    top:57px;
+    background-color: #db3f2a;
+}
+
+.inputBtnSection{
+    display:inline-block;
+    vertical-align:top;
+    font-size:0;
+    font-family:verdana;
+    margin-left: 39px;
+    margin-bottom: 15px;
+}
+.disableInputField{
+    display:inline-block;
+    vertical-align:top;
+    height: 27px;
+    margin: 0;
+    font-size:14px;
+    padding:0 3px;
+    width: 230px;
+}
+
+.fileUpload {
+    overflow: hidden;
+    border:solid 1px gray;
+    display:inline-block;
+    vertical-align:top;
+}
+.uploadBtn{
+    display:inline-block;
+    vertical-align:top;
+    background: none;
+    text-transform: uppercase;
+    font-size:16px;
+    padding:2px 13px;
+    height:25px;
+    line-height:22px;
+    border: 1px solid #124c5e;
+    color:#124c5e;
+    letter-spacing: 1px;
+}
+
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
 .pubcontent {
     color: #0e5c5b;
     font-size: 16px;
