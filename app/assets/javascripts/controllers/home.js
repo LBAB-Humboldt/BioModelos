@@ -10,4 +10,13 @@ jQuery(document).ready(function($) {
         'usecaptions'  : false,     // enable/disable captions using img title attribute
         'randomstart' : true   
     });
+
+    $("#cc_licenses input:checkbox").on('click', function() {
+        var $box = $(this);
+        if ($box.is(":checked")) {
+            $("#publication_cc_license").val($box.val());
+        }
+ 
+    });
+
 });

@@ -35,5 +35,7 @@ public/uploads/
 metadata/
 tiff/
 .sass-cache/
+uploads/
 *.sql
 *.csv
+*.pdf

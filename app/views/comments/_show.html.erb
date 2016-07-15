@@ -1,6 +1,6 @@
 <%= content_tag :div, :id => "comment-#{comment.id}", :class => 'comment-tab' do %>
 	<div class="minavatar">
-		<% miniavat = User.find(comment.user_id).avatarUrl.url(:thumb30).to_s
+		<% miniavat = User.find(comment.user_id).avatarUrl.url(:thumb30).to_s.split("/public/")[1]
 			if  miniavat == "fotoperfil.png" %>
 				<%= image_tag('minavatar.png') %>
 			<% else %>

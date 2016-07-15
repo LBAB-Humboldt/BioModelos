@@ -4,6 +4,7 @@
 	              <h2>Mantengase en contacto con nosotros, estamos para atender sus dudas, oir sus opiniones y sugerencias.</h2>
             <div id="mailform">       
                   <%= simple_form_for :message, :url => {:controller => "home", :action => "send_message" }, :html => {:class => 'forma' }, :remote => true do |f| %>
+                        <%= f.error_notification %>
                         <%= f.input :name, :maxlength => 50, :placeholder => "Nombre o Institución", :name => "nombre", label: false%>
                         <%= f.input :subject, :maxlength => 50, :placeholder => "Asunto", :name => "asunto", label: false %>
                         <%= f.input :email, :maxlength => 50, :placeholder => "E-mail", :name => "email", label: false %>

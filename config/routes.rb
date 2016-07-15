@@ -29,6 +29,7 @@ Biomodis::Application.routes.draw do
   post "reviews/reviews_by_species"
   post "regions/save_region_user"
   post "species/get_altitude_range"
+  post "home/upload_model"
   resources :regions do
     get :regions_by_user, :on => :collection
   end

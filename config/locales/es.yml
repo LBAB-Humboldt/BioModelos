@@ -119,6 +119,7 @@ es:
       too_long: es demasiado largo (%{count} caracteres máximo)
       too_short: es demasiado corto (%{count} caracteres mínimo)
       wrong_length: no tiene la longitud correcta (%{count} caracteres exactos)
+      extension_white_list_error: Sólo se permiten archivos con extensión %{allowed_types}
     template:
       body: ! 'Se encontraron problemas con los siguientes campos:'
       header:

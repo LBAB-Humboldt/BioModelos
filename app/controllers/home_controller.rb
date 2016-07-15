@@ -40,11 +40,16 @@ class HomeController < ApplicationController
 
   def send_message
   	@message = Message.new(message_params)
-  	ContactMailer.contact_us(@message).deliver
 
-  	respond_to do |format|
-  		format.js
-  	end
+    if @message.valid?
+    	ContactMailer.contact_us(@message).deliver
+
+    	respond_to do |format|
+    		format.js
+    	end
+    else
+      render :feedback
+    end
   end
 
   def active_species
@@ -53,13 +58,29 @@ class HomeController < ApplicationController
   end
 
   def publish
-      
+    @publication = Publication.new
+  end
+
+  def upload_model
+
+    @publication = Publication.new(upload_params)
+
+    if @publication.save
+      redirect_to home_publish_path, notice: 'Comment was successfully created.'
+    else
+      render :publish, notice: 'There was an issue trying to save your comment.'
+    end
+
   end
 
   private
 
     def message_params
       params.require(:message).permit(:name, :email, :subject, :content)
+    end
+
+    def upload_params
+      params.require(:publication).permit(:cc_license, :records_vis, :sib_contact, :files, :atlas_agreement, :terminos).merge(user_id: current_user.id)
     end
 
 end

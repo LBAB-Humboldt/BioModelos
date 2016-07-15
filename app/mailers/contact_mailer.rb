@@ -38,4 +38,5 @@ class ContactMailer < ActionMailer::Base
     @datetime = DateTime.now
     mail to: "biomodelos@humboldt.org.co",  subject: "Sugerencia de Nuevo Grupo BioModelos"
   end
+
 end
