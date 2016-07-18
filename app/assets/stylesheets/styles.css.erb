@@ -153,6 +153,7 @@ footer nav a:active {
     position: absolute;
     top: 142px;
     z-index: 1000;
+    font-family: 'Lato', sans-serif;
 }
 
 .termbox {
@@ -340,11 +341,11 @@ background: transparent;
     cursor: pointer;
 }
 
-#name_error:before {
+.publierror:before {
     clear: both;
 }
 
-#name_error,
+.publierror,
 .publish .alert {
     position: absolute;
     z-index: 101;
@@ -357,11 +358,15 @@ background: transparent;
     border: none;
     font-size: 14px !important;
     color:#fff;
+    font-family: 'Lato', sans-serif;
 }
 
-#name_error {
-    top:57px;
+.publierror {
+    top:96px;
     background-color: #db3f2a;
+}
+.publierror:nth-child(2) {
+    top:56px;
 }
 
 .inputBtnSection{
@@ -396,10 +401,11 @@ background: transparent;
     font-size:16px;
     padding:2px 13px;
     height:25px;
-    line-height:22px;
+    line-height:25px;
     border: 1px solid #124c5e;
     color:#124c5e;
     letter-spacing: 1px;
+    cursor: pointer;
 }
 
 .fileUpload input.upload {

@@ -65,7 +65,7 @@
             <div class="inputBtnSection">
             <input id="uploadFile" class="disableInputField" placeholder="Seleccionar Archivo" />
                   <label class="fileUpload">
-                  <%= f.input :files, :as => :file, :required => true, label: false, error_html: {:id => 'name_error'}, :input_html => { :id => "uploadBtn", :class => "upload"} %>
+                  <%= f.input :files, :as => :file, :required => true, label: false, error_html: {:id => 'name_error', :class =>'publierror'}, :input_html => { :id => "uploadBtn", :class => "upload"} %>
                   <span class="uploadBtn">SUBIR ZIP</span>
                   </label>
             </div>
@@ -87,7 +87,8 @@
                   <p><b>2.</b> Otorgará el crédito correspondiente a los publicadores de modelos en la página de BioModelos y en los metadatos que acompañan los modelos de su autoría, con base en la información registrada en el formulario de publicación.</p>
                   <p><b>3.</b> Utilizará los registros biológicos que acompañan el modelo únicamente para la visualización en BioModelos bajo las condiciones determinadas por los publicadores en el formulario de publicación del modelo. En ningún caso su uso o descarga estará habilitada en BioModelos, a menos que esto sea expresamente autorizado en el formulario de publicación de modelos.</p>
                   <p><b>4.</b> Se reserva el derecho de publicar los modelos así como de bajarlos en cualquier momento de la página.</p>
-                  
+            </div>
+            <div class="pubcontent">   
                   <%= f.input :terminos, label: false, :as => :boolean, :required => true, error_html: {:id => 'name_error'} %>He leído y acepto los términos y condiciones</br>
                   <%= f.input :atlas_agreement, label: false, :as => :boolean %>Deseo postular mi trabajo para publicar en el <a href="http://biomodelos.humboldt.org.co/publicacion.pdf" target="_blank">Atlas de la Biodiversidad de Colombia</a>
             </div>
