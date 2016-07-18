@@ -1,4 +1,7 @@
 class HomeController < ApplicationController
+
+  before_action :authenticate_user!, :except => [:show, :send_message, :active_species, :feedback]
+
   def show
     @user=User.new
     @users_by_reviews = @user.users_most_reviews
@@ -58,7 +61,7 @@ class HomeController < ApplicationController
   end
 
   def publish
-    @publication = Publication.new
+      @publication = Publication.new
   end
 
   def upload_model
@@ -66,9 +69,9 @@ class HomeController < ApplicationController
     @publication = Publication.new(upload_params)
 
     if @publication.save
-      redirect_to home_publish_path, notice: 'Comment was successfully created.'
+      redirect_to home_publish_path, notice: 'Su publicación se ha llevado a cabo con éxito.'
     else
-      render :publish, notice: 'There was an issue trying to save your comment.'
+      render :publish
     end
 
   end
