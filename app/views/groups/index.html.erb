@@ -20,7 +20,7 @@
           <% @groups.each do |group| %>
           <div class="grupogen">
               <ul>
-                <li class="crop"><%= link_to image_tag(group.logo.url(:thumb250).to_s.split("/public/")[1]), group %></li>
+                <li class="crop"><%= link_to image_tag(group.logo.url(:thumb250).to_s.split("public")[1]), group %></li>
                 <li class="grtit"><%= link_to group.name, group %></li>
                 <li><%= group.description.blank? ? "Descripción pendiente." : group.description %></li>
               </ul>

@@ -340,11 +340,11 @@ background: transparent;
     cursor: pointer;
 }
 
-#name_error:before {
+.publierror:before {
     clear: both;
 }
 
-#name_error,
+.publierror,
 .publish .alert {
     position: absolute;
     z-index: 101;
@@ -359,9 +359,12 @@ background: transparent;
     color:#fff;
 }
 
-#name_error {
+.publierror {
     top:57px;
     background-color: #db3f2a;
+}
+.publierror:nth-child(2) {
+    top:97px;
 }
 
 .inputBtnSection{
