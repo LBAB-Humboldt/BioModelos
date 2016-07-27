@@ -11,7 +11,7 @@
           <p class="alert alert-notice"><%= @message %></p>
         <% end %>
         <div class="subcol">
-          <div class="crop2"><%= image_tag(@group.logo.url(:thumb250).to_s.split("public")[1]) %></div>
+          <div class="crop2"><%= image_tag(@group.logo.url(:thumb250).to_s) %></div>
         </div>
         <div class="subcol2">
           <h3>Administrador(es)</h3></br>

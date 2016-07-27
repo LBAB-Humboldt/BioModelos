@@ -39,4 +39,12 @@ class ContactMailer < ActionMailer::Base
     mail to: "biomodelos@humboldt.org.co",  subject: "Sugerencia de Nuevo Grupo BioModelos"
   end
 
+  # Envío de subida de publicación a BioModelos
+  def model_uploaded(user, publication)
+    @user = user
+    @publication = publication
+    @datetime = DateTime.now
+    mail to: "biomodelos@humboldt.org.co",  subject: "Nuevo modelo publicado por experto"
+  end
+
 end

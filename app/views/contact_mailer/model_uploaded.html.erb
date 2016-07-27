@@ -1,0 +1,11 @@
+Se ha subido un modelo a BioModelos con la siguiente información:
+
+Hora de recepción: <%= @datetime.strftime("%F %r") %>
+
+Experto: <a href="http://biomodelos.humboldt.org.co/users/<%= @user.id %>"><%= @user.name %></a>
+E-Mail: <%= @user.email %>
+Archivo: <%= @publication.files %>
+Licensia CC: <%= @publication.cc_license %>
+Visualización: <%= @publication.records_vis %>
+Contacto SiB: <%= @publication.sib_contact %>
+Atlas de la Biodiversidad: <%= @publication.atlas_agreement %>

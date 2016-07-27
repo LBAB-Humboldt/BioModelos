@@ -61,7 +61,7 @@
             <p><b>4.</b> <a href="http://biomodelos.humboldt.org.co/guia_doc_metodologico.docx" download>Descargar</a> y llenar el archivo word de metodología de modelamiento</p>
             <p><b>5.</b> <a href="http://biomodelos.humboldt.org.co/plantilla_metadatos_modelo.xlsx" download>Descargar</a> y llenar la plantilla excel de metadatos del modelo</p>
             <p><b>6.</b> <a href="http://biomodelos.humboldt.org.co/plantilla_metadatos_registros.xlsx" download>Descargar</a> y llenar la plantilla excel de metadatos del conjunto de datos</p>
-            <p><b>7.</b> Subir en un zip comprimido la metodología, las dos plantillas y el modelos binario.</br><i>Para muchos modelos hacer un zip con todos los modelos por carpetas.</i></p>
+            <p><b>7.</b> Subir en un zip comprimido la metodología, las dos plantillas y el modelo binario.</br><i>Para muchos modelos hacer un zip con todos los modelos por carpetas.</i></p>
             <div class="inputBtnSection">
             <input id="uploadFile" class="disableInputField" placeholder="Seleccionar Archivo" />
                   <label class="fileUpload">
@@ -99,7 +99,11 @@
 </div>
 
 <script>
-document.getElementById("uploadBtn").onchange = function () {
-    document.getElementById("uploadFile").value = this.value;
-};
+$( document ).ready(function() {
+      $("#cclicense").click();
+
+      document.getElementById("uploadBtn").onchange = function () {
+          document.getElementById("uploadFile").value = this.value;
+      };
+});
 </script>

@@ -45,13 +45,10 @@ class HomeController < ApplicationController
   	@message = Message.new(message_params)
 
     if @message.valid?
-    	ContactMailer.contact_us(@message).deliver
-
-    	respond_to do |format|
-    		format.js
-    	end
+    	ContactMailer.contact_us(@message).deliver_now
+      redirect_to root_path, notice: 'Su mensaje ha sido enviado con éxito.'
     else
-      render :feedback
+      redirect_to home_feedback_path, notice: 'Error: diligencie todos los campos antes de enviar el mensaje.'
     end
   end
 
@@ -69,12 +66,14 @@ class HomeController < ApplicationController
     @publication = Publication.new(upload_params)
 
     if @publication.save
+      ContactMailer.model_uploaded(current_user, @publication).deliver_now
       redirect_to home_publish_path, notice: 'Su publicación se ha llevado a cabo con éxito.'
     else
       render :publish
     end
 
   end
+
 
   private
 

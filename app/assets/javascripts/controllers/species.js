@@ -19,7 +19,7 @@ $( document ).ready(function() {
   /* 
     Species search form buttons logic
   */
-  $("input:checkbox").on('click', function() {
+  $("#class_checker input:checkbox").on('click', function() {
     var $box = $(this),
         box_val = "";
     if ($box.is(":checked")) {
