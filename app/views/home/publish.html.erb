@@ -4,10 +4,10 @@
             <%= f.error_notification %>
             <%= f.error :error, :class => "publierror" %>
       	<h2>Publica tu mapa</h2>
-            <h3>Para publicar un modelo de distribución en BioModelos, se deben seguir los siguientes pasos</h3>
+            <h3>Para publicar un modelo de distribución en BioModelos, sigue los siguientes pasos</h3>
 
-            <p><b>1.</b> Leer la <a href="/publicacion.pdf" target="_blank">guía de publicación</a></p>
-            <p><b>2.</b> Leer sobre y seleccionar una <a ng-click="licencia=!licencia; activeButton()" ng-class="{'anglnkact': isActive}">licencia de uso CC</a> para los modelos</p>
+            <p><b>1.</b> Lee la <a href="/publicacion.pdf" target="_blank">guía de publicación</a></p>
+            <p><b>2.</b> Selecciona una <a ng-click="licencia=!licencia; activeButton()" ng-class="{'anglnkact': isActive}">licencia de uso CC</a> para los modelos</p>
                   <div ng-show="licencia" class="pubcontent clearfix">
                         <h4>Tipo de licencia Creative Commons</h4>
                   <div class="cclicenses">
@@ -48,20 +48,18 @@
                         </div>
                     </div>
                   </div>
-            <p><b>3.</b> Seleccionar <a ng-click="visual=!visual; activeButton()" ng-class="{'anglnkact': isActive}">tipo de visualización</a> de los registros en BioModelos</p>
+            <p><b>3.</b> Selecciona el <a ng-click="visual=!visual; activeButton()" ng-class="{'anglnkact': isActive}">tipo de visualización</a> de los registros en BioModelos</p>
                   <div ng-show="visual" class="pubcontent clearfix">
                   <h4>Permisos de visualización de registros</h4>
-                  <p>Escoja una de las siguientes opciones:</p>
-                  <%= f.collection_radio_buttons :records_vis, [['allusers', 'Todos los usuarios'] ,['regusers', 'Sólo para usuarios registrados dentro del grupo que cobija la especie']], :first, :last, { item_wrapper_tag: false, :checked => 'allusers', label: false } %>
+                  <p>Escoge una de las siguientes opciones:</p>
+                  <%= f.collection_radio_buttons :records_vis, [['allusers', 'Todos los usuarios'] ,['regusers', 'Expertos registrados en el grupo de la especie']], :first, :last, { item_wrapper_tag: false, :checked => 'allusers', label: false } %>
                   
                   <div class="mt20"></div>
-                  <p>¿Desea ser contactado por el SiB Colombia para la publicación de su conjunto de datos?</p>
+                  <p>¿Deseas ser contactado por el SiB Colombia para la publicación de tu conjunto de datos?</p>
                   <%= f.collection_radio_buttons :sib_contact, [['SI', 'Si'] ,['NO', 'No'],['NA', 'No aplica']], :first, :last, { item_wrapper_tag: false, :checked => 'SI', label: false } %>
                   </div>
-            <p><b>4.</b> <a href="http://biomodelos.humboldt.org.co/guia_doc_metodologico.docx" download>Descargar</a> y llenar el archivo word de metodología de modelamiento</p>
-            <p><b>5.</b> <a href="http://biomodelos.humboldt.org.co/plantilla_metadatos_modelo.xlsx" download>Descargar</a> y llenar la plantilla excel de metadatos del modelo</p>
-            <p><b>6.</b> <a href="http://biomodelos.humboldt.org.co/plantilla_metadatos_registros.xlsx" download>Descargar</a> y llenar la plantilla excel de metadatos del conjunto de datos</p>
-            <p><b>7.</b> Subir en un zip comprimido la metodología, las dos plantillas y el modelos binario.</br><i>Para muchos modelos hacer un zip con todos los modelos por carpetas.</i></p>
+            <p><b>4.</b> <a href="http://biomodelos.humboldt.org.co/guia_documentacion_y_plantillas.zip" download>Descarga</a> y llena las plantillas para documentación de datos y metadatos de los modelos</p>
+            <p><b>5.</b> Sube en un zip comprimido la metodología, las dos plantillas y los modelos</p>
             <div class="inputBtnSection">
             <input id="uploadFile" class="disableInputField" placeholder="Seleccionar Archivo" />
                   <label class="fileUpload">
@@ -69,7 +67,7 @@
                   <span class="uploadBtn">SUBIR ZIP</span>
                   </label>
             </div>
-            <p><b>8.</b> Leer y aceptar los <a ng-click="terminos=!terminos; activeButton()" ng-class="{'anglnkact': isActive}">términos y condiciones</a></p>
+            <p><b>6.</b> Lee y acepta los <a ng-click="terminos=!terminos; activeButton()" ng-class="{'anglnkact': isActive}">términos y condiciones</a> de publicación</p>
             <div ng-show="terminos" class="pubcontent clearfix">
                   <h4>términos y condiciones</h4>
                   <p>La publicación de modelos en BioModelos se regirá por los siguientes términos y condiciones:</p>
@@ -90,9 +88,9 @@
                   </div>
                   <div class="pubcontent">
                   <%= f.input :terminos, label: false, :as => :boolean, :required => true, error_html: {:class => 'publierror'} %>He leído y acepto los términos y condiciones</br>
-                  <%= f.input :atlas_agreement, label: false, :as => :boolean %>Deseo postular mi trabajo para publicar en el <a href="http://biomodelos.humboldt.org.co/publicacion.pdf" target="_blank">Atlas de la Biodiversidad de Colombia</a>
+                  <%= f.input :atlas_agreement, label: false, :as => :boolean %>Deseo postular mi trabajo para publicación en el <a href="http://biomodelos.humboldt.org.co/publicacion.pdf" target="_blank">Atlas de la Biodiversidad de Colombia</a>
             </div>
-            <p>Cualquier inquietud escríbanos a <a mailto="biomodelos@humboldt.org.co">biomodelos@humboldt.org.co</a></p>
+            <p>Cualquier inquietud escríbenos a <a mailto="biomodelos@humboldt.org.co">biomodelos@humboldt.org.co</a></p>
             <%= f.submit 'ENVIAR', class: "upzip uzcolor"%>
             <% end %>
 	</div>
