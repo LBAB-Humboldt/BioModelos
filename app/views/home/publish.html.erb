@@ -97,7 +97,11 @@
 </div>
 
 <script>
-document.getElementById("uploadBtn").onchange = function () {
-    document.getElementById("uploadFile").value = this.value;
-};
+$( document ).ready(function() {
+      $("#cclicense").click();
+
+      document.getElementById("uploadBtn").onchange = function () {
+          document.getElementById("uploadFile").value = this.value;
+      };
+});
 </script>
