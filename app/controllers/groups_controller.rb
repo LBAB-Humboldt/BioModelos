@@ -102,7 +102,7 @@ class GroupsController < ApplicationController
     mp[:name] = current_user.name
     mp[:email] = current_user.email
     @message = Message.new(mp)
-    ContactMailer.email_new_group(@message).deliver
+    ContactMailer.email_new_group(@message).deliver_now
     redirect_to groups_path
   end
 

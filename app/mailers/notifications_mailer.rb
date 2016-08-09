@@ -88,7 +88,7 @@ class NotificationsMailer < ApplicationMailer
     @user = user
     @group = group
     @datetime = DateTime.now
-    mail to: admin_mail, subject: "Un usuario quiere unirse a tu grupo " + @group.name + " en BioModelos"
+    mail to: admin_mail, bcc: "biomodelos@humboldt.org.co", subject: "Un usuario quiere unirse a tu grupo " + @group.name + " en BioModelos"
   end
 
   # Envío de notificación instantanea a administrador(es) de grupo de un usuario sugiriendo una especie

@@ -8,7 +8,7 @@ class HomeController < ApplicationController
     if user_signed_in?
       user=User.find_by_id(current_user.id)
       # Crea usuario no administrador pendiente de aprobación para un grupo existente
-      if user.group_id != 0 && user.group_id != nil
+      if user.group_id != 0 && user.group_id != nil && user.requested_group_name.blank?
         group_user = GroupUser.new
         group_user.group_id = user.group_id
         group_user.group_user_state_id=2
@@ -17,10 +17,19 @@ class HomeController < ApplicationController
         if group_user.save
           user.group_id=nil
           user.save
+          #Envío de notificación a admin(s)
+          group_admins = GroupUser.where(:group_id => group_user.group_id, :is_admin => true, :group_user_state_id => 1)
+          group = Group.find(group_user.group_id)
+          if group_admins.blank?
+            NotificationsMailer.new_user_group(User.find(group_user.user_id), group, "biomodelos@humboldt.org.co").deliver_now
+          else
+            group_admins.each do |f|
+              NotificationsMailer.new_user_group(User.find(group_user.user_id), group, f.user.email).deliver_now
+            end
+          end
         end
-      end
-      # Crea usuario administrador aprobado para un grupo pendiente de aprobación.
-      if user.requested_group_name != '' && user.requested_group_name != nil
+      # Crea usuario administrador no aprobado para un grupo pendiente de aprobación.
+      elsif user.requested_group_name != '' && user.requested_group_name != nil
         group = Group.new
         group.name = user.requested_group_name
         group.description = user.requested_group_name
@@ -31,11 +40,14 @@ class HomeController < ApplicationController
           group_user2 = GroupUser.new
           group_user2.user_id = user.id
           group_user2.group_id=group.id
-          group_user2.group_user_state_id=1
+          group_user2.group_user_state_id=2
           group_user2.is_admin=1
           group_user2.save
           user.requested_group_name=''
           user.save
+          #Envío de notificación a equipo BioModelos
+          @message = Message.new(name: user.name, email: user.email, subject: group.name, content: group.name)
+          ContactMailer.email_new_group(@message).deliver_now
         end
       end
     end
