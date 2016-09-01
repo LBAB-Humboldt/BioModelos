@@ -171,7 +171,7 @@ class SpeciesController < ApplicationController
     end
 
     def point_comment_params
-      params.require(:point_comment).permit(:user_id, :species_id, :lat, :lon, :wrong_id, :geo_problem, :comment, :register_id)
+      params.require(:point_comment).permit(:user_id, :species_id, :lat, :lon, :isOutlier, :oldTaxonomy, :inCaptivity, :geoIssue, :idIssue, :otherIssues, :dataBaseId, :comment, :recordId)
     end
 
     def eco_params

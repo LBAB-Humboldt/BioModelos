@@ -2,7 +2,7 @@ $(".pointBox").html(""); //Clear div before rendering again
 <% if user_signed_in? && user_is_in_group(current_user.id) %>
 	$('.pointBox').html('<%=j render partial: 'species/comment_point', locals: { :point_comment => @point_comment } %>');
 	/* Set lat & lon points*/
-	$('#point_comment_register_id').val($('#rep_reg_id').html());
+	$('#point_comment_recordId').val($('#rep_reg_id').html());
 	$('#point_comment_species_id').val($('#species_id').val());
 	$('#point_comment_lat').val($('#point_lat').html());
 	$('#point_comment_lon').val($('#point_lon').html());

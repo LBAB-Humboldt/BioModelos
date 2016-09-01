@@ -1,4 +1,4 @@
-class CommentsController < ApplicationController
+ class CommentsController < ApplicationController
   
   def create
   	@comment_hash = params[:comment]

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160706205326) do
+ActiveRecord::Schema.define(version: 20160811152650) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -193,12 +193,17 @@ ActiveRecord::Schema.define(version: 20160706205326) do
     t.integer  "species_id"
     t.decimal  "lat"
     t.decimal  "lon"
-    t.boolean  "wrong_id",                default: false
-    t.boolean  "geo_problem",             default: false
+    t.boolean  "idIssue",                 default: false
+    t.boolean  "geoIssue",                default: false
     t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "register_id", limit: 255
+    t.string   "recordId",    limit: 255
+    t.boolean  "isOutlier",               default: false
+    t.boolean  "oldTaxonomy",             default: false
+    t.boolean  "inCaptivity",             default: false
+    t.boolean  "otherIssues",             default: false
+    t.string   "dataBaseId",  limit: 255
   end
 
   create_table "publications", force: :cascade do |t|

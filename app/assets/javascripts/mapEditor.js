@@ -205,6 +205,7 @@ var _mapVisorModule = function() {
 												popup += '<b><div id="point_lon">'+ feature.geometry.coordinates[0]+'</div>, <div id="point_lat"> '+ feature.geometry.coordinates[1] + '</div></b><br /><br />';
 												for (var i=0; i < csvTitles.length; i++) {
 													if (csvTitles[i] == "id"){
+														popup += "<input id='bm_db_id' type='hidden' value='" + feature.properties[csvLayer.getPropertyName(csvTitles[i])] + "'>";
 														popup += '<b>'+hashTitles[csvTitles[i]]+'</b><br />'+ '<div id="rep_reg_id">' + feature.properties[csvLayer.getPropertyName(csvTitles[i])]+'</div><br />';
 													}else{
 														popup += '<b>'+ hashTitles[csvTitles[i]]+'</b><br />'+ feature.properties[csvLayer.getPropertyName(csvTitles[i])]+'<br /><br />';
@@ -241,10 +242,6 @@ var _mapVisorModule = function() {
       			//$('#cargando').delay(500).fadeOut('slow');
    			}
 		});
-    };
-
-    var loadTestPoints = function () {
-
     };
 
     var unloadPoints = function () {
